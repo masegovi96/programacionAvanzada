@@ -1,0 +1,274 @@
+/* Body Styles */
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #212529; /* Fondo gris oscuro */
+    color: #ffffff; /* Texto blanco */
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h4 {
+    font-weight: 700;
+    color: #f8f9fa; /* Título visible */
+}
+
+.sidebar .nav-link {
+    color: #adb5bd; /* Texto gris claro */
+    padding: 10px 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link:focus {
+    background-color: #495057; /* Fondo más claro al pasar el cursor */
+    color: #ffffff; /* Texto blanco al pasar el cursor */
+}
+
+.toggle-btn {
+    cursor: pointer;
+    color: #ced4da; /* Color claro para los botones */
+    font-weight: 600;
+}
+
+/* Content Styles */
+.content, .container {
+    margin-left: 270px; /* Espacio para la barra lateral */
+    padding: 20px;
+    text-align: justify;
+    flex: 1; /* Hace que el contenedor principal ocupe el espacio disponible */
+}
+
+h1 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 2.8rem;
+    color: #343a40;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+p.lead {
+    color: #495057;
+    font-size: 1.25rem;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer Styles */
+footer {
+    background: #212529;
+    color: #ccc;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    margin-top: 20px; /* Espaciado superior para separarlo del contenido */
+}
+
+/* Custom styles for the sorteo */
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.instructions {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.bombo-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+/* Estilo para los bombos */
+.bombo {
+    position: relative;
+    width: 30%;
+    min-width: 150px;
+    height: 100px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    transition: transform 0.3s ease;
+}
+
+.bombo:hover {
+    transform: scale(1.1);
+}
+
+/* Ocultar la lista por defecto */
+.bombo-list {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+/* Mostrar la lista al hacer hover */
+.bombo:hover .bombo-list {
+    display: block;
+}
+
+/* Ocultar el título por defecto */
+.bombo-title {
+    display: block;
+}
+
+/* Ocultar el título al hacer hover */
+.bombo:hover .bombo-title {
+    display: none;
+}
+
+.btn-sorteo {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    background-color: #27ae60;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-sorteo:hover {
+    background-color: #2ecc71;
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+/* Estilo para los resultados del sorteo */
+.result-item {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    opacity: 0; /* Inicialmente invisible */
+    transform: translateY(-20px); /* Inicialmente desplazado */
+}
+
+/* Submenu Styles */
+.submenu {
+    display: none;
+}
+
+.submenu.active {
+    display: block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1496px) {
+    .sidebar {
+        width: 200px; /* Reduce el ancho de la barra lateral */
+    }
+
+    .content, .container {
+        margin-left: 220px; /* Ajusta el margen del contenido */
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%; /* La barra lateral ocupa todo el ancho */
+        height: auto;
+    }
+
+    .content, .container {
+        margin-left: 0; /* Elimina el margen en pantallas pequeñas */
+    }
+}
+
+/* Justificar el texto de las secciones */
+section {
+    text-align: justify;
+    line-height: 1.6; /* Mejora la legibilidad con un espaciado entre líneas */
+}
+
+/* Estilo para los títulos de las secciones */
+section h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40; /* Color oscuro para los títulos */
+    margin-bottom: 15px;
+}
+
+/* Estilo para los párrafos */
+section p {
+    font-size: 1rem;
+    color: #495057; /* Color gris oscuro para el texto */
+}
+
+/* Estilo para las listas */
+section ul {
+    padding-left: 20px; /* Sangría para las listas */
+}
+
+section ul li {
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 10px; /* Espaciado entre elementos de la lista */
+}
+
+/* Centrar las imágenes en los modales */
+.modal-body img {
+    margin: 0 auto;
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+#recursionAnimation {
+    height: 900px;
+    overflow-y: auto;
+}
