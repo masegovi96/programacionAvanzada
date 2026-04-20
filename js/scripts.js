@@ -3,6 +3,13 @@ function toggleMenu(menuId) {
     const menu = document.getElementById(menuId);
     if (menu) {
         menu.classList.toggle('active');
+        const btn = document.querySelector(`[aria-controls="${menuId}"]`);
+        if (btn) {
+            const isOpen = menu.classList.contains('active');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            const chevron = btn.querySelector('.sidebar-chevron');
+            if (chevron) chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+        }
     } else {
         console.error(`El menú con ID "${menuId}" no existe.`);
     }
@@ -205,19 +212,76 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("El modal con ID 'shellSortModal' no existe.");
     }
 
-    // Ruta base calculada desde el src del propio script (funciona tanto en index.html como en subcarpetas)
-    const baseURL = (() => {
-        const el = document.querySelector('script[src*="scripts.js"]');
-        return el ? el.src.replace(/js\/scripts\.js.*$/, '') : '../';
-    })();
-
     // Cargar el navbar desde un archivo externo
     const navbarContainer = document.getElementById("navbar-container");
     if (navbarContainer) {
-        fetch(`${baseURL}components/navbar.html`)
+        // Utilizamos la raíz porque <base href="/"> asegurará que todas las peticiones HTML 
+        // tomen de base la raíz del domninio
+        fetch('/components/navbar.html')
             .then(response => response.text())
             .then(data => {
                 navbarContainer.innerHTML = data;
+                
+                // Establecer aria-current y la clase 'active' para el enlace seleccionado
+                const currentPath = window.location.pathname;
+                const navLinks = navbarContainer.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && (currentPath.endsWith(href) || (currentPath === '/' && href === '/index.html'))) {
+                        link.setAttribute('aria-current', 'page');
+                        link.classList.add('active');
+                        // Expandir parent si es un submenú
+                        const parentSubmenu = link.closest('.submenu');
+                        if (parentSubmenu) {
+                            parentSubmenu.classList.add('active');
+                            const btn = document.querySelector(`[aria-controls="${parentSubmenu.id}"]`);
+                            if (btn) {
+                                btn.setAttribute('aria-expanded', 'true');
+                                const chevron = btn.querySelector('.sidebar-chevron');
+                                if (chevron) chevron.style.transform = 'rotate(180deg)';
+                            }
+                        }
+                    }
+                });
+
+                // --- Sidebar toggle (icon-rail) ---
+                const toggleBtn = document.getElementById('sidebar-toggle-btn');
+                const openBtn   = document.getElementById('sidebar-open-btn');
+                const overlay   = document.getElementById('sidebar-overlay');
+                const isMobile  = () => window.innerWidth <= 768;
+
+                // Desktop: colapsar a icon-rail
+                function collapseDesktop() {
+                    document.body.classList.add('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', 'true');
+                }
+                function expandDesktop() {
+                    document.body.classList.remove('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', 'false');
+                }
+
+                // Mobile: mostrar/ocultar sidebar completo
+                function openMobile()  { document.body.classList.add('sidebar-open'); }
+                function closeMobile() { document.body.classList.remove('sidebar-open'); }
+
+                // Restaurar estado desktop
+                if (!isMobile() && localStorage.getItem('sidebar-collapsed') === 'true') {
+                    collapseDesktop();
+                }
+
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', () => {
+                        if (isMobile()) {
+                            closeMobile();
+                        } else {
+                            document.body.classList.contains('sidebar-collapsed')
+                                ? expandDesktop()
+                                : collapseDesktop();
+                        }
+                    });
+                }
+                if (openBtn)  openBtn.addEventListener('click',  openMobile);
+                if (overlay)  overlay.addEventListener('click',  closeMobile);
             })
             .catch(error => console.error("Error al cargar el navbar:", error));
     }
@@ -225,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cargar el footer desde un archivo externo
     const footerContainer = document.getElementById("footer-container");
     if (footerContainer) {
-        fetch(`${baseURL}components/footer.html`)
+        fetch('/components/footer.html')
             .then(response => response.text())
             .then(data => {
                 footerContainer.innerHTML = data;

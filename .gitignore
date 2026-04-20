@@ -1,0 +1,20 @@
+# Dependencias (no se usan; el proyecto usa CDN)
+node_modules/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variables de entorno
+.env
+.env.*

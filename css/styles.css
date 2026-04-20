@@ -1,6 +1,7 @@
 /* Body Styles */
 body {
     font-family: 'Rubik', sans-serif;
+    font-size: 1.15rem;          /* Base mayor para proyección */
     background-color: #f8f9fa;
     margin: 0;
     overflow-x: hidden;
@@ -9,61 +10,254 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
+/* El contenedor del navbar no debe generar caja visible */
+#navbar-container {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: visible;
+}
+
+/* =====================
+   SIDEBAR
+   ===================== */
+
+/* Overlay (móvil) */
+.sidebar-overlay {
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 999;
+}
+.sidebar-overlay.active { display: block; }
+
+/* Contenedor */
+.sidebar {
+    width: 260px;
+    position: fixed;
+    top: 0; left: 0;
     height: 100%;
-    background-color: #212529; /* Fondo gris oscuro */
-    color: #ffffff; /* Texto blanco */
-    padding: 20px;
+    background-color: #212529;
+    color: #fff;
+    padding: 12px;
     overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.25);
+    transition: width 0.28s ease, padding 0.28s ease;
+    z-index: 1000;
 }
 
-.sidebar h4 {
+/* Cabecera */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px 12px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #343a40;
+    min-height: 48px;
+    overflow: hidden;
+}
+
+.sidebar-brand {
     font-weight: 700;
-    color: #f8f9fa; /* Título visible */
+    font-size: 1.05rem;
+    color: #f8f9fa;
+    white-space: nowrap;
+    max-width: 160px;
+    overflow: hidden;
+    transition: opacity 0.2s, max-width 0.28s;
 }
 
-.sidebar .nav-link {
-    color: #adb5bd; /* Texto gris claro */
-    padding: 10px 20px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.sidebar .nav-link:hover,
-.sidebar .nav-link:focus {
-    background-color: #495057; /* Fondo más claro al pasar el cursor */
-    color: #ffffff; /* Texto blanco al pasar el cursor */
-}
-
-.toggle-btn {
+/* Botón toggle dentro del sidebar */
+.sidebar-toggle-btn {
+    background: none;
+    border: none;
+    color: #adb5bd;
+    font-size: 1.1rem;
     cursor: pointer;
-    color: #ced4da; /* Color claro para los botones */
-    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: background 0.2s, color 0.2s;
 }
+.sidebar-toggle-btn:hover {
+    background: #343a40;
+    color: #fff;
+}
+
+/* Items de navegación */
+.sidebar-item {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 6px;
+    color: #adb5bd;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-decoration: none;
+    width: 100%;
+    transition: background 0.2s, color 0.2s;
+}
+.sidebar-item:hover,
+.sidebar-item:focus {
+    background: #343a40;
+    color: #fff;
+    text-decoration: none;
+}
+.sidebar-item.active,
+.sidebar-item[aria-current="page"] {
+    background: #0d6efd;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+button.sidebar-item {
+    background: none;
+    border: none;
+    text-align: left;
+}
+
+.sidebar-icon {
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.2s;
+}
+
+.sidebar-chevron {
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: transform 0.25s;
+}
+
+.sidebar-sub {
+    padding-left: 38px !important;
+    font-size: 0.9rem;
+}
+
+/* Submenús */
+.submenu { display: none; }
+.submenu.active { display: block; }
+
+/* ── ESTADO COLAPSADO (icon-rail) ── */
+body.sidebar-collapsed .sidebar {
+    width: 60px;
+    padding: 12px 4px;
+}
+
+body.sidebar-collapsed .sidebar-brand {
+    opacity: 0;
+    max-width: 0;
+}
+
+body.sidebar-collapsed .sidebar-label,
+body.sidebar-collapsed .sidebar-chevron {
+    display: none;
+}
+
+body.sidebar-collapsed .sidebar-item {
+    justify-content: center;
+    gap: 0;
+    padding: 10px 0;
+}
+
+body.sidebar-collapsed .sidebar-sub {
+    padding-left: 0 !important;
+}
+
+body.sidebar-collapsed .submenu {
+    display: none !important;
+}
+
+/* Tooltip CSS al colapsar */
+body.sidebar-collapsed .sidebar-item {
+    position: relative;
+}
+body.sidebar-collapsed .sidebar-item::after {
+    content: attr(data-label);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: #343a40;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 2000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+body.sidebar-collapsed .sidebar-item:hover::after {
+    opacity: 1;
+}
+
+/* Botón flotante ☰ — solo en móvil cuando el sidebar está oculto */
+.sidebar-open-btn {
+    display: none;
+    position: fixed;
+    top: 12px; left: 12px;
+    z-index: 1100;
+    width: 42px; height: 42px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    border: none;
+    background: #212529;
+    color: #fff;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    transition: background 0.2s;
+}
+.sidebar-open-btn:hover { background: #343a40; }
 
 /* Content Styles */
 .content, .container {
-    margin-left: 270px; /* Espacio para la barra lateral */
-    padding: 20px;
+    margin-left: 280px;
+    margin-right: 0;
+    width: calc(100% - 280px); /* flex stretch + margin-left causaban overflow; width explícito lo evita */
+    padding: 30px;
     text-align: justify;
-    flex: 1; /* Hace que el contenedor principal ocupe el espacio disponible */
+    flex: 1;
+    transition: margin-left 0.28s ease, width 0.28s ease;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+
+
+body.sidebar-collapsed .content,
+body.sidebar-collapsed .container {
+    margin-left: 78px;
+    width: calc(100% - 78px);
 }
 
 h1 {
     font-family: 'Rubik', sans-serif;
-    font-size: 2.8rem;
+    font-size: 3.2rem;
     color: #343a40;
     animation: fadeInDown 1s ease-in-out;
 }
 
 p.lead {
     color: #495057;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
 }
 
 @keyframes fadeInDown {
@@ -75,6 +269,26 @@ p.lead {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Grid de dos columnas alineadas por fila (ej: cosas randoms) */
+.two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 768px) {
+    .two-col-grid { grid-template-columns: 1fr; }
+}
+
+/* Contenedores de animaciones D3 — scroll horizontal si el SVG excede el ancho */
+[id$="Animation"],
+[id$="SortAnimation"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+[id$="Animation"] svg,
+[id$="SortAnimation"] svg {
+    display: block;
 }
 
 /* Footer Styles */
@@ -207,57 +421,108 @@ footer {
 }
 
 /* Responsive Adjustments */
+
+/* ── Pantallas grandes (>1496px) ── */
 @media (max-width: 1496px) {
-    .sidebar {
-        width: 200px; /* Reduce el ancho de la barra lateral */
-    }
-
-    .content, .container {
-        margin-left: 220px; /* Ajusta el margen del contenido */
-    }
+    .sidebar { width: 240px; }
+    .content, .container { margin-left: 258px; width: calc(100% - 258px); }
+    body.sidebar-collapsed .content,
+    body.sidebar-collapsed .container { margin-left: 72px; width: calc(100% - 72px); }
 }
 
+/* ── Tablet (≤992px): sidebar se colapsa automáticamente ── */
+@media (max-width: 992px) {
+    .sidebar { width: 60px; padding: 12px 4px; }
+    .sidebar-brand { opacity: 0; max-width: 0; }
+    .sidebar-label, .sidebar-chevron { display: none; }
+    .sidebar-item { justify-content: center; gap: 0; padding: 10px 0; }
+    .sidebar-sub { padding-left: 0 !important; }
+    .submenu { display: none !important; }
+    .content, .container { margin-left: 78px; width: calc(100% - 78px); }
+    body.sidebar-collapsed .content,
+    body.sidebar-collapsed .container { margin-left: 78px; width: calc(100% - 78px); }
+    h1 { font-size: 2.4rem; }
+    section h2 { font-size: 1.8rem; }
+}
+
+/* ── Móvil (≤768px): sidebar se oculta completamente ── */
 @media (max-width: 768px) {
+    /* Sidebar se oculta y se abre sobre el contenido */
     .sidebar {
-        position: relative;
-        width: 100%; /* La barra lateral ocupa todo el ancho */
-        height: auto;
+        transform: translateX(-280px);
+        width: 260px !important;
+        transition: transform 0.28s ease !important;
+        /* Restaurar labels ocultos por el breakpoint de tablet */
     }
+    .sidebar .sidebar-brand { opacity: 1; max-width: 160px; }
+    .sidebar .sidebar-label { display: inline; }
+    .sidebar .sidebar-chevron { display: inline; }
+    .sidebar .sidebar-item { justify-content: flex-start; gap: 10px; padding: 9px 10px; }
+    .sidebar .sidebar-sub { padding-left: 38px !important; }
+    body.sidebar-open .sidebar { transform: translateX(0); }
+    body.sidebar-open .sidebar-overlay { display: block; }
 
     .content, .container {
-        margin-left: 0; /* Elimina el margen en pantallas pequeñas */
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 16px;
+        text-align: left;
+    }
+    .sidebar-open-btn { display: flex; }
+    body.sidebar-open .sidebar-open-btn { display: none; }
+
+    /* En móvil no usamos icon-rail */
+    body.sidebar-collapsed .sidebar { width: 260px !important; }
+    body.sidebar-collapsed .content,
+    body.sidebar-collapsed .container { margin-left: 0 !important; width: 100% !important; }
+
+    h1 { font-size: 1.9rem; }
+    section h2 { font-size: 1.5rem; }
+    section { text-align: left; }
+
+    /* Evitar desbordamiento horizontal en animaciones SVG */
+    svg { max-width: 100%; height: auto; }
+    [id$="Animation"], [id$="Sort"], [id$="Chart"] { overflow-x: auto; }
+}
+
+/* Justificar el texto de las secciones (solo en pantallas ≥769px) */
+@media (min-width: 769px) {
+    section {
+        text-align: justify;
+        line-height: 1.6;
     }
 }
 
-/* Justificar el texto de las secciones */
 section {
-    text-align: justify;
-    line-height: 1.6; /* Mejora la legibilidad con un espaciado entre líneas */
+    line-height: 1.6;
 }
 
 /* Estilo para los títulos de las secciones */
 section h2 {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    color: #343a40; /* Color oscuro para los títulos */
+    color: #343a40;
     margin-bottom: 15px;
 }
 
 /* Estilo para los párrafos */
 section p {
-    font-size: 1rem;
-    color: #495057; /* Color gris oscuro para el texto */
+    font-size: 1.15rem;
+    color: #495057;
+    line-height: 1.75;
 }
 
 /* Estilo para las listas */
 section ul {
-    padding-left: 20px; /* Sangría para las listas */
+    padding-left: 24px;
 }
 
-section ul li {
-    font-size: 1rem;
+section ul li,
+section ol li {
+    font-size: 1.15rem;
     color: #495057;
-    margin-bottom: 10px; /* Espaciado entre elementos de la lista */
+    margin-bottom: 12px;
+    line-height: 1.7;
 }
 
 /* Centrar las imágenes en los modales */
@@ -272,3 +537,55 @@ section ul li {
     height: 900px;
     overflow-y: auto;
 }
+
+/* =====================
+   CONOCIÉNDOTE (hablame-de-ti.html)
+   ===================== */
+.pregunta-card {
+    background: #fff;
+    border-left: 5px solid #0d6efd;
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.pregunta-card:hover {
+    box-shadow: 0 6px 20px rgba(13,110,253,0.12);
+    transform: translateX(4px);
+}
+.pregunta-num {
+    min-width: 40px;
+    height: 40px;
+    background: #0d6efd;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.pregunta-texto {
+    font-size: 1.1rem;
+    color: #212529;
+    line-height: 1.5;
+    padding-top: 6px;
+}
+.pregunta-sub {
+    font-size: 0.88rem;
+    color: #6c757d;
+    margin-top: 4px;
+}
+.nota-profe {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 20px;
+    font-size: 0.92rem;
+    color: #555;
+}
+.nota-profe strong { color: #333; }
