@@ -205,15 +205,32 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("El modal con ID 'shellSortModal' no existe.");
     }
 
+    // Ruta base calculada desde el src del propio script (funciona tanto en index.html como en subcarpetas)
+    const baseURL = (() => {
+        const el = document.querySelector('script[src*="scripts.js"]');
+        return el ? el.src.replace(/js\/scripts\.js.*$/, '') : '../';
+    })();
+
     // Cargar el navbar desde un archivo externo
     const navbarContainer = document.getElementById("navbar-container");
     if (navbarContainer) {
-        fetch("../components/navbar.html")
+        fetch(`${baseURL}components/navbar.html`)
             .then(response => response.text())
             .then(data => {
                 navbarContainer.innerHTML = data;
             })
             .catch(error => console.error("Error al cargar el navbar:", error));
+    }
+
+    // Cargar el footer desde un archivo externo
+    const footerContainer = document.getElementById("footer-container");
+    if (footerContainer) {
+        fetch(`${baseURL}components/footer.html`)
+            .then(response => response.text())
+            .then(data => {
+                footerContainer.innerHTML = data;
+            })
+            .catch(error => console.error("Error al cargar el footer:", error));
     }
 
     // Mostrar/ocultar el panel de accesibilidad
