@@ -1,7 +1,11 @@
 body {
     font-family: 'Rubik', sans-serif;
     font-size: 1.2rem;
-    background-color: #f8f9fa;
+    background-color: #f0f2f5;
+    background-image:
+        radial-gradient(ellipse at 15% 15%, rgba(13,110,253,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 85%, rgba(102,16,242,0.06) 0%, transparent 55%);
+    background-attachment: fixed;
     margin: 0;
     overflow-x: hidden;
     display: flex;
@@ -210,8 +214,14 @@ body.sidebar-collapsed .container {
 h1 {
     font-family: 'Rubik', sans-serif;
     font-size: 3.2rem;
-    color: #343a40;
+    font-weight: 700;
+    color: #0d6efd;
+    background: linear-gradient(120deg, #0d6efd 0%, #6610f2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     animation: fadeInDown 1s ease-in-out;
+    padding-bottom: 0.2rem;
 }
 p.lead {
     color: #495057;
@@ -244,12 +254,14 @@ p.lead {
     display: block;
 }
 footer {
-    background: #212529;
-    color: #ccc;
+    background: linear-gradient(90deg, #1a1d20, #2c3237);
+    color: #adb5bd;
     text-align: center;
-    padding: 10px;
-    font-size: 0.9rem;
-    margin-top: 20px;
+    padding: 22px 30px;
+    font-size: 0.95rem;
+    margin-top: 40px;
+    border-top: 3px solid #0d6efd;
+    letter-spacing: 0.02em;
 }
 .title {
     text-align: center;
@@ -393,7 +405,7 @@ footer {
     body.sidebar-collapsed .container { margin-left: 0 !important; width: 100% !important; }
     h1 { font-size: 1.9rem; }
     section h2 { font-size: 1.5rem; }
-    section { text-align: left; }
+    section { text-align: left; padding: 20px 18px; }
     svg { max-width: 100%; height: auto; }
     [id$="Animation"], [id$="Sort"], [id$="Chart"] { overflow-x: auto; }
 }
@@ -405,12 +417,28 @@ footer {
 }
 section {
     line-height: 1.6;
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
 }
 section h2 {
     font-size: 2.2rem;
-    font-weight: bold;
+    font-weight: 700;
     color: #343a40;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+    position: relative;
+    padding-left: 18px;
+}
+section h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 4px;
+    background: linear-gradient(180deg, #0d6efd, #6610f2);
+    border-radius: 2px;
 }
 section p {
     font-size: 1.2rem;
@@ -485,6 +513,31 @@ section ol li {
     color: #555;
 }
 .nota-profe strong { color: #333; }
+
+hr {
+    border-color: #dee2e6;
+    opacity: 0.5;
+    margin: 0.5rem 0 1.25rem;
+}
+
+.alert {
+    border-left-width: 5px;
+    border-radius: 4px 10px 10px 4px;
+}
+
+.list-group-item {
+    transition: background-color 0.2s;
+}
+.list-group-item:hover {
+    background-color: rgba(13,110,253,0.05);
+}
+
+.table tbody tr {
+    transition: background-color 0.2s;
+}
+.table tbody tr:hover > td {
+    background-color: rgba(13,110,253,0.06) !important;
+}
 
 #accessibility-btn {
     position: fixed;
