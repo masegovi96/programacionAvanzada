@@ -97,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (accessibilityBtn && accessibilityPanel) {
         accessibilityBtn.addEventListener('click', () => {
-            accessibilityPanel.style.display =
-                accessibilityPanel.style.display === 'none' ? 'block' : 'none';
+            accessibilityPanel.classList.toggle('d-none');
         });
 
         document.getElementById('increase-text').addEventListener('change', e => {
@@ -123,7 +122,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sorteoBtn) {
         sorteoBtn.addEventListener('click', realizarSorteo);
     }
+
+    initScrollReveal();
 });
+
+function initScrollReveal() {
+    const targets = document.querySelectorAll('section, .card, table, .alert, .list-group, .pregunta-card');
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+    );
+    targets.forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+}
 
 function realizarSorteo() {
     let lideres   = ['David Castro', 'Bryant Dzul', 'Michael Alavez'];

@@ -1,7 +1,6 @@
-/* Body Styles */
 body {
     font-family: 'Rubik', sans-serif;
-    font-size: 1.15rem;          /* Base mayor para proyección */
+    font-size: 1.2rem;
     background-color: #f8f9fa;
     margin: 0;
     overflow-x: hidden;
@@ -9,20 +8,12 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
-/* El contenedor del navbar no debe generar caja visible */
 #navbar-container {
     position: absolute;
     width: 0;
     height: 0;
     overflow: visible;
 }
-
-/* =====================
-   SIDEBAR
-   ===================== */
-
-/* Overlay (móvil) */
 .sidebar-overlay {
     display: none;
     position: fixed;
@@ -31,8 +22,6 @@ body {
     z-index: 999;
 }
 .sidebar-overlay.active { display: block; }
-
-/* Contenedor */
 .sidebar {
     width: 320px;
     position: fixed;
@@ -47,8 +36,6 @@ body {
     transition: width 0.28s ease, padding 0.28s ease;
     z-index: 1000;
 }
-
-/* Cabecera */
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -59,7 +46,6 @@ body {
     min-height: 48px;
     overflow: hidden;
 }
-
 .sidebar-brand {
     font-weight: 700;
     font-size: 1.05rem;
@@ -69,8 +55,6 @@ body {
     overflow: hidden;
     transition: opacity 0.2s, max-width 0.28s;
 }
-
-/* Botón toggle dentro del sidebar */
 .sidebar-toggle-btn {
     background: none;
     border: none;
@@ -87,8 +71,6 @@ body {
     background: #343a40;
     color: #fff;
 }
-
-/* Items de navegación */
 .sidebar-item {
     display: flex !important;
     align-items: center;
@@ -115,73 +97,57 @@ body {
     color: #fff !important;
     font-weight: 700;
 }
-
 button.sidebar-item {
     background: none;
     border: none;
     text-align: left;
 }
-
 .sidebar-icon {
     width: 18px;
     text-align: center;
     flex-shrink: 0;
 }
-
 .sidebar-label {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: opacity 0.2s;
 }
-
 .sidebar-chevron {
     font-size: 0.7rem;
     flex-shrink: 0;
     margin-left: auto;
     transition: transform 0.25s;
 }
-
 .sidebar-sub {
     padding-left: 38px !important;
     font-size: 0.9rem;
 }
-
-/* Submenús */
 .submenu { display: none; }
 .submenu.active { display: block; }
-
-/* ── ESTADO COLAPSADO (icon-rail) ── */
 body.sidebar-collapsed .sidebar {
     width: 60px;
     padding: 12px 4px;
 }
-
 body.sidebar-collapsed .sidebar-brand {
     opacity: 0;
     max-width: 0;
 }
-
 body.sidebar-collapsed .sidebar-label,
 body.sidebar-collapsed .sidebar-chevron {
     display: none;
 }
-
 body.sidebar-collapsed .sidebar-item {
     justify-content: center;
     gap: 0;
     padding: 10px 0;
 }
-
 body.sidebar-collapsed .sidebar-sub {
     padding-left: 0 !important;
 }
-
 body.sidebar-collapsed .submenu {
     display: none !important;
 }
-
-/* Tooltip CSS al colapsar */
 body.sidebar-collapsed .sidebar-item {
     position: relative;
 }
@@ -206,8 +172,6 @@ body.sidebar-collapsed .sidebar-item::after {
 body.sidebar-collapsed .sidebar-item:hover::after {
     opacity: 1;
 }
-
-/* Botón flotante ☰ — solo en móvil cuando el sidebar está oculto */
 .sidebar-open-btn {
     display: none;
     position: fixed;
@@ -226,12 +190,10 @@ body.sidebar-collapsed .sidebar-item:hover::after {
     transition: background 0.2s;
 }
 .sidebar-open-btn:hover { background: #343a40; }
-
-/* Content Styles */
 .content, .container {
     margin-left: 340px;
     margin-right: 0;
-    width: calc(100% - 340px); /* flex stretch + margin-left causaban overflow; width explícito lo evita */
+    width: calc(100% - 340px); 
     padding: 30px;
     margin-top: 0 !important;
     text-align: justify;
@@ -240,27 +202,21 @@ body.sidebar-collapsed .sidebar-item:hover::after {
     max-width: none;
     box-sizing: border-box;
 }
-
-
-
 body.sidebar-collapsed .content,
 body.sidebar-collapsed .container {
     margin-left: 78px;
     width: calc(100% - 78px);
 }
-
 h1 {
     font-family: 'Rubik', sans-serif;
     font-size: 3.2rem;
     color: #343a40;
     animation: fadeInDown 1s ease-in-out;
 }
-
 p.lead {
     color: #495057;
     font-size: 1.4rem;
 }
-
 @keyframes fadeInDown {
     from {
         opacity: 0;
@@ -271,8 +227,6 @@ p.lead {
         transform: translateY(0);
     }
 }
-
-/* Grid de dos columnas alineadas por fila (ej: cosas randoms) */
 .two-col-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -280,8 +234,6 @@ p.lead {
 @media (max-width: 768px) {
     .two-col-grid { grid-template-columns: 1fr; }
 }
-
-/* Contenedores de animaciones D3 — scroll horizontal si el SVG excede el ancho */
 [id$="Animation"],
 [id$="SortAnimation"] {
     overflow-x: auto;
@@ -291,38 +243,30 @@ p.lead {
 [id$="SortAnimation"] svg {
     display: block;
 }
-
-/* Footer Styles */
 footer {
     background: #212529;
     color: #ccc;
     text-align: center;
     padding: 10px;
     font-size: 0.9rem;
-    margin-top: 20px; /* Espaciado superior para separarlo del contenido */
+    margin-top: 20px;
 }
-
-/* Custom styles for the sorteo */
 .title {
     text-align: center;
     margin-bottom: 30px;
 }
-
 .instructions {
     background-color: #ecf0f1;
     padding: 20px;
     margin-top: 20px;
     border-radius: 10px;
 }
-
 .bombo-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 20px 0;
 }
-
-/* Estilo para los bombos */
 .bombo {
     position: relative;
     width: 30%;
@@ -337,15 +281,12 @@ footer {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+    overflow: hidden;
     transition: transform 0.3s ease;
 }
-
 .bombo:hover {
     transform: scale(1.1);
 }
-
-/* Ocultar la lista por defecto */
 .bombo-list {
     display: none;
     list-style: none;
@@ -353,22 +294,15 @@ footer {
     margin: 0;
     text-align: center;
 }
-
-/* Mostrar la lista al hacer hover */
 .bombo:hover .bombo-list {
     display: block;
 }
-
-/* Ocultar el título por defecto */
 .bombo-title {
     display: block;
 }
-
-/* Ocultar el título al hacer hover */
 .bombo:hover .bombo-title {
     display: none;
 }
-
 .btn-sorteo {
     display: block;
     width: 200px;
@@ -382,11 +316,9 @@ footer {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .btn-sorteo:hover {
     background-color: #2ecc71;
 }
-
 .result {
     text-align: center;
     margin-top: 20px;
@@ -398,8 +330,6 @@ footer {
     border: 1px solid #dee2e6;
     border-radius: 5px;
 }
-
-/* Estilo para los resultados del sorteo */
 .result-item {
     font-size: 1.5rem;
     margin: 10px 0;
@@ -408,30 +338,21 @@ footer {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
-    opacity: 0; /* Inicialmente invisible */
-    transform: translateY(-20px); /* Inicialmente desplazado */
+    opacity: 0; 
+    transform: translateY(-20px); 
 }
-
-/* Submenu Styles */
 .submenu {
     display: none;
 }
-
 .submenu.active {
     display: block;
 }
-
-/* Responsive Adjustments */
-
-/* ── Pantallas grandes (>1496px) ── */
 @media (max-width: 1496px) {
     .sidebar { width: 300px; }
     .content, .container { margin-left: 320px; width: calc(100% - 320px); }
     body.sidebar-collapsed .content,
     body.sidebar-collapsed .container { margin-left: 72px; width: calc(100% - 72px); }
 }
-
-/* ── Tablet (≤992px): sidebar se colapsa automáticamente ── */
 @media (max-width: 992px) {
     .sidebar { width: 60px; padding: 12px 4px; }
     .sidebar-brand { opacity: 0; max-width: 0; }
@@ -445,26 +366,20 @@ footer {
     h1 { font-size: 2.4rem; }
     section h2 { font-size: 1.8rem; }
 }
-
-/* ── Móvil (≤768px): sidebar se oculta completamente ── */
 @media (max-width: 768px) {
-    /* Sidebar se oculta y se abre sobre el contenido */
     .sidebar {
         transform: translateX(-320px);
         width: 300px !important;
         transition: transform 0.28s ease !important;
-        /* Restaurar labels ocultos por el breakpoint de tablet */
     }
     .sidebar .sidebar-brand { opacity: 1; max-width: 180px; }
     .sidebar .sidebar-label { display: inline; }
     .sidebar .sidebar-chevron { display: inline; }
     .sidebar .sidebar-item { justify-content: flex-start; gap: 10px; padding: 9px 10px; }
     .sidebar .sidebar-sub { padding-left: 38px !important; }
-    /* Permitir submenús en móvil (anula el !important del breakpoint tablet) */
     .submenu.active { display: block !important; }
     body.sidebar-open .sidebar { transform: translateX(0); }
     body.sidebar-open .sidebar-overlay { display: block; }
-
     .content, .container {
         margin-left: 0 !important;
         width: 100% !important;
@@ -473,77 +388,55 @@ footer {
     }
     .sidebar-open-btn { display: flex; }
     body.sidebar-open .sidebar-open-btn { display: none; }
-
-    /* En móvil no usamos icon-rail */
     body.sidebar-collapsed .sidebar { width: 300px !important; }
     body.sidebar-collapsed .content,
     body.sidebar-collapsed .container { margin-left: 0 !important; width: 100% !important; }
-
     h1 { font-size: 1.9rem; }
     section h2 { font-size: 1.5rem; }
     section { text-align: left; }
-
-    /* Evitar desbordamiento horizontal en animaciones SVG */
     svg { max-width: 100%; height: auto; }
     [id$="Animation"], [id$="Sort"], [id$="Chart"] { overflow-x: auto; }
 }
-
-/* Justificar el texto de las secciones (solo en pantallas ≥769px) */
 @media (min-width: 769px) {
     section {
         text-align: justify;
         line-height: 1.6;
     }
 }
-
 section {
     line-height: 1.6;
 }
-
-/* Estilo para los títulos de las secciones */
 section h2 {
     font-size: 2.2rem;
     font-weight: bold;
     color: #343a40;
     margin-bottom: 15px;
 }
-
-/* Estilo para los párrafos */
 section p {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: #495057;
     line-height: 1.75;
 }
-
-/* Estilo para las listas */
 section ul {
     padding-left: 24px;
 }
-
 section ul li,
 section ol li {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: #495057;
     margin-bottom: 12px;
     line-height: 1.7;
 }
-
-/* Centrar las imágenes en los modales */
 .modal-body img {
     margin: 0 auto;
     display: block;
     width: 200px;
     height: 200px;
 }
-
 #recursionAnimation {
     height: 900px;
     overflow-y: auto;
 }
-
-/* =====================
-   CONOCIÉNDOTE (hablame-de-ti.html)
-   ===================== */
 .pregunta-card {
     background: #fff;
     border-left: 5px solid #0d6efd;
@@ -592,3 +485,28 @@ section ol li {
     color: #555;
 }
 .nota-profe strong { color: #333; }
+
+#accessibility-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1050;
+}
+
+#accessibility-panel {
+    position: fixed;
+    top: 58px;
+    right: 12px;
+    z-index: 1050;
+    width: 300px;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
