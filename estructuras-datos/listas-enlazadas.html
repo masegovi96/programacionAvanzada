@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -28,13 +28,13 @@
         <section class="mb-4">
             <h2>Operaciones Básicas</h2>
             <ul>
-                <li>insertAtBeginning(valor) �  insertar al inicio</li>
-                <li>insertAtEnd(valor) �  insertar al final</li>
-                <li>insertAt(pos, valor) �  insertar en una posición
+                <li>insertAtBeginning(valor) &#8594;  insertar al inicio</li>
+                <li>insertAtEnd(valor) &#8594;  insertar al final</li>
+                <li>insertAt(pos, valor) &#8594;  insertar en una posición
                     específica</li>
-                <li>deleteAt(pos) �  eliminar en una posición específica</li>
-                <li>search(valor) �  buscar un valor en la lista</li>
-                <li>traverse() �  recorrer elementos</li>
+                <li>deleteAt(pos) &#8594;  eliminar en una posición específica</li>
+                <li>search(valor) &#8594;  buscar un valor en la lista</li>
+                <li>traverse() &#8594;  recorrer elementos</li>
             </ul>
         </section>
 
@@ -96,30 +96,32 @@
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-php">
+// Clase Nodo: representa cada elemento (nodo) de la lista
 class Nodo {
-public $valor;
-public $siguiente;
+    public $valor;      // Dato almacenado en el nodo
+    public $siguiente;  // Referencia al siguiente nodo
 
-public function __construct($valor) {
-    $this->valor = $valor;
-    $this->siguiente = null;
-}
+    public function __construct($valor) {
+        $this->valor = $valor;
+        $this->siguiente = null; // Al crearse, no apunta a ning&#250;n nodo
+    }
 }
 
-// Crear nodos
+// Crear tres nodos con valores A, B y C
 $nodo1 = new Nodo("A");
 $nodo2 = new Nodo("B");
 $nodo3 = new Nodo("C");
 
-// Enlazar nodos
+// Enlazar los nodos para formar la lista: A &#8594; B &#8594; C
 $nodo1->siguiente = $nodo2;
 $nodo2->siguiente = $nodo3;
+// $nodo3->siguiente queda en null (fin de la lista)
 
-// Recorrer la lista
+// Recorrer la lista nodo por nodo
 $actual = $nodo1;
 while ($actual != null) {
-echo $actual->valor . " ";
-$actual = $actual->siguiente;
+    echo $actual->valor . " ";   // Imprime: A B C
+    $actual = $actual->siguiente; // Avanza al siguiente nodo
 }
                 </code></pre>
                 </div>
@@ -141,28 +143,29 @@ $actual = $actual->siguiente;
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-javascript">
-// Clase Nodo
+// Clase Nodo: representa cada elemento de la lista
 class Nodo {
-constructor(valor) {
-    this.valor = valor;
-    this.siguiente = null;
-}
+    constructor(valor) {
+        this.valor = valor;        // Dato almacenado en el nodo
+        this.siguiente = null;     // Referencia al siguiente nodo (null = fin)
+    }
 }
 
-// Crear nodos
+// Crear tres nodos con valores A, B y C
 const nodo1 = new Nodo("A");
 const nodo2 = new Nodo("B");
 const nodo3 = new Nodo("C");
 
-// Enlazar nodos
+// Enlazar los nodos para formar la lista: A &#8594; B &#8594; C
 nodo1.siguiente = nodo2;
 nodo2.siguiente = nodo3;
+// nodo3.siguiente queda en null (fin de la lista)
 
-// Recorrer la lista
+// Recorrer la lista nodo por nodo
 let actual = nodo1;
 while (actual !== null) {
-console.log(actual.valor);
-actual = actual.siguiente;
+    console.log(actual.valor);     // Imprime: A, luego B, luego C
+    actual = actual.siguiente;     // Avanza al siguiente nodo
 }
                 </code></pre>
                 </div>
@@ -183,26 +186,27 @@ actual = actual.siguiente;
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-python">
-# Clase Nodo
+# Clase Nodo: representa cada elemento de la lista
 class Nodo:
-def __init__(self, valor):
-    self.valor = valor
-    self.siguiente = None
+    def __init__(self, valor):
+        self.valor = valor       # Dato almacenado en el nodo
+        self.siguiente = None    # Referencia al siguiente nodo (None = fin)
 
-# Crear nodos
+# Crear tres nodos con valores A, B y C
 nodo1 = Nodo("A")
 nodo2 = Nodo("B")
 nodo3 = Nodo("C")
 
-# Enlazar nodos
+# Enlazar los nodos para formar la lista: A -> B -> C
 nodo1.siguiente = nodo2
 nodo2.siguiente = nodo3
+# nodo3.siguiente queda en None (fin de la lista)
 
-# Recorrer la lista
+# Recorrer la lista nodo por nodo
 actual = nodo1
 while actual is not None:
-print(actual.valor)
-actual = actual.siguiente
+    print(actual.valor)       # Imprime: A, luego B, luego C
+    actual = actual.siguiente # Avanza al siguiente nodo
                 </code></pre>
                 </div>
             </div>

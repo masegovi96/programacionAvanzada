@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -28,12 +28,12 @@
         <section class="mb-4">
             <h2>Operaciones Básicas</h2>
             <ul>
-                <li>insertFront(valor) �  insertar al inicio</li>
-                <li>insertBack(valor) �  insertar al final</li>
-                <li>deleteFront() �  eliminar al inicio</li>
-                <li>deleteBack() �  eliminar al final</li>
-                <li>search(valor) �  buscar un valor en la lista</li>
-                <li>traverseForward(), traverseBackward() �  recorrer elementos hacia adelante y hacia atrás</li>
+                <li>insertFront(valor) &#8594;  insertar al inicio</li>
+                <li>insertBack(valor) &#8594;  insertar al final</li>
+                <li>deleteFront() &#8594;  eliminar al inicio</li>
+                <li>deleteBack() &#8594;  eliminar al final</li>
+                <li>search(valor) &#8594;  buscar un valor en la lista</li>
+                <li>traverseForward(), traverseBackward() &#8594;  recorrer elementos hacia adelante y hacia atrás</li>
             </ul>
         </section>
 
@@ -95,41 +95,42 @@
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-php">
+// Clase Nodo: guarda el dato, el nodo anterior y el siguiente
 class Nodo {
-public $valor;
-public $anterior;
-public $siguiente;
+    public $valor;      // Dato almacenado
+    public $anterior;   // Enlace al nodo anterior
+    public $siguiente;  // Enlace al nodo siguiente
 
-public function __construct($valor) {
-    $this->valor = $valor;
-    $this->anterior = null;
-    $this->siguiente = null;
-}
+    public function __construct($valor) {
+        $this->valor    = $valor;
+        $this->anterior = null;
+        $this->siguiente = null;
+    }
 }
 
-// Crear nodos
+// Crear tres nodos
 $nodo1 = new Nodo("A");
 $nodo2 = new Nodo("B");
 $nodo3 = new Nodo("C");
 
-// Enlazar nodos
+// Enlazar: A <-> B <-> C
 $nodo1->siguiente = $nodo2;
-$nodo2->anterior = $nodo1;
+$nodo2->anterior  = $nodo1;
 $nodo2->siguiente = $nodo3;
-$nodo3->anterior = $nodo2;
+$nodo3->anterior  = $nodo2;
 
-// Recorrer la lista hacia adelante
+// Recorrer hacia adelante: imprime A B C
 $actual = $nodo1;
 while ($actual != null) {
-echo $actual->valor . " ";
-$actual = $actual->siguiente;
+    echo $actual->valor . " ";
+    $actual = $actual->siguiente;
 }
 
-// Recorrer la lista hacia atrás
+// Recorrer hacia atrás: imprime C B A
 $actual = $nodo3;
 while ($actual != null) {
-echo $actual->valor . " ";
-$actual = $actual->anterior;
+    echo $actual->valor . " ";
+    $actual = $actual->anterior;
 }
                 </code></pre>
                 </div>
@@ -151,38 +152,38 @@ $actual = $actual->anterior;
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-javascript">
-// Clase Nodo
+// Clase Nodo: guarda el dato y referencias al anterior y siguiente
 class Nodo {
-constructor(valor) {
-    this.valor = valor;
-    this.anterior = null;
-    this.siguiente = null;
-}
+    constructor(valor) {
+        this.valor    = valor;     // Dato almacenado
+        this.anterior = null;      // Enlace al nodo anterior
+        this.siguiente = null;     // Enlace al nodo siguiente
+    }
 }
 
-// Crear nodos
+// Crear tres nodos
 const nodo1 = new Nodo("A");
 const nodo2 = new Nodo("B");
 const nodo3 = new Nodo("C");
 
-// Enlazar nodos
+// Enlazar: A <-> B <-> C
 nodo1.siguiente = nodo2;
-nodo2.anterior = nodo1;
+nodo2.anterior  = nodo1;
 nodo2.siguiente = nodo3;
-nodo3.anterior = nodo2;
+nodo3.anterior  = nodo2;
 
-// Recorrer la lista hacia adelante
+// Recorrer hacia adelante: imprime A, B, C
 let actual = nodo1;
 while (actual !== null) {
-console.log(actual.valor);
-actual = actual.siguiente;
+    console.log(actual.valor);
+    actual = actual.siguiente;
 }
 
-// Recorrer la lista hacia atrás
+// Recorrer hacia atrás: imprime C, B, A
 actual = nodo3;
 while (actual !== null) {
-console.log(actual.valor);
-actual = actual.anterior;
+    console.log(actual.valor);
+    actual = actual.anterior;
 }
                 </code></pre>
                 </div>
@@ -203,35 +204,35 @@ actual = actual.anterior;
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-python">
-# Clase Nodo
+# Clase Nodo: guarda el dato y referencias al anterior y siguiente
 class Nodo:
-def __init__(self, valor):
-    self.valor = valor
-    self.anterior = None
-    self.siguiente = None
+    def __init__(self, valor):
+        self.valor    = valor  # Dato almacenado
+        self.anterior = None   # Enlace al nodo anterior
+        self.siguiente = None  # Enlace al nodo siguiente
 
-# Crear nodos
+# Crear tres nodos
 nodo1 = Nodo("A")
 nodo2 = Nodo("B")
 nodo3 = Nodo("C")
 
-# Enlazar nodos
+# Enlazar: A <-> B <-> C
 nodo1.siguiente = nodo2
-nodo2.anterior = nodo1
+nodo2.anterior  = nodo1
 nodo2.siguiente = nodo3
-nodo3.anterior = nodo2
+nodo3.anterior  = nodo2
 
-# Recorrer la lista hacia adelante
+# Recorrer hacia adelante: imprime A, B, C
 actual = nodo1
 while actual is not None:
-print(actual.valor)
-actual = actual.siguiente
+    print(actual.valor)
+    actual = actual.siguiente
 
-# Recorrer la lista hacia atrás
+# Recorrer hacia atrás: imprime C, B, A
 actual = nodo3
 while actual is not None:
-print(actual.valor)
-actual = actual.anterior
+    print(actual.valor)
+    actual = actual.anterior
                 </code></pre>
                 </div>
             </div>

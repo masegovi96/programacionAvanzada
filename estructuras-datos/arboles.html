@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -29,11 +29,11 @@
         <section class="mb-4">
             <h2>Operaciones Básicas</h2>
             <ul>
-                <li>insert(valor) �  agregar un nodo</li>
-                <li>delete(valor) �  eliminar un nodo</li>
-                <li>search(valor) �  buscar un nodo</li>
-                <li>height() �  altura del árbol</li>
-                <li>isBalanced() �  verificar si el árbol está
+                <li>insert(valor) &#8594;  agregar un nodo</li>
+                <li>delete(valor) &#8594;  eliminar un nodo</li>
+                <li>search(valor) &#8594;  buscar un nodo</li>
+                <li>height() &#8594;  altura del árbol</li>
+                <li>isBalanced() &#8594;  verificar si el árbol está
                     balanceado</li>
             </ul>
         </section>
@@ -45,7 +45,7 @@
                         <p>Se utiliza en árboles binarios de búsqueda para obtener los elementos en orden ascendente.</p>
                     </li>
                     <li>Preorden (Raíz, Izquierda, Derecha)
-                        <p>�atil para clonar árboles o para generar expresiones prefijas.</p>
+                        <p>Útil para clonar árboles o para generar expresiones prefijas.</p>
                     </li>
                     <li>Postorden (Izquierda, Derecha, Raíz)
                         <p>Usado en evaluaciones de árboles de expresión o para eliminar nodos.</p>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <div id="treeAnimation"
-                        style="width: 100%; height: 700px;"></div>
+                        style="width: 100%; height: 580px;"></div>
                     </div>
             </div>
         </div>
@@ -110,40 +110,45 @@
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-php">
+// Clase Nodo: cada nodo puede tener múltiples hijos
 class Nodo {
-public $valor;
-public $hijos;
+    public $valor;  // Dato del nodo
+    public $hijos;  // Lista de nodos hijos
 
-public function __construct($valor) {
-    $this->valor = $valor;
-    $this->hijos = [];
+    public function __construct($valor) {
+        $this->valor = $valor;
+        $this->hijos = [];
+    }
+
+    // Agrega un nodo hijo a este nodo
+    public function agregarHijo($nodo) {
+        $this->hijos[] = $nodo;
+    }
 }
 
-public function agregarHijo($nodo) {
-    $this->hijos[] = $nodo;
-}
-}
-
-// Crear nodos
-$raiz = new Nodo("A");
+// Construir el árbol:   A
+//                      / \
+//                     B   C
+//                     |
+//                     D
+$raiz  = new Nodo("A");
 $nodoB = new Nodo("B");
 $nodoC = new Nodo("C");
 $nodoD = new Nodo("D");
 
-// Construir el árbol
-$raiz->agregarHijo($nodoB);
-$raiz->agregarHijo($nodoC);
-$nodoB->agregarHijo($nodoD);
+$raiz->agregarHijo($nodoB);   // A -> B
+$raiz->agregarHijo($nodoC);   // A -> C
+$nodoB->agregarHijo($nodoD);  // B -> D
 
-// Recorrer el árbol
+// Recorrido preorden (raíz primero): A B D C
 function recorrerArbol($nodo) {
-echo $nodo->valor . " ";
-foreach ($nodo->hijos as $hijo) {
-    recorrerArbol($hijo);
-}
+    echo $nodo->valor . " ";
+    foreach ($nodo->hijos as $hijo) {
+        recorrerArbol($hijo); // Llamada recursiva
+    }
 }
 
-recorrerArbol($raiz);
+recorrerArbol($raiz); // Imprime: A B D C
                 </code></pre>
                 </div>
             </div>
@@ -164,36 +169,40 @@ recorrerArbol($raiz);
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-javascript">
-// Clase Nodo
+// Clase Nodo: cada nodo puede tener múltiples hijos
 class Nodo {
-constructor(valor) {
-    this.valor = valor;
-    this.hijos = [];
+    constructor(valor) {
+        this.valor = valor;  // Dato del nodo
+        this.hijos = [];     // Lista de nodos hijos
+    }
+
+    // Agrega un nodo hijo a este nodo
+    agregarHijo(nodo) {
+        this.hijos.push(nodo);
+    }
 }
 
-agregarHijo(nodo) {
-    this.hijos.push(nodo);
-}
-}
-
-// Crear nodos
-const raiz = new Nodo("A");
+// Construir el árbol:   A
+//                      / \
+//                     B   C
+//                     |
+//                     D
+const raiz  = new Nodo("A");
 const nodoB = new Nodo("B");
 const nodoC = new Nodo("C");
 const nodoD = new Nodo("D");
 
-// Construir el árbol
-raiz.agregarHijo(nodoB);
-raiz.agregarHijo(nodoC);
-nodoB.agregarHijo(nodoD);
+raiz.agregarHijo(nodoB);   // A -> B
+raiz.agregarHijo(nodoC);   // A -> C
+nodoB.agregarHijo(nodoD);  // B -> D
 
-// Recorrer el árbol
+// Recorrido preorden (raíz primero): A B D C
 function recorrerArbol(nodo) {
-console.log(nodo.valor);
-nodo.hijos.forEach(hijo => recorrerArbol(hijo));
+    console.log(nodo.valor);
+    nodo.hijos.forEach(hijo => recorrerArbol(hijo)); // Recursión
 }
 
-recorrerArbol(raiz);
+recorrerArbol(raiz); // Imprime: A, B, D, C
                 </code></pre>
                 </div>
             </div>
@@ -213,33 +222,36 @@ recorrerArbol(raiz);
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-python">
-# Clase Nodo
+# Clase Nodo: cada nodo puede tener múltiples hijos
 class Nodo:
-def __init__(self, valor):
-    self.valor = valor
-    self.hijos = []
+    def __init__(self, valor):
+        self.valor = valor  # Dato del nodo
+        self.hijos = []     # Lista de nodos hijos
 
-def agregar_hijo(self, nodo):
-    self.hijos.append(nodo)
+    def agregar_hijo(self, nodo):
+        self.hijos.append(nodo)  # Añade un nodo hijo
 
-# Crear nodos
-raiz = Nodo("A")
+# Construir el árbol:   A
+#                      / \
+#                     B   C
+#                     |
+#                     D
+raiz   = Nodo("A")
 nodo_b = Nodo("B")
 nodo_c = Nodo("C")
 nodo_d = Nodo("D")
 
-# Construir el árbol
-raiz.agregar_hijo(nodo_b)
-raiz.agregar_hijo(nodo_c)
-nodo_b.agregar_hijo(nodo_d)
+raiz.agregar_hijo(nodo_b)   # A -> B
+raiz.agregar_hijo(nodo_c)   # A -> C
+nodo_b.agregar_hijo(nodo_d) # B -> D
 
-# Recorrer el árbol
+# Recorrido preorden (raíz primero): A B D C
 def recorrer_arbol(nodo):
-print(nodo.valor)
-for hijo in nodo.hijos:
-    recorrer_arbol(hijo)
+    print(nodo.valor)
+    for hijo in nodo.hijos:
+        recorrer_arbol(hijo)  # Llamada recursiva
 
-recorrer_arbol(raiz)
+recorrer_arbol(raiz)  # Imprime: A, B, D, C
                 </code></pre>
                 </div>
             </div>

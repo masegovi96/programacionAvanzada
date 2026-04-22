@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -29,11 +29,11 @@
         <section class="mb-4">
             <h2>Operaciones Básicas</h2>
             <ul>
-                <li>push(elemento) �  inserta elemento arriba</li>
-                <li>pop() �  elimina el último elemento</li>
-                <li>peek() o top() �  consulta el elemento superior</li>
-                <li>isEmpty() �  verifica si está vacía</li>
-                <li>size() �  retorna el tamaño de la pila</li>
+                <li>push(elemento) &#8594;  inserta elemento arriba</li>
+                <li>pop() &#8594;  elimina el último elemento</li>
+                <li>peek() o top() &#8594;  consulta el elemento superior</li>
+                <li>isEmpty() &#8594;  verifica si está vacía</li>
+                <li>size() &#8594;  retorna el tamaño de la pila</li>
             </ul>
         </section>
 
@@ -95,15 +95,24 @@
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-php">
-// Crear una pila
+// Crear una pila usando un arreglo (LIFO: último en entrar, primero en salir)
 $pila = [];
-array_push($pila, "A");
-array_push($pila, "B");
-array_push($pila, "C");
+array_push($pila, "A");  // Pila: [A]
+array_push($pila, "B");  // Pila: [A, B]
+array_push($pila, "C");  // Pila: [A, B, C]
 
-// Eliminar el último elemento
-$elemento = array_pop($pila);
-echo $elemento; // Imprime "C"
+// Consultar el elemento en el tope sin sacarlo (peek)
+$tope = end($pila);      // Obtiene "C"
+echo "Tope: $tope\n";    // Imprime: Tope: C
+
+// Verificar si la pila está vacía
+if (!empty($pila)) {
+    echo "La pila no está vacía\n";
+}
+
+// Sacar el último elemento (pop)
+$elemento = array_pop($pila); // Pila: [A, B]
+echo "Sacado: $elemento\n";  // Imprime: Sacado: C
                 </code></pre>
                 </div>
             </div>
@@ -124,15 +133,24 @@ echo $elemento; // Imprime "C"
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-javascript">
-// Crear una pila
+// Crear una pila usando un arreglo (LIFO: último en entrar, primero en salir)
 const pila = [];
-pila.push("A");
-pila.push("B");
-pila.push("C");
+pila.push("A");  // Pila: ["A"]
+pila.push("B");  // Pila: ["A", "B"]
+pila.push("C");  // Pila: ["A", "B", "C"]
 
-// Eliminar el último elemento
-const elemento = pila.pop();
-console.log(elemento); // Imprime "C"
+// Consultar el elemento en el tope sin sacarlo (peek)
+const tope = pila[pila.length - 1]; // "C"
+console.log("Tope:", tope);          // Imprime: Tope: C
+
+// Verificar si la pila está vacía
+if (pila.length > 0) {
+    console.log("La pila no está vacía");
+}
+
+// Sacar el último elemento (pop)
+const elemento = pila.pop();        // Pila: ["A", "B"]
+console.log("Sacado:", elemento);   // Imprime: Sacado: C
                 </code></pre>
                 </div>
             </div>
@@ -152,15 +170,23 @@ console.log(elemento); // Imprime "C"
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-python">
-# Crear una pila
+# Crear una pila usando una lista (LIFO: último en entrar, primero en salir)
 pila = []
-pila.append("A")
-pila.append("B")
-pila.append("C")
+pila.append("A")  # Pila: ["A"]
+pila.append("B")  # Pila: ["A", "B"]
+pila.append("C")  # Pila: ["A", "B", "C"]
 
-# Eliminar el último elemento
-elemento = pila.pop()
-print(elemento) # Imprime "C"
+# Consultar el elemento en el tope sin sacarlo (peek)
+tope = pila[-1]               # "C"
+print("Tope:", tope)          # Imprime: Tope: C
+
+# Verificar si la pila está vacía
+if pila:
+    print("La pila no está vacía")
+
+# Sacar el último elemento (pop)
+elemento = pila.pop()         # Pila: ["A", "B"]
+print("Sacado:", elemento)    # Imprime: Sacado: C
                 </code></pre>
                 </div>
             </div>

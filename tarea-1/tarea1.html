@@ -5,7 +5,7 @@
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Descripción y requisitos de la Tarea 1.">
+    <meta name="description" content="Tarea 1: Benchmark comparativo de algoritmos y estructuras de datos.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
@@ -18,68 +18,154 @@
     <div id="navbar-container"></div>
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Tarea 1: Investigación y Exposición</h1>
+        <h1 class="text-center mb-4">Tarea 1: Benchmark Comparativo</h1>
 
         <section class="mb-4">
-            <h2>Instrucciones generales</h2>
-            <p>Cada estudiante deberá:</p>
-
-            <ol>
-                <li>Investigar a profundidad los dos temas asignados:
-                    <ul>
-                        <li>Una estructura de datos.</li>
-                        <li>Un método de ordenamiento (o recursividad, en un caso).</li>
-                    </ul>
-                </li>
-                <li>Entregar un documento en formato PDF que contenga la investigación de ambos temas.</li>
-                <li>Realizar una exposición, la cual puede ser en una de las siguientes modalidades:
-                    <ul>
-                        <li>Video explicativo (máximo 10 minutos).</li>
-                        <li>Presentación con diapositivas (PowerPoint, Google Slides o similar), que será expuesta en clase
-                            o enviada con audio grabado.</li>
-                    </ul>
-                </li>
-                <li>Presentar el código funcional que ejemplifique un caso de uso real relacionado con uno o ambos
-                    temas.
-                    <ul>
-                        <li>El código no necesita ser complejo, pero debe tener una aplicación práctica en la vida real.
-                        </li>
-                        <li>El estudiante debe poder explicar cómo funciona el código y qué problema resuelve.</li>
-                    </ul>
-                </li>
-            </ol>
-        </section>
-
-        <section class="mb-4">
-            <h2>Contenido Mínimo de la investigación y exposición</h2>
+            <h2>Objetivo</h2>
             <p>
-                Para cada tema (estructura y método):
+                Implementar <strong>dos soluciones distintas</strong> para un mismo problema, medir su rendimiento
+                real con distintos tamaños de datos y presentar conclusiones fundamentadas sobre cuándo conviene
+                usar cada una.
             </p>
-
-            <ul>
-                <li>Definición.</li>
-                <li>Importancia y aplicaciones en la programación.</li>
-                <li>Ejemplos ilustrativos.</li>
-                <li>Código de ejemplo que muestre un caso de uso en la vida real.
-                    <ul>
-                        <li>Ejemplo: uso de una pila para deshacer cambios, uso de una cola para gestionar turnos, etc.
-                        </li>
-                    </ul>
-                </li>
-                <li>Ventajas y desventajas.</li>
-                <li>Comparación con otras estructuras o métodos similares (si aplica).</li>
-                <li>Fuentes de consulta (mínimo 3, confiables).</li>
-            </ul>
+            <p>
+                El par de algoritmos o estructuras a comparar te será <strong>asignado por el docente</strong>.
+            </p>
         </section>
 
         <section class="mb-4">
-            <h2>Notas finales</h2>
+            <h2>¿Qué debes entregar?</h2>
+
+            <div class="d-flex flex-column gap-3 mt-3">
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">1</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Código funcional</strong></div>
+                        <div class="pregunta-sub">
+                            Implementa las dos soluciones en el lenguaje de tu elección
+                            (JavaScript, Python, Java, C++, etc.). Cada implementación debe:
+                            <ul class="mt-2 mb-0">
+                                <li>Resolver el mismo problema con el mismo conjunto de datos.</li>
+                                <li>Medir el tiempo de ejecución para al menos <strong>cuatro tamaños de entrada</strong>
+                                    diferentes (por ejemplo: 100, 1 000, 10 000 y 100 000 elementos).</li>
+                                <li>Ser código propio y legible, con nombres de variables y funciones claros.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">2</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Gráfica de rendimiento</strong></div>
+                        <div class="pregunta-sub">
+                            Genera una gráfica que muestre el tiempo de ejecución de cada solución en función
+                            del tamaño de entrada. Puede ser una imagen exportada desde Excel, Google Sheets,
+                            matplotlib, Chart.js o cualquier herramienta que prefieras.
+                            La gráfica debe tener ejes etiquetados y leyenda.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">3</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Documento de conclusiones</strong></div>
+                        <div class="pregunta-sub">
+                            Un documento (PDF) de máximo <strong>2 páginas</strong> que responda:
+                            <ul class="mt-2 mb-0">
+                                <li>¿Cuál de las dos soluciones es más eficiente y en qué escenarios?</li>
+                                <li>¿Los resultados coinciden con la complejidad teórica (<em>Big O</em>) de cada algoritmo?</li>
+                                <li>¿En qué situaciones reales elegirías una sobre la otra?</li>
+                                <li>Mínimo 3 fuentes de consulta confiables.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2>Pares asignados</h2>
+            <p>Cada estudiante comparará el par que le corresponda según la siguiente tabla.</p>
+
+            <table class="table table-bordered table-striped mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Solución A</th>
+                        <th>Solución B</th>
+                        <th>Operación a medir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Matrices (arreglo)</td><td>Bubble Sort</td><td>Búsqueda del máximo</td></tr>
+                    <tr><td>2</td><td>Pilas</td><td>Selection Sort</td><td>Inserción y extracción</td></tr>
+                    <tr><td>3</td><td>Colas</td><td>Insertion Sort</td><td>Encolar / desencolar vs. ordenar</td></tr>
+                    <tr><td>4</td><td>Listas enlazadas</td><td>Shell Sort</td><td>Búsqueda secuencial</td></tr>
+                    <tr><td>5</td><td>Listas doblemente enlazadas</td><td>Merge Sort</td><td>Inserción ordenada</td></tr>
+                    <tr><td>6</td><td>Listas circulares</td><td>Quick Sort</td><td>Recorrido completo</td></tr>
+                    <tr><td>7</td><td>Árboles (BST)</td><td>Heap Sort</td><td>Búsqueda</td></tr>
+                    <tr><td>8</td><td>Grafos</td><td>Radix Sort</td><td>Recorrido BFS vs. ordenamiento</td></tr>
+                    <tr><td>9</td><td>Tablas Hash</td><td>Counting Sort</td><td>Búsqueda por clave</td></tr>
+                    <tr><td>10</td><td colspan="2" class="text-center">Recursividad — comparar versión recursiva vs. iterativa del mismo problema</td><td>Tiempo y uso de memoria</td></tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info mt-3" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                Si tu número no aparece aún en la tabla o tienes dudas sobre tu par asignado, consulta directamente con el docente.
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2>Criterios de evaluación</h2>
+            <table class="table table-bordered table-striped mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Aspectos a observar</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Código</strong></td>
+                        <td>Ambas implementaciones funcionan correctamente, miden tiempos reales y el código es legible.</td>
+                        <td>40 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gráfica</strong></td>
+                        <td>Representa fielmente los datos medidos, tiene ejes y leyenda claros.</td>
+                        <td>20 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Conclusiones</strong></td>
+                        <td>Análisis fundamentado, relación con la complejidad teórica y criterios de elección.</td>
+                        <td>30 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fuentes</strong></td>
+                        <td>Mínimo 3 fuentes confiables, correctamente citadas.</td>
+                        <td>10 %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="mb-4">
+            <h2>Entrega</h2>
             <ul>
-                <li>La exposición puede incluir animaciones, demostraciones prácticas o esquemas para facilitar la comprensión.</li>
-                <li>Se valorará la creatividad, el esfuerzo y la capacidad de explicar lo que se presenta.</li>
-                <li>Cualquier duda sobre los temas asignados o sobre los medios de entrega, comunicarse antes de la fecha límite.</li>
-                
+                <li>Sube todo a tu repositorio de GitHub del curso, dentro de una carpeta llamada exactamente <code>Tarea 1</code>.</li>
+                <li>El repositorio debe contener: el código fuente, la imagen de la gráfica y el PDF de conclusiones.</li>
+                <li>Realiza un <em>commit</em> con el mensaje: <code>feat: tarea 1 benchmark comparativo</code>.</li>
+                <li>Entrega el enlace a tu repositorio a través de Classroom antes de que concluya la fecha límite.</li>
             </ul>
+            <div class="alert alert-warning mt-3" role="alert">
+                <strong>Importante:</strong> Se revisarán los <em>logs</em> de Git para validar la hora de entrega.
+                Asegúrate de hacer el <em>push</em> antes de que venza el plazo.
+            </div>
         </section>
 
     </div>

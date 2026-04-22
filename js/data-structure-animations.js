@@ -341,12 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'C', children: [{ name: 'F' }, { name: 'G' }] },
             ],
         };
-        const width = 1200, height = 500;
+        const width = 1200, height = 560;
 
-        const svg = d3.select(treeContainer).append('svg').attr('width', width).attr('height', height)
-            .append('g').attr('transform', 'translate(50, 50)');
+        const svgRoot = d3.select(treeContainer).append('svg').attr('width', width).attr('height', height);
 
-        const treeLayout = d3.tree().size([width - 100, height - 100]);
+        // Etiqueta del recorrido actual (se muestra arriba del árbol)
+        const treeLabel = svgRoot.append('text')
+            .attr('x', width / 2).attr('y', 30)
+            .attr('text-anchor', 'middle').attr('font-size', '20px').attr('font-weight', 'bold');
+
+        const svg = svgRoot.append('g').attr('transform', 'translate(50, 70)');
+
+        const treeLayout = d3.tree().size([width - 100, height - 120]);
         const root = d3.hierarchy(treeData);
         treeLayout(root);
 
@@ -361,26 +367,58 @@ document.addEventListener('DOMContentLoaded', () => {
         treeNodes.append('text').text(d => d.data.name).attr('text-anchor', 'middle')
             .attr('alignment-baseline', 'middle').attr('font-size', '20px');
 
-        const postOrderTraversal = (node, cb) => {
+        // ── Algoritmos de recorrido ───────────────────────────────────────
+        const preOrder = (node, cb) => {
             if (!node) return;
-            if (node.children) node.children.forEach(c => postOrderTraversal(c, cb));
+            cb(node);
+            if (node.children) node.children.forEach(c => preOrder(c, cb));
+        };
+        const inOrder = (node, cb) => {
+            if (!node) return;
+            const [left, right] = node.children || [null, null];
+            inOrder(left, cb);
+            cb(node);
+            inOrder(right, cb);
+        };
+        const postOrder = (node, cb) => {
+            if (!node) return;
+            if (node.children) node.children.forEach(c => postOrder(c, cb));
             cb(node);
         };
 
-        const animatePreOrder = () => {
+        const treeTraversals = [
+            { label: 'Preorden — Raíz → Izquierda → Derecha',   fn: preOrder,  color: '#e67e00' },
+            { label: 'Inorden — Izquierda → Raíz → Derecha',    fn: inOrder,   color: '#0d6efd' },
+            { label: 'Postorden — Izquierda → Derecha → Raíz',  fn: postOrder, color: '#198754' },
+        ];
+
+        let treeAnimationTimer = null;
+
+        const runTreeTraversal = (idx) => {
+            const { label, fn, color } = treeTraversals[idx];
             const order = [];
-            postOrderTraversal(root, n => order.push(n));
+            fn(root, n => order.push(n));
+
+            // Actualizar etiqueta y restablecer colores
+            treeLabel.text(label).attr('fill', color);
+            treeNodes.select('circle').attr('fill', '#fff');
+
             let index = 0;
-            const highlight = () => {
-                if (index >= order.length) return;
-                treeNodes.select('circle').attr('fill', d => d === order[index] ? '#ffcc00' : '#fff');
-                index++;
-                setTimeout(highlight, 1000);
+            const step = () => {
+                if (index < order.length) {
+                    treeNodes.select('circle').attr('fill', d => d === order[index] ? color : '#fff');
+                    index++;
+                    treeAnimationTimer = setTimeout(step, 900);
+                } else {
+                    // Pausa antes del siguiente recorrido
+                    treeAnimationTimer = setTimeout(() => runTreeTraversal((idx + 1) % treeTraversals.length), 1800);
+                }
             };
-            highlight();
+            step();
         };
 
-        modal.addEventListener('shown.bs.modal', animatePreOrder);
+        modal.addEventListener('shown.bs.modal', () => runTreeTraversal(0));
+        modal.addEventListener('hidden.bs.modal', () => clearTimeout(treeAnimationTimer));
     }
 
     // ── GRAFOS ────────────────────────────────────────────────────────────
@@ -395,6 +433,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const svg = d3.select(graphContainer).append('svg').attr('width', width).attr('height', height);
+
+        // Etiqueta del recorrido actual
+        const graphLabel = svg.append('text')
+            .attr('x', width / 2).attr('y', 28)
+            .attr('text-anchor', 'middle').attr('font-size', '18px').attr('font-weight', 'bold');
 
         const simulation = d3.forceSimulation(graphNodes)
             .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(100))
@@ -420,37 +463,74 @@ document.addEventListener('DOMContentLoaded', () => {
             node.attr('transform', d => `translate(${d.x}, ${d.y})`);
         });
 
-        const bfsTraversal = startId => {
+        // Función auxiliar: vecinos de un nodo (grafo no dirigido)
+        const getNeighbors = id => {
+            const ns = [];
+            graphLinks.forEach(l => {
+                if (l.source.id === id) ns.push(l.target.id);
+                else if (l.target.id === id) ns.push(l.source.id);
+            });
+            return ns;
+        };
+
+        // BFS — recorre nivel por nivel usando una cola
+        const bfsOrder = startId => {
             const visited = new Set(), queue = [startId], order = [];
             while (queue.length > 0) {
                 const cur = queue.shift();
                 if (!visited.has(cur)) {
                     visited.add(cur); order.push(cur);
-                    graphLinks.forEach(l => {
-                        if (l.source.id === cur && !visited.has(l.target.id)) queue.push(l.target.id);
-                        else if (l.target.id === cur && !visited.has(l.source.id)) queue.push(l.source.id);
-                    });
+                    getNeighbors(cur).forEach(n => { if (!visited.has(n)) queue.push(n); });
                 }
             }
             return order;
         };
 
-        const animateBFS = () => {
-            const bfsOrder = bfsTraversal('A');
-            let index = 0;
-            const highlight = () => {
-                if (index >= bfsOrder.length) return;
-                svg.selectAll('circle').attr('fill', d => d.id === bfsOrder[index] ? '#ff0000' : '#ffcc00');
-                index++;
-                setTimeout(highlight, 1000);
+        // DFS — recorre en profundidad usando recursión
+        const dfsOrder = startId => {
+            const visited = new Set(), order = [];
+            const dfs = id => {
+                if (visited.has(id)) return;
+                visited.add(id); order.push(id);
+                getNeighbors(id).forEach(n => dfs(n));
             };
-            highlight();
+            dfs(startId);
+            return order;
+        };
+
+        const graphTraversals = [
+            { label: 'BFS — Búsqueda en Anchura (nivel por nivel)', fn: bfsOrder, color: '#0d6efd' },
+            { label: 'DFS — Búsqueda en Profundidad (recursiva)',   fn: dfsOrder, color: '#198754' },
+        ];
+
+        let graphAnimationTimer = null;
+
+        const runGraphTraversal = idx => {
+            const { label, fn, color } = graphTraversals[idx];
+            const order = fn('A');
+
+            graphLabel.text(label).attr('fill', color);
+            node.select('circle').attr('fill', '#ffcc00');
+
+            let index = 0;
+            const step = () => {
+                if (index < order.length) {
+                    node.select('circle').attr('fill', d => d.id === order[index] ? color : '#ffcc00');
+                    index++;
+                    graphAnimationTimer = setTimeout(step, 900);
+                } else {
+                    // Pausa y luego muestra el siguiente recorrido
+                    graphAnimationTimer = setTimeout(() => runGraphTraversal((idx + 1) % graphTraversals.length), 1800);
+                }
+            };
+            step();
         };
 
         modal.addEventListener('shown.bs.modal', () => {
             simulation.alpha(1).restart();
-            setTimeout(animateBFS, 2000);
+            graphAnimationTimer = setTimeout(() => runGraphTraversal(0), 2000);
         });
+        modal.addEventListener('hidden.bs.modal', () => clearTimeout(graphAnimationTimer));
     }
 
     // ── TABLAS HASH ───────────────────────────────────────────────────────

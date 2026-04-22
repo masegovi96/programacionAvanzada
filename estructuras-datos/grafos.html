@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -30,11 +30,11 @@
         <section class="mb-4">
             <h2>Operaciones Básicas</h2>
             <ul>
-                <li>addVertex(v) �  agregar un vértice al grafo</li>
-                <li>addEdge(v1, v2) �  agregar una arista entre dos</li>
-                <li>removeEdge(v1, v2) �  eliminar una arista entre dos</li>
-                <li>removeVertex(v) �  eliminar</li>
-                <li>adjacent(v1, v2) �  verificar si hay una arista entre
+                <li>addVertex(v) &#8594;  agregar un vértice al grafo</li>
+                <li>addEdge(v1, v2) &#8594;  agregar una arista entre dos</li>
+                <li>removeEdge(v1, v2) &#8594;  eliminar una arista entre dos</li>
+                <li>removeVertex(v) &#8594;  eliminar</li>
+                <li>adjacent(v1, v2) &#8594;  verificar si hay una arista entre
                     dos</li>
                 <li>Recorridos: BFS (amplitud), DFS (profundidad)</li>
                 <li>shortestPath(v1, v2) (usando Dijkstra, etc.)</li>
@@ -58,7 +58,7 @@
                     <li>Explora todos los vecinos antes de ir más
                         profundo.</li>
                     <li>Usa una cola.</li>
-                    <li>�atil para encontrar el camino más corto en grafos no
+                    <li>Útil para encontrar el camino más corto en grafos no
                         ponderados.</li>
                 </ul>
             </ol>
@@ -242,26 +242,32 @@ grafo.mostrarGrafo();
                 <div class="modal-body text-center">
                     <pre
                         class="d-inline-block text-start"><code class="language-python">
+# Grafo representado con lista de adyacencia
 class Grafo:
-def __init__(self):
-    self.adyacencia = {}
+    def __init__(self):
+        self.adyacencia = {}  # Diccionario: nodo -> lista de vecinos
 
-def agregar_arista(self, origen, destino):
-    if origen not in self.adyacencia:
-        self.adyacencia[origen] = []
-    self.adyacencia[origen].append(destino)
+    def agregar_arista(self, origen, destino):
+        # Crea la entrada si el nodo origen es nuevo
+        if origen not in self.adyacencia:
+            self.adyacencia[origen] = []
+        self.adyacencia[origen].append(destino)
 
-def mostrar_grafo(self):
-    for origen, destinos in self.adyacencia.items():
-        print(f"{origen} -> {', '.join(destinos)}")
+    def mostrar_grafo(self):
+        for origen, destinos in self.adyacencia.items():
+            print(f"{origen} -> {', '.join(destinos)}")
 
-# Crear grafo
+# Crear grafo: A->B, A->C, B->D, C->D
 grafo = Grafo()
 grafo.agregar_arista("A", "B")
 grafo.agregar_arista("A", "C")
 grafo.agregar_arista("B", "D")
 grafo.agregar_arista("C", "D")
 grafo.mostrar_grafo()
+# Imprime:
+# A -> B, C
+# B -> D
+# C -> D
                 </code></pre>
                 </div>
             </div>

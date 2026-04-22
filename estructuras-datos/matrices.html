@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -21,7 +21,7 @@
 
         <section class="mb-4">
             <h2>¿Qué son?</h2>
-            <p>Estructura bidimensional organizada en filas y columnas. �atil
+            <p>Estructura bidimensional organizada en filas y columnas. Útil
                 para representar datos tabulares o espaciales.
             </p>
         </section>
@@ -104,15 +104,27 @@
                 </div>
                 <div class="modal-body">
                     <pre><code class="language-php">
-                        // Crear una matriz bidimensional
-                        $matriz = [
-                            [1, 2, 3],
-                            [4, 5, 6],
-                            [7, 8, 9]
-                        ];
+// Crear una matriz bidimensional 3x3
+$matriz = [
+    [1, 2, 3],   // Fila 0
+    [4, 5, 6],   // Fila 1
+    [7, 8, 9]    // Fila 2
+];
 
-                        // Acceder a un elemento
-                        echo $matriz[1][2]; // Imprime 6
+// Acceder a un elemento: fila 1, columna 2
+echo $matriz[1][2]; // Imprime: 6
+
+// Recorrer toda la matriz con doble for
+for ($i = 0; $i < count($matriz); $i++) {
+    for ($j = 0; $j < count($matriz[$i]); $j++) {
+        echo $matriz[$i][$j] . " ";
+    }
+    echo "\n";
+}
+// Imprime:
+// 1 2 3
+// 4 5 6
+// 7 8 9
                     </code></pre>
                 </div>
             </div>
@@ -132,15 +144,27 @@
                 </div>
                 <div class="modal-body">
                     <pre><code class="language-javascript">
-                        // Crear una matriz bidimensional
-                        const matriz = [
-                            [1, 2, 3],
-                            [4, 5, 6],
-                            [7, 8, 9]
-                        ];
+// Crear una matriz bidimensional 3x3
+const matriz = [
+    [1, 2, 3],   // Fila 0
+    [4, 5, 6],   // Fila 1
+    [7, 8, 9]    // Fila 2
+];
 
-                        // Acceder a un elemento
-                        console.log(matriz[1][2]); // Imprime 6
+// Acceder a un elemento: fila 1, columna 2
+console.log(matriz[1][2]); // Imprime: 6
+
+// Recorrer toda la matriz con forEach anidado
+matriz.forEach((fila, i) => {
+    fila.forEach((valor, j) => {
+        process.stdout.write(valor + " ");
+    });
+    console.log();
+});
+// Imprime:
+// 1 2 3
+// 4 5 6
+// 7 8 9
                     </code></pre>
                 </div>
             </div>
@@ -159,15 +183,25 @@
                 </div>
                 <div class="modal-body">
                     <pre><code class="language-python">
-                        # Crear una matriz bidimensional
-                        matriz = [
-                            [1, 2, 3],
-                            [4, 5, 6],
-                            [7, 8, 9]
-                        ]
+# Crear una matriz bidimensional 3x3
+matriz = [
+    [1, 2, 3],   # Fila 0
+    [4, 5, 6],   # Fila 1
+    [7, 8, 9]    # Fila 2
+]
 
-                        # Acceder a un elemento
-                        print(matriz[1][2]) # Imprime 6
+# Acceder a un elemento: fila 1, columna 2
+print(matriz[1][2])  # Imprime: 6
+
+# Recorrer toda la matriz con doble for
+for i, fila in enumerate(matriz):
+    for j, valor in enumerate(fila):
+        print(valor, end=" ")  # Imprime sin salto de línea
+    print()  # Salto al final de cada fila
+# Imprime:
+# 1 2 3
+# 4 5 6
+# 7 8 9
                     </code></pre>
                 </div>
             </div>

@@ -63,15 +63,24 @@
             </a>
         </div>
 
-        <a href="/actividad-diagnostico/diagnostico_2026.html" class="nav-link sidebar-item" data-label="Diagnóstico">
+        <button class="nav-link sidebar-item toggle-btn"
+                onclick="toggleMenu('diagnostico')"
+                aria-expanded="false" aria-controls="diagnostico"
+                data-label="Diagnóstico">
             <i class="fa-solid fa-clipboard-question sidebar-icon"></i>
             <span class="sidebar-label">Actividad de diagnóstico</span>
-        </a>
-
-        <a href="/tarea-1/tarea1.html" class="nav-link sidebar-item" data-label="Tarea 1">
-            <i class="fa-solid fa-book-open sidebar-icon"></i>
-            <span class="sidebar-label">Tarea 1</span>
-        </a>
+            <i class="fa-solid fa-chevron-down sidebar-chevron"></i>
+        </button>
+        <div id="diagnostico" class="submenu">
+            <a href="/actividad-diagnostico/diagnostico_2026.html" class="nav-link sidebar-item sidebar-sub" data-label="Instrucciones">
+                <i class="fa-solid fa-file-lines sidebar-icon"></i>
+                <span class="sidebar-label">Instrucciones</span>
+            </a>
+            <a href="/actividad-diagnostico/diagnostico_2026_resuelta.html" class="nav-link sidebar-item sidebar-sub" data-label="Resuelta">
+                <i class="fa-solid fa-circle-check sidebar-icon"></i>
+                <span class="sidebar-label">Versión resuelta</span>
+            </a>
+        </div>
 
         <button class="nav-link sidebar-item toggle-btn"
                 onclick="toggleMenu('estructuras')"
@@ -120,11 +129,6 @@
             </a>
         </div>
 
-        <a href="/recursividad/recursividad.html" class="nav-link sidebar-item" data-label="Recursividad">
-            <i class="fa-solid fa-arrows-rotate sidebar-icon"></i>
-            <span class="sidebar-label">Recursividad</span>
-        </a>
-
         <button class="nav-link sidebar-item toggle-btn"
                 onclick="toggleMenu('ordenamiento')"
                 aria-expanded="false" aria-controls="ordenamiento"
@@ -171,6 +175,16 @@
                 <span class="sidebar-label">Shell Sort</span>
             </a>
         </div>
+
+        <a href="/tarea-1/tarea1.html" class="nav-link sidebar-item" data-label="Tarea 1">
+            <i class="fa-solid fa-book-open sidebar-icon"></i>
+            <span class="sidebar-label">Tarea 1</span>
+        </a>
+
+        <a href="/recursividad/recursividad.html" class="nav-link sidebar-item" data-label="Recursividad">
+            <i class="fa-solid fa-arrows-rotate sidebar-icon"></i>
+            <span class="sidebar-label">Recursividad</span>
+        </a>
 
     </nav>
 </div>
