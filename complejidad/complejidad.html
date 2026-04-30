@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<base href="/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Introducción a la Notación Big O y complejidad algorítmica para alumnos de Programación Avanzada.">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/jpeg" href="media/jigsaw.jpg">
+<title>Notación Big O | Programación Avanzada</title>
+<style>
+    .bigo-badge {
+        display: inline-block;
+        font-family: 'Courier New', monospace;
+        font-weight: 700;
+        font-size: 1.05rem;
+        padding: .25rem .65rem;
+        border-radius: .4rem;
+        white-space: nowrap;
+    }
+    .bigo-o1    { background: #d1e7dd; color: #0a3622; }
+    .bigo-logn  { background: #c3e6cd; color: #0a3622; }
+    .bigo-n     { background: #cfe2ff; color: #084298; }
+    .bigo-nlogn { background: #b6d4fe; color: #084298; }
+    .bigo-n2    { background: #fff3cd; color: #664d03; }
+    .bigo-nk    { background: #f8d7da; color: #58151c; }
+
+    .notation-card {
+        border-left: 5px solid transparent;
+        transition: transform .15s;
+    }
+    .notation-card:hover { transform: translateY(-3px); }
+    .notation-card.o1    { border-color: #198754; }
+    .notation-card.logn  { border-color: #20c997; }
+    .notation-card.lin   { border-color: #0d6efd; }
+    .notation-card.nlogn { border-color: #6ea8fe; }
+    .notation-card.quad  { border-color: #ffc107; }
+    .notation-card.spec  { border-color: #dc3545; }
+
+    #growth-chart text { font-family: 'Rubik', sans-serif; font-size: 11px; }
+
+    .algo-table td, .algo-table th { vertical-align: middle; }
+    .ds-table  td, .ds-table  th  { vertical-align: middle; }
+
+    .scale-bar {
+        height: 12px;
+        border-radius: 6px;
+        display: inline-block;
+    }
+</style>
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5 pb-5">
+
+        <!-- ══════════════════════════════════════════════════════════
+             HERO
+        ═══════════════════════════════════════════════════════════ -->
+        <div class="text-center mb-5">
+            <h1 class="mb-2">Notación Big O</h1>
+            <p class="lead text-muted">¿Cómo medimos qué tan rápido (o lento) crece un algoritmo?</p>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 1 — ¿QUÉ ES LA COMPLEJIDAD?
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>¿Qué es la complejidad de un algoritmo?</h2>
+            <p>
+                Cuando escribimos un algoritmo, nos interesa saber dos cosas:
+            </p>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fa-solid fa-stopwatch me-2 text-primary"></i>Complejidad de Tiempo</h5>
+                            <p class="card-text">¿Cuántas <strong>operaciones</strong> realiza el algoritmo conforme aumenta la cantidad de datos? No medimos segundos exactos (eso depende del hardware), sino <em>cuánto crece el trabajo</em> cuando hay más elementos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fa-solid fa-memory me-2 text-success"></i>Complejidad de Espacio</h5>
+                            <p class="card-text">¿Cuánta <strong>memoria extra</strong> necesita el algoritmo? Algunos algoritmos son muy rápidos pero requieren mucha memoria adicional; otros hacen lo contrario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>
+                La <strong>Notación Big O</strong> es la forma estándar de expresar esta complejidad.
+                Describe el <em>peor escenario posible</em> (cota superior) del crecimiento del algoritmo en función del número de elementos <strong>n</strong>.
+            </p>
+            <div class="alert alert-info border-0 shadow-sm" style="border-left: 4px solid #0d6efd !important;">
+                <strong><i class="fa-solid fa-lightbulb me-1"></i> Idea clave:</strong>
+                Big O no dice "tarda X segundos". Dice <em>"si duplicas los datos, el tiempo se
+                multiplica por…"</em>. Es una medida de <strong>escalabilidad</strong>.
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 2 — ANALOGÍA DEL DÍA A DÍA
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>Una analogía: buscar un nombre en una lista</h2>
+            <p>
+                Imagina que tienes una lista de <strong>1&nbsp;000&nbsp;nombres</strong> en un cuaderno y necesitas encontrar a "Zúñiga, Roberto".
+            </p>
+
+            <div class="row g-3">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm notation-card o1">
+                        <div class="card-body text-center">
+                            <span class="bigo-badge bigo-o1 mb-2">O(1)</span>
+                            <p class="card-text small mt-2">Alguien te da la <strong>página exacta</strong> donde está. Vas directo. No importa cuántos nombres haya, siempre tardas lo mismo.</p>
+                            <p class="text-muted small fst-italic">Ej: acceder a un arreglo por índice: <code>arr[42]</code></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm notation-card logn">
+                        <div class="card-body text-center">
+                            <span class="bigo-badge bigo-logn mb-2">O(log n)</span>
+                            <p class="card-text small mt-2">La lista está <strong>ordenada</strong>. Abres por la mitad: si el nombre va antes, descartas la mitad de atrás. Repites. Con 1&nbsp;000 nombres bastan ~10 pasos.</p>
+                            <p class="text-muted small fst-italic">Ej: búsqueda binaria, árboles AVL.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm notation-card lin">
+                        <div class="card-body text-center">
+                            <span class="bigo-badge bigo-n mb-2">O(n)</span>
+                            <p class="card-text small mt-2">La lista <strong>no está ordenada</strong>. Lees nombre por nombre desde el principio hasta encontrarlo. Con 1&nbsp;000 nombres, en el peor caso revisas los 1&nbsp;000.</p>
+                            <p class="text-muted small fst-italic">Ej: búsqueda lineal, recorrer una lista.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm notation-card quad">
+                        <div class="card-body text-center">
+                            <span class="bigo-badge bigo-n2 mb-2">O(n²)</span>
+                            <p class="card-text small mt-2">Comparas <strong>cada nombre con todos los demás</strong> para ordenarlos. Con 1&nbsp;000 nombres harías hasta <strong>1&nbsp;000&nbsp;000</strong> comparaciones.</p>
+                            <p class="text-muted small fst-italic">Ej: Bubble Sort, Selection Sort.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 3 — LAS NOTACIONES EXPLICADAS
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>Las notaciones y su significado</h2>
+            <p class="text-muted">Para cada notación verás: qué significa, un ejemplo de código y cómo crece con distintos valores de <strong>n</strong>.</p>
+
+            <!-- O(1) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card o1">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-o1 fs-5">O(1)</span>
+                        <h5 class="mb-0">Tiempo Constante</h5>
+                    </div>
+                    <p>El algoritmo realiza <strong>siempre la misma cantidad de operaciones</strong>, sin importar cuántos datos haya. Es el ideal.</p>
+                    <pre class="bg-light p-3 rounded small"><code>// Acceder a un elemento en un arreglo: siempre 1 operación
+int elemento = arr[5];
+
+// Insertar al inicio de una pila: siempre 1 operación
+pila.push(x);</code></pre>
+                    <p class="mb-0 text-muted small"><strong>Estructuras:</strong> Pilas (push/pop), Colas (enqueue/dequeue), Tablas Hash (búsqueda promedio), acceso por índice en arreglos.</p>
+                </div>
+            </div>
+
+            <!-- O(log n) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card logn">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-logn fs-5">O(log n)</span>
+                        <h5 class="mb-0">Tiempo Logarítmico</h5>
+                    </div>
+                    <p>Con cada paso, el problema se <strong>reduce a la mitad</strong>. Es muy eficiente: duplicar los datos apenas agrega un paso extra.</p>
+                    <pre class="bg-light p-3 rounded small"><code>// Búsqueda binaria en arreglo ordenado
+int busquedaBinaria(int[] arr, int objetivo) {
+    int izq = 0, der = arr.length - 1;
+    while (izq <= der) {
+        int mid = (izq + der) / 2;
+        if (arr[mid] == objetivo) return mid;
+        else if (arr[mid] < objetivo) izq = mid + 1;
+        else der = mid - 1;
+    }
+    return -1;  // no encontrado
+}</code></pre>
+                    <p class="mb-0 text-muted small"><strong>Estructuras:</strong> Árboles Binarios de Búsqueda (BST) balanceados, búsqueda binaria, Heap.</p>
+                </div>
+            </div>
+
+            <!-- O(n) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card lin">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-n fs-5">O(n)</span>
+                        <h5 class="mb-0">Tiempo Lineal</h5>
+                    </div>
+                    <p>El tiempo crece <strong>proporcionalmente</strong> con n. Si tienes el doble de datos, tarda el doble. Aceptable para la mayoría de casos.</p>
+                    <pre class="bg-light p-3 rounded small"><code>// Recorrer una lista enlazada para encontrar un elemento
+Nodo* buscar(Nodo* cabeza, int valor) {
+    Nodo* actual = cabeza;
+    while (actual != nullptr) {
+        if (actual->dato == valor) return actual;
+        actual = actual->siguiente;
+    }
+    return nullptr;
+}</code></pre>
+                    <p class="mb-0 text-muted small"><strong>Estructuras:</strong> Listas Enlazadas (búsqueda), recorrido de árboles/grafos, Matrices (buscar un elemento).</p>
+                </div>
+            </div>
+
+            <!-- O(n log n) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card nlogn">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-nlogn fs-5">O(n log n)</span>
+                        <h5 class="mb-0">Tiempo Lineal-Logarítmico</h5>
+                    </div>
+                    <p>Se aplica cuando hay que procesar <strong>cada uno de los n elementos</strong>, pero cada uno requiere una operación logarítmica (dividir y conquistar). Es la mejor complejidad posible para ordenar datos <em>en general</em>.</p>
+                    <pre class="bg-light p-3 rounded small"><code>// Merge Sort — divide el arreglo a la mitad recursivamente
+void mergeSort(int[] arr, int izq, int der) {
+    if (izq < der) {
+        int mid = (izq + der) / 2;
+        mergeSort(arr, izq, mid);    // O(log n) niveles de recursión
+        mergeSort(arr, mid+1, der);
+        merge(arr, izq, mid, der);   // O(n) trabajo por nivel
+    }
+}</code></pre>
+                    <p class="mb-0 text-muted small"><strong>Algoritmos:</strong> Merge Sort, Quick Sort (promedio), Heap Sort, Shell Sort (mejor caso).</p>
+                </div>
+            </div>
+
+            <!-- O(n²) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card quad">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-n2 fs-5">O(n²)</span>
+                        <h5 class="mb-0">Tiempo Cuadrático</h5>
+                    </div>
+                    <p>Generalmente resultado de <strong>dos ciclos anidados</strong>. Si duplicas los datos, el tiempo se <em>cuadruplica</em>. Funciona bien para listas pequeñas, pero se vuelve muy lento con datos grandes.</p>
+                    <pre class="bg-light p-3 rounded small"><code>// Bubble Sort — compara cada par de elementos adyacentes
+for (int i = 0; i < n; i++) {           // ciclo externo: n veces
+    for (int j = 0; j < n - i - 1; j++) {  // ciclo interno: ~n veces
+        if (arr[j] > arr[j+1]) {
+            int temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
+        }
+    }
+}</code></pre>
+                    <p class="mb-0 text-muted small"><strong>Algoritmos:</strong> Bubble Sort, Selection Sort, Insertion Sort (peor caso).</p>
+                </div>
+            </div>
+
+            <!-- O(n+k) / O(nk) -->
+            <div class="card mb-3 border-0 shadow-sm notation-card spec">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="bigo-badge bigo-nk fs-5">O(n+k) / O(nk)</span>
+                        <h5 class="mb-0">Complejidad Especial (No Comparativa)</h5>
+                    </div>
+                    <p>
+                        Estos algoritmos <strong>no comparan elementos entre sí</strong>, por lo que pueden superar la barrera teórica de O(n log n).
+                        Su complejidad depende tanto de <strong>n</strong> (cantidad de elementos) como de <strong>k</strong> (rango de valores o cantidad de dígitos).
+                    </p>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <pre class="bg-light p-3 rounded small"><code>// Counting Sort — O(n + k)
+// k = rango de valores (ej. 0-100)
+int[] cuenta = new int[k + 1];
+for (int x : arr) cuenta[x]++;   // O(n)
+for (int i = 1; i <= k; i++)
+    cuenta[i] += cuenta[i-1];     // O(k)
+// Reconstruir arreglo: O(n)</code></pre>
+                        </div>
+                        <div class="col-md-6">
+                            <pre class="bg-light p-3 rounded small"><code>// Radix Sort — O(n * k)
+// k = número de dígitos del mayor número
+// Por cada dígito aplica Counting Sort
+for (int exp = 1; max/exp > 0; exp *= 10)
+    countingSortPorDigito(arr, exp);
+// Total: k pasadas × O(n) cada una</code></pre>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted small"><strong>Condición:</strong> Counting Sort requiere que k (rango) sea razonablemente pequeño. Si k es muy grande, puede consumir más memoria que otros algoritmos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 4 — TABLA DE CRECIMIENTO
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>¿Cuánto crecen? — Tabla comparativa</h2>
+            <p>La siguiente tabla muestra el número aproximado de operaciones para distintos valores de <strong>n</strong>. Observa cómo O(n²) se dispara con n grandes.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Notación</th>
+                            <th>n = 10</th>
+                            <th>n = 100</th>
+                            <th>n = 1,000</th>
+                            <th>n = 1,000,000</th>
+                            <th>Calificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td>1</td><td>1</td><td>1</td><td>1</td>
+                            <td><span class="badge bg-success">Excelente</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td>3</td><td>7</td><td>10</td><td>20</td>
+                            <td><span class="badge bg-success">Excelente</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td>10</td><td>100</td><td>1,000</td><td>1,000,000</td>
+                            <td><span class="badge bg-primary">Bueno</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td>33</td><td>664</td><td>9,965</td><td>19,931,568</td>
+                            <td><span class="badge bg-primary">Bueno</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td>100</td><td>10,000</td><td>1,000,000</td><td class="text-danger fw-bold">10¹²</td>
+                            <td><span class="badge bg-warning text-dark">Aceptable (n pequeño)</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bigo-badge bigo-nk">O(n+k)</span></td>
+                            <td colspan="4" class="text-muted fst-italic">Depende del rango k de valores. Típicamente lineal.</td>
+                            <td><span class="badge bg-success">Excelente (con k pequeño)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 5 — GRÁFICA DE CRECIMIENTO
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>Gráfica de crecimiento</h2>
+            <p class="text-muted">Observa cómo cada función crece para valores de n del 1 al 20. O(n²) se dispara rápidamente comparado con las demás.</p>
+            <div id="growth-chart-container" style="width:100%; max-width:700px; margin:0 auto;"></div>
+            <div class="d-flex flex-wrap gap-3 justify-content-center mt-3">
+                <span><span style="display:inline-block;width:20px;height:4px;background:#198754;vertical-align:middle;border-radius:2px;"></span> O(1)</span>
+                <span><span style="display:inline-block;width:20px;height:4px;background:#20c997;vertical-align:middle;border-radius:2px;"></span> O(log n)</span>
+                <span><span style="display:inline-block;width:20px;height:4px;background:#0d6efd;vertical-align:middle;border-radius:2px;"></span> O(n)</span>
+                <span><span style="display:inline-block;width:20px;height:4px;background:#6610f2;vertical-align:middle;border-radius:2px;"></span> O(n log n)</span>
+                <span><span style="display:inline-block;width:20px;height:4px;background:#ffc107;vertical-align:middle;border-radius:2px;"></span> O(n²)</span>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 6 — COMPARATIVA ALGORITMOS DE ORDENAMIENTO
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>Comparativa: Algoritmos de Ordenamiento</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle text-center algo-table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th rowspan="2">Algoritmo</th>
+                            <th colspan="3">Complejidad de Tiempo</th>
+                            <th rowspan="2">Espacio</th>
+                            <th rowspan="2">¿Estable?</th>
+                        </tr>
+                        <tr>
+                            <th class="table-success">Mejor</th>
+                            <th class="table-warning">Promedio</th>
+                            <th class="table-danger">Peor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/bubble-sort.html">Bubble Sort</a></td>
+                            <td class="table-primary"><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td class="table-warning"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td class="table-danger"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="badge bg-success">Sí</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/selection-sort.html">Selection Sort</a></td>
+                            <td class="table-warning"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td class="table-warning"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td class="table-danger"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="badge bg-danger">No</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/insertion-sort.html">Insertion Sort</a></td>
+                            <td class="table-primary"><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td class="table-warning"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td class="table-danger"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="badge bg-success">Sí</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/merge-sort.html">Merge Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="badge bg-success">Sí</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/quick-sort.html">Quick Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-danger"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td><span class="badge bg-danger">No</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/heap-sort.html">Heap Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="badge bg-danger">No</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/counting-sort.html">Counting Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(n+k)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(n+k)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(n+k)</span></td>
+                            <td><span class="bigo-badge bigo-nk">O(k)</span></td>
+                            <td><span class="badge bg-success">Sí</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/radix-sort.html">Radix Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(nk)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(nk)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nk">O(nk)</span></td>
+                            <td><span class="bigo-badge bigo-nk">O(n+k)</span></td>
+                            <td><span class="badge bg-success">Sí</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="metodos-ordenamiento/shell-sort.html">Shell Sort</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-nlogn">O(n log n)</span></td>
+                            <td class="text-muted fst-italic small">Varía según secuencia</td>
+                            <td class="table-danger"><span class="bigo-badge bigo-n2">O(n²)</span></td>
+                            <td><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="badge bg-danger">No</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 7 — COMPARATIVA ESTRUCTURAS DE DATOS
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>Comparativa: Estructuras de Datos</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle text-center ds-table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Estructura</th>
+                            <th>Acceso</th>
+                            <th>Búsqueda</th>
+                            <th>Inserción</th>
+                            <th>Eliminación</th>
+                            <th>Espacio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/matrices.html">Arreglo / Matriz</a></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/pilas.html">Pila</a></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/colas.html">Cola</a></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/listas-enlazadas.html">Lista Enlazada</a></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)*</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)*</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/arboles.html">Árbol Binario (BST)</a></td>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td><span class="bigo-badge bigo-logn">O(log n)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/tablas-hash.html">Tabla Hash</a></td>
+                            <td class="text-muted">—</td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)**</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)**</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)**</span></td>
+                            <td><span class="bigo-badge bigo-n">O(n)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-start"><a href="estructuras-datos/grafos.html">Grafo (Lista Adyacencia)</a></td>
+                            <td><span class="bigo-badge bigo-n">O(V+E)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(V+E)</span></td>
+                            <td class="table-success"><span class="bigo-badge bigo-o1">O(1)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(E)</span></td>
+                            <td><span class="bigo-badge bigo-n">O(V+E)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted small mt-2">
+                * O(1) para inserción/eliminación si ya tienes el puntero al nodo.<br>
+                ** Promedio con buena función hash; peor caso O(n) con muchas colisiones.<br>
+                V = vértices, E = aristas (edges).
+            </p>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════
+             SECCIÓN 8 — CONSEJOS PRÁCTICOS
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="mb-5">
+            <h2>¿Qué tomar en cuenta al elegir un algoritmo?</h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title"><i class="fa-solid fa-database me-2 text-primary"></i>Tamaño de los datos</h6>
+                            <p class="card-text small">Para listas pequeñas (menos de 50 elementos), Insertion Sort puede ser más rápido en la práctica que Merge Sort a pesar de su peor complejidad, debido al bajo overhead.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title"><i class="fa-solid fa-sort me-2 text-success"></i>¿Datos casi ordenados?</h6>
+                            <p class="card-text small">Insertion Sort tiene complejidad O(n) si los datos ya están casi ordenados. En ese escenario supera a Quick Sort y Merge Sort.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title"><i class="fa-solid fa-scale-balanced me-2 text-warning"></i>Tiempo vs. Espacio</h6>
+                            <p class="card-text small">Merge Sort es O(n log n) garantizado pero usa O(n) memoria extra. Heap Sort logra O(n log n) con O(1) espacio, sin necesitar memoria adicional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /container -->
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+    // ─── Growth Curve Chart ──────────────────────────────────────────
+    (function drawGrowthChart() {
+        const container = document.getElementById('growth-chart-container');
+        const W = container.clientWidth || 600;
+        const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+        const width  = W - margin.left - margin.right;
+        const height = Math.round(W * 0.55) - margin.top - margin.bottom;
+
+        const svg = d3.select('#growth-chart-container').append('svg')
+            .attr('width', '100%')
+            .attr('viewBox', `0 0 ${W} ${Math.round(W * 0.55)}`)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const nValues = d3.range(1, 21); // n = 1..20
+
+        const funcs = [
+            { label: 'O(1)',      color: '#198754', fn: n => 1 },
+            { label: 'O(log n)', color: '#20c997', fn: n => Math.log2(n) },
+            { label: 'O(n)',      color: '#0d6efd', fn: n => n },
+            { label: 'O(n log n)',color: '#6610f2', fn: n => n * Math.log2(n) },
+            { label: 'O(n²)',     color: '#ffc107', fn: n => n * n },
+        ];
+
+        const maxY = 400; // clip at n²=20 → 400
+        const x = d3.scaleLinear().domain([1, 20]).range([0, width]);
+        const y = d3.scaleLinear().domain([0, maxY]).range([height, 0]);
+
+        // Axes
+        svg.append('g').attr('transform', `translate(0,${height})`).call(
+            d3.axisBottom(x).ticks(10).tickFormat(d3.format('d'))
+        );
+        svg.append('g').call(d3.axisLeft(y).ticks(6));
+
+        // Axis labels
+        svg.append('text').attr('x', width / 2).attr('y', height + 35)
+            .attr('text-anchor', 'middle').attr('fill', '#555').attr('font-size', 12)
+            .text('n (cantidad de elementos)');
+        svg.append('text').attr('transform', 'rotate(-90)')
+            .attr('x', -height / 2).attr('y', -40)
+            .attr('text-anchor', 'middle').attr('fill', '#555').attr('font-size', 12)
+            .text('Operaciones');
+
+        // Grid lines
+        svg.selectAll('.grid-line').data(y.ticks(6)).enter().append('line')
+            .attr('x1', 0).attr('x2', width)
+            .attr('y1', d => y(d)).attr('y2', d => y(d))
+            .attr('stroke', '#eee').attr('stroke-dasharray', '3,3');
+
+        const line = d3.line()
+            .x(d => x(d.n))
+            .y(d => y(Math.min(d.v, maxY)))
+            .curve(d3.curveCatmullRom);
+
+        funcs.forEach(({ label, color, fn }) => {
+            const pts = nValues.map(n => ({ n, v: fn(n) }));
+            svg.append('path')
+                .datum(pts)
+                .attr('fill', 'none')
+                .attr('stroke', color)
+                .attr('stroke-width', 2.5)
+                .attr('d', line);
+        });
+    })();
+    </script>
+</body>
+</html>

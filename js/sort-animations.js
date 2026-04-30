@@ -60,8 +60,8 @@ function animateBubbleSort() {
 
     const svg = d3.select('#bubbleSortAnimation')
         .append('svg')
-        .attr('width', width)
-        .attr('height', height + 50);
+        .attr('width', '100%')
+        .attr('viewBox', `0 0 800 ${height + 50}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -127,7 +127,7 @@ function animateInsertionSort() {
     const barWidth = width / data.length;
 
     const svg = d3.select('#insertionSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 50);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 50}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -194,7 +194,7 @@ function animateSelectionSort() {
     const barWidth = width / data.length;
 
     const svg = d3.select('#selectionSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 50);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 50}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -260,7 +260,7 @@ function animateMergeSort() {
     const barWidth = width / data.length;
 
     const svg = d3.select('#mergeSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 50);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 50}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -333,7 +333,7 @@ function animateQuickSort() {
     const barWidth = width / data.length;
 
     const svg = d3.select('#quickSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 50);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 50}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -518,81 +518,116 @@ function animateHeapSort() {
 function animateCountingSort() {
     const data = [4, 2, 2, 8, 3, 3, 1];
     const width = 800;
-    const height = 400;
+    const mainHeight = 220;       // zona de barras principales
+    const countHeight = 140;      // zona del arreglo de conteo
+    const totalHeight = mainHeight + countHeight + 80;
     const barWidth = width / data.length;
     const maxHeight = Math.max(...data);
 
     const svg = d3.select('#countingSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 200);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${totalHeight}`);
 
-    const bars = svg.selectAll('rect')
-        .data(data).enter().append('rect')
+    // ── Barras principales ──────────────────────────────────────────────
+    const bars = svg.selectAll('rect.main-bar')
+        .data(data).enter().append('rect').attr('class', 'main-bar')
         .attr('x', (d, i) => i * barWidth)
-        .attr('y', d => height - (d / maxHeight) * (height - 50))
+        .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50))
         .attr('width', barWidth - 5)
-        .attr('height', d => (d / maxHeight) * (height - 50))
+        .attr('height', d => (d / maxHeight) * (mainHeight - 50))
         .attr('fill', 'steelblue');
 
-    const labels = svg.selectAll('text')
-        .data(data).enter().append('text')
+    const barLabels = svg.selectAll('text.main-label')
+        .data(data).enter().append('text').attr('class', 'main-label')
         .attr('x', (d, i) => i * barWidth + barWidth / 2 - 10)
-        .attr('y', d => height - (d / maxHeight) * (height - 50) - 10)
+        .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50) - 5)
         .text(d => d).attr('fill', 'black').attr('font-size', '14px');
 
     const explanation = svg.append('text')
-        .attr('x', width / 2).attr('y', 30)
-        .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('x', width / 2).attr('y', 22)
+        .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '15px')
         .text('Iniciando Counting Sort...');
 
-    function highlightBar(index, color) {
-        bars.filter((d, idx) => idx === index)
-            .transition().duration(500).attr('fill', color)
-            .transition().duration(500).attr('fill', 'steelblue');
-    }
+    // ── Título y zona del arreglo de conteo ────────────────────────────
+    svg.append('text')
+        .attr('x', 5).attr('y', mainHeight + 22)
+        .attr('font-size', '13px').attr('font-weight', 'bold').attr('fill', '#555')
+        .text('Arreglo de conteo (frecuencias):');
+
+    const maxVal = Math.max(...data);
+    const cw = Math.min(60, width / (maxVal + 1));
+    const countCells = svg.selectAll('rect.count-cell')
+        .data(d3.range(maxVal + 1)).enter().append('rect').attr('class', 'count-cell')
+        .attr('x', (d, i) => i * cw + 5)
+        .attr('y', mainHeight + 30)
+        .attr('width', cw - 3).attr('height', 34)
+        .attr('fill', '#e9ecef').attr('stroke', '#999');
+
+    svg.selectAll('text.count-idx')
+        .data(d3.range(maxVal + 1)).enter().append('text').attr('class', 'count-idx')
+        .attr('x', (d, i) => i * cw + 5 + (cw - 3) / 2)
+        .attr('y', mainHeight + 30 + 48)
+        .attr('text-anchor', 'middle').attr('font-size', '11px').attr('fill', '#888')
+        .text(d => `[${d}]`);
+
+    const countLabels = svg.selectAll('text.count-val')
+        .data(d3.range(maxVal + 1)).enter().append('text').attr('class', 'count-val')
+        .attr('x', (d, i) => i * cw + 5 + (cw - 3) / 2)
+        .attr('y', mainHeight + 30 + 22)
+        .attr('text-anchor', 'middle').attr('font-size', '13px').attr('font-weight', 'bold')
+        .attr('fill', '#333').text('0');
+
+    const countArr = new Array(maxVal + 1).fill(0);
+
+    const refreshCountDisplay = (highlightIdx = -1) => {
+        countCells.attr('fill', (d, i) => i === highlightIdx ? '#ffc107' : '#e9ecef')
+                  .attr('stroke', (d, i) => i === highlightIdx ? '#e67e00' : '#999');
+        countLabels.text((d, i) => countArr[i]);
+    };
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(1000)
+        bars.data(arr).transition().duration(800)
             .attr('x', (d, idx) => idx * barWidth)
-            .attr('y', d => height - (d / maxHeight) * (height - 50))
-            .attr('height', d => (d / maxHeight) * (height - 50));
-        labels.data(arr).transition().duration(1000)
+            .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50))
+            .attr('height', d => (d / maxHeight) * (mainHeight - 50));
+        barLabels.data(arr).transition().duration(800)
             .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
-            .attr('y', d => height - (d / maxHeight) * (height - 50) - 10)
+            .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50) - 5)
             .text(d => d);
     }
 
     async function countingSort(arr) {
-        const max = Math.max(...arr);
-        const count = new Array(max + 1).fill(0);
-
-        explanation.text('Contando las frecuencias de cada elemento...');
+        // Paso 1: Contar frecuencias
+        explanation.text('Paso 1: Contando la frecuencia de cada elemento...');
         for (let idx = 0; idx < arr.length; idx++) {
-            count[arr[idx]]++;
-            highlightBar(idx, 'orange');
-            await delay(1000);
+            countArr[arr[idx]]++;
+            bars.filter((d, i) => i === idx).attr('fill', 'orange');
+            refreshCountDisplay(arr[idx]);
+            await delay(900);
+            bars.filter((d, i) => i === idx).attr('fill', 'steelblue');
         }
+        refreshCountDisplay(-1);
 
-        explanation.text('Calculando la suma acumulativa...');
-        for (let i = 1; i <= max; i++) {
-            count[i] += count[i - 1];
-            await delay(500);
+        // Paso 2: Suma acumulativa
+        explanation.text('Paso 2: Calculando suma acumulativa en el arreglo de conteo...');
+        for (let i = 1; i <= maxVal; i++) {
+            countArr[i] += countArr[i - 1];
+            refreshCountDisplay(i);
+            await delay(700);
         }
+        refreshCountDisplay(-1);
 
-        explanation.text('Construyendo el arreglo ordenado...');
+        // Paso 3: Construir y copiar salida ordenada
+        explanation.text('Paso 3: Construyendo el arreglo ordenado...');
         const output = new Array(arr.length).fill(0);
-
-        // Fase 1: construir output (sin modificar arr aún)
         for (let i = arr.length - 1; i >= 0; i--) {
-            const digit = arr[i];
-            output[count[digit] - 1] = digit;
-            count[digit]--;
+            const val = arr[i];
+            output[countArr[val] - 1] = val;
+            countArr[val]--;
         }
-
-        // Fase 2: copiar output → arr y actualizar visualmente
         for (let k = 0; k < arr.length; k++) {
             arr[k] = output[k];
             refreshBars(arr);
-            await delay(1000);
+            await delay(800);
         }
 
         explanation.text('Counting Sort completado.');
@@ -613,7 +648,7 @@ function animateRadixSort() {
     const maxHeight = Math.max(...data);
 
     const svg = d3.select('#radixSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 200);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 200}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')
@@ -695,7 +730,7 @@ function animateShellSort() {
     const scaleFactor = 0.9;
 
     const svg = d3.select('#shellSortAnimation')
-        .append('svg').attr('width', width).attr('height', height + 100);
+        .append('svg').attr('width', '100%').attr('viewBox', `0 0 800 ${height + 100}`);
 
     const bars = svg.selectAll('rect')
         .data(data).enter().append('rect')

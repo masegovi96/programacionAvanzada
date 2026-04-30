@@ -36,11 +36,51 @@
         </section>
 
         <section class="mb-4">
+            <h2>Manejo de Colisiones</h2>
+            <p>Una <strong>colisión</strong> ocurre cuando dos claves distintas producen el mismo índice al aplicar la
+                función hash. Las estrategias más comunes para resolverlo son:</p>
+            <ul>
+                <li><strong>Encadenamiento (Chaining):</strong> Cada celda de la tabla contiene una lista enlazada con
+                    todos los elementos que colisionan en ese índice.</li>
+                <li><strong>Direccionamiento abierto (Open Addressing):</strong> Cuando hay colisión, se busca la
+                    siguiente celda libre. Hay tres variantes:
+                    <ul>
+                        <li><em>Sondeo lineal:</em> Se avanza de una en una hasta encontrar un hueco.</li>
+                        <li><em>Sondeo cuadrático:</em> Se avanza en potencias de 2 (1, 4, 9…).</li>
+                        <li><em>Doble hashing:</em> Se aplica una segunda función hash para calcular el salto.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Operación</th>
+                        <th>Caso Promedio</th>
+                        <th>Peor Caso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>put() / insertar</td><td>O(1)</td><td>O(n)</td></tr>
+                    <tr><td>get() / buscar</td><td>O(1)</td><td>O(n)</td></tr>
+                    <tr><td>remove() / eliminar</td><td>O(1)</td><td>O(n)</td></tr>
+                    <tr><td>Espacio total</td><td colspan="2">O(n)</td></tr>
+                </tbody>
+            </table>
+            <p>El peor caso O(n) ocurre cuando todas las claves colisionan en el mismo índice.</p>
+        </section>
+
+        <section class="mb-4">
             <h2>Implementaciones Comunes</h2>
             <ul>
-                <li>Bases de datos</li>
-                <li>Contadores de frecuencia</li>
-                <li>Caches (memoria rápida)</li>
+                <li>Bases de datos (índices hash para búsqueda rápida)</li>
+                <li>Contadores de frecuencia de palabras o eventos</li>
+                <li>Cachés (memoria rápida, como Redis o Memcached)</li>
+                <li>Verificación de duplicados en grandes conjuntos de datos</li>
+                <li>Tablas de símbolos en compiladores</li>
             </ul>
         </section>
 

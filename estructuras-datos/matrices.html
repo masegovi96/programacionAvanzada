@@ -39,11 +39,35 @@
         </section>
 
         <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Operación</th>
+                        <th>Complejidad de Tiempo</th>
+                        <th>Complejidad de Espacio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Acceso matriz[i][j]</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>Búsqueda de un valor</td><td>O(n·m)</td><td>O(1)</td></tr>
+                    <tr><td>Recorrido completo</td><td>O(n·m)</td><td>O(1)</td></tr>
+                    <tr><td>Insertar fila/columna</td><td>O(n·m)</td><td>O(n·m)</td></tr>
+                    <tr><td>Eliminar fila/columna</td><td>O(n·m)</td><td>O(n·m)</td></tr>
+                    <tr><td>Espacio total</td><td>—</td><td>O(n·m)</td></tr>
+                </tbody>
+            </table>
+            <p>donde <strong>n</strong> es el número de filas y <strong>m</strong> el número de columnas.</p>
+        </section>
+
+        <section class="mb-4">
             <h2>Implementaciones Comunes</h2>
             <ul>
-                <li>Juegos tipo tablero</li>
-                <li>Imágenes digitales</li>
-                <li>Algoritmos numéricos</li>
+                <li>Juegos tipo tablero (ajedrez, tres en raya, etc.)</li>
+                <li>Imágenes digitales (cada píxel es una celda de la matriz)</li>
+                <li>Algoritmos numéricos (multiplicación de matrices, transformaciones)</li>
+                <li>Representación de grafos mediante matriz de adyacencia</li>
+                <li>Procesamiento de grillas en robótica e inteligencia artificial</li>
             </ul>
         </section>
 
@@ -81,10 +105,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <p>Esta animación muestra cómo se accede a los
-                            elementos de una matriz bidimensional.</p>
+                        <p>Esta animación muestra cómo se recorre una matriz bidimensional
+                            fila por fila (<em>row-major order</em>). La celda resaltada en
+                            naranja indica el elemento que se está accediendo en ese momento.</p>
                         <canvas id="matrixAnimation" width="600"
-                            height="400"
+                            height="340"
                             style="border: 1px solid #ccc;"></canvas>
                     </div>
                 </div>

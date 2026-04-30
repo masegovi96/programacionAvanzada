@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = '16px Arial';
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
-                    const x = j * cellSize, y = i * cellSize;
+                    const x = j * cellSize, y = i * cellSize + 30;
                     if (i === currentRow && j === currentCol) {
                         ctx.fillStyle = '#f0ad4e';
+                        ctx.fillRect(x, y, cellSize, cellSize);
+                    } else {
+                        ctx.fillStyle = '#fff';
                         ctx.fillRect(x, y, cellSize, cellSize);
                     }
                     ctx.strokeStyle = '#000';
@@ -31,6 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.fillText(`[${i},${j}]`, x + 10, y + 20);
                 }
             }
+            // Etiqueta de acción actual
+            ctx.clearRect(0, 0, matrixCanvas.width, 28);
+            ctx.font = '14px Arial'; ctx.fillStyle = '#0d6efd'; ctx.textAlign = 'left';
+            if (currentRow < rows) {
+                ctx.fillText(`Accediendo a matriz[${currentRow}][${currentCol}] — Recorrido por filas (row-major)`, 5, 18);
+            } else {
+                ctx.fillStyle = '#198754';
+                ctx.fillText('Recorrido completo de la matriz 3×3 — O(n·m)', 5, 18);
+            }
+            ctx.textAlign = 'left';
         };
 
         const animateMatrix = () => {
@@ -42,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal.addEventListener('shown.bs.modal', () => {
             currentRow = 0; currentCol = 0;
-            animationInterval = setInterval(animateMatrix, 500);
+            animationInterval = setInterval(animateMatrix, 600);
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(animationInterval));
     }
@@ -53,20 +66,57 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = queueCanvas.getContext('2d');
         const cellWidth = 100, cellHeight = 50, startX = 50, startY = 75, animSpeed = 10;
         let queue = [], isAnimating = false, queueInterval = null;
+        const queueElements = ['A', 'B', 'C', 'D', 'E'];
+        let queuePhase = 'enqueue', queueEnqueueIndex = 0;
 
-        const drawQueue = () => {
+        const drawQueueLabel = (text, color = '#000') => {
+            ctx.font = '13px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillStyle = color;
+            ctx.fillText(text, queueCanvas.width / 2, startY - 25);
+        };
+
+        const drawQueue = (extraEl = null, extraX = null, extraColor = '#0d6efd') => {
             ctx.clearRect(0, 0, queueCanvas.width, queueCanvas.height);
             ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             queue.forEach((el, idx) => {
                 const x = startX + idx * (cellWidth + 10);
-                ctx.strokeStyle = '#000'; ctx.strokeRect(x, startY, cellWidth, cellHeight);
+                ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                ctx.strokeRect(x, startY, cellWidth, cellHeight);
                 ctx.fillText(el, x + cellWidth / 2, startY + cellHeight / 2);
             });
+            if (extraEl !== null) {
+                ctx.strokeStyle = extraColor; ctx.fillStyle = extraColor;
+                ctx.strokeRect(extraX, startY, cellWidth, cellHeight);
+                ctx.fillText(extraEl, extraX + cellWidth / 2, startY + cellHeight / 2);
+            }
+            // Etiquetas FRONT y REAR
+            if (queue.length > 0) {
+                ctx.font = '12px Arial'; ctx.fillStyle = '#198754';
+                ctx.fillText('← FRONT', startX + cellWidth / 2, startY + cellHeight + 16);
+                const rearX = startX + (queue.length - 1) * (cellWidth + 10);
+                ctx.fillText('REAR →', rearX + cellWidth / 2, startY + cellHeight + 16);
+            }
+        };
+
+        const enqueueAnimation = (el) => {
+            if (isAnimating) return;
+            isAnimating = true;
+            const targetX = startX + queue.length * (cellWidth + 10);
+            let offset = 60;
+
+            const animatePush = () => {
+                drawQueue(el, targetX + offset, '#0d6efd');
+                drawQueueLabel(`enqueue("${el}") — Agregando al final (REAR)`, '#0d6efd');
+                if (offset > 0) { offset -= animSpeed; requestAnimationFrame(animatePush); }
+                else { queue.push(el); isAnimating = false; drawQueue(); }
+            };
+            animatePush();
         };
 
         const dequeueAnimation = () => {
             if (queue.length > 0 && !isAnimating) {
                 isAnimating = true;
+                const removed = queue[0];
                 let offset = 0;
 
                 const animateRemoval = () => {
@@ -75,9 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     queue.forEach((el, idx) => {
                         const x = startX + idx * (cellWidth + 10);
                         const y = idx === 0 ? startY - offset : startY;
-                        ctx.strokeStyle = '#000'; ctx.strokeRect(x, y, cellWidth, cellHeight);
+                        ctx.strokeStyle = idx === 0 ? '#dc3545' : '#000';
+                        ctx.fillStyle = idx === 0 ? '#dc3545' : '#000';
+                        ctx.strokeRect(x, y, cellWidth, cellHeight);
                         ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
                     });
+                    drawQueueLabel(`dequeue() — Extrayendo "${removed}" del frente (FRONT)`, '#dc3545');
                     if (offset < cellHeight + 20) { offset += animSpeed; requestAnimationFrame(animateRemoval); }
                     else { queue.shift(); animateShift(); }
                 };
@@ -86,9 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     let shiftOffset = 0;
                     const shiftElements = () => {
                         ctx.clearRect(0, 0, queueCanvas.width, queueCanvas.height);
+                        ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                         queue.forEach((el, idx) => {
                             const x = startX + idx * (cellWidth + 10) - shiftOffset;
-                            ctx.strokeStyle = '#000'; ctx.strokeRect(x, startY, cellWidth, cellHeight);
+                            ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                            ctx.strokeRect(x, startY, cellWidth, cellHeight);
                             ctx.fillText(el, x + cellWidth / 2, startY + cellHeight / 2);
                         });
                         if (shiftOffset < cellWidth + 10) { shiftOffset += animSpeed; requestAnimationFrame(shiftElements); }
@@ -101,13 +156,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const runQueueStep = () => {
+            if (queuePhase === 'enqueue') {
+                if (queueEnqueueIndex < queueElements.length) {
+                    enqueueAnimation(queueElements[queueEnqueueIndex]);
+                    queueEnqueueIndex++;
+                } else {
+                    queuePhase = 'dequeue';
+                }
+            } else {
+                if (queue.length > 0) {
+                    dequeueAnimation();
+                } else {
+                    queuePhase = 'enqueue'; queueEnqueueIndex = 0;
+                }
+            }
+        };
+
         modal.addEventListener('shown.bs.modal', () => {
-            queue = ['A', 'B', 'C', 'D', 'E']; isAnimating = false;
+            queue = []; isAnimating = false; queuePhase = 'enqueue'; queueEnqueueIndex = 0;
             drawQueue();
-            queueInterval = setInterval(() => {
-                if (queue.length > 0) dequeueAnimation();
-                else clearInterval(queueInterval);
-            }, 2000);
+            queueInterval = setInterval(runQueueStep, 1500);
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(queueInterval));
     }
@@ -118,15 +187,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = stackCanvas.getContext('2d');
         const cellWidth = 100, cellHeight = 50, startX = 150, startY = 300, animSpeed = 10;
         let stack = [], isAnimating = false, stackInterval = null;
+        const elements = ['A', 'B', 'C', 'D', 'E'];
+        let phase = 'push', pushIndex = 0;
 
-        const drawStack = () => {
+        const drawLabel = (text, color = '#000') => {
+            ctx.font = '14px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillStyle = color;
+            ctx.fillText(text, startX + cellWidth / 2, 20);
+        };
+
+        const drawStack = (extraEl = null, extraY = null, extraColor = '#f00') => {
             ctx.clearRect(0, 0, stackCanvas.width, stackCanvas.height);
             ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             stack.forEach((el, idx) => {
                 const x = startX, y = startY - idx * (cellHeight + 10);
-                ctx.strokeStyle = '#000'; ctx.strokeRect(x, y, cellWidth, cellHeight);
+                ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                ctx.strokeRect(x, y, cellWidth, cellHeight);
                 ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
             });
+            if (extraEl !== null) {
+                const x = startX;
+                ctx.strokeStyle = extraColor; ctx.fillStyle = extraColor;
+                ctx.strokeRect(x, extraY, cellWidth, cellHeight);
+                ctx.fillText(extraEl, x + cellWidth / 2, extraY + cellHeight / 2);
+            }
+        };
+
+        const pushAnimation = (el) => {
+            if (isAnimating) return;
+            isAnimating = true;
+            let offset = 100;
+            const targetY = startY - stack.length * (cellHeight + 10);
+
+            const animatePush = () => {
+                const y = targetY - offset;
+                drawStack(el, y, '#0d6efd');
+                drawLabel(`push("${el}") — Insertando al tope`, '#0d6efd');
+                if (offset > 0) { offset -= animSpeed; requestAnimationFrame(animatePush); }
+                else { stack.push(el); isAnimating = false; drawStack(); }
+            };
+            animatePush();
         };
 
         const popAnimation = () => {
@@ -137,14 +237,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const animateRemoval = () => {
                     ctx.clearRect(0, 0, stackCanvas.width, stackCanvas.height);
+                    ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                     stack.forEach((el, idx) => {
                         const x = startX, y = startY - idx * (cellHeight + 10);
-                        ctx.strokeStyle = '#000'; ctx.strokeRect(x, y, cellWidth, cellHeight);
+                        ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                        ctx.strokeRect(x, y, cellWidth, cellHeight);
                         ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
                     });
                     const x = startX, y = startY - stack.length * (cellHeight + 10) - offset;
-                    ctx.strokeStyle = '#f00'; ctx.strokeRect(x, y, cellWidth, cellHeight);
+                    ctx.strokeStyle = '#f00'; ctx.fillStyle = '#f00';
+                    ctx.strokeRect(x, y, cellWidth, cellHeight);
                     ctx.fillText(removed, x + cellWidth / 2, y + cellHeight / 2);
+                    drawLabel(`pop() — Extrayendo "${removed}" del tope`, '#dc3545');
                     if (offset < 100) { offset += animSpeed; requestAnimationFrame(animateRemoval); }
                     else { isAnimating = false; drawStack(); }
                 };
@@ -152,13 +256,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const runStep = () => {
+            if (phase === 'push') {
+                if (pushIndex < elements.length) {
+                    pushAnimation(elements[pushIndex]);
+                    pushIndex++;
+                } else {
+                    phase = 'pop';
+                }
+            } else {
+                if (stack.length > 0) {
+                    popAnimation();
+                } else {
+                    phase = 'push'; pushIndex = 0;
+                }
+            }
+        };
+
         modal.addEventListener('shown.bs.modal', () => {
-            stack = ['A', 'B', 'C', 'D', 'E']; isAnimating = false;
+            stack = []; isAnimating = false; phase = 'push'; pushIndex = 0;
             drawStack();
-            stackInterval = setInterval(() => {
-                if (stack.length > 0) popAnimation();
-                else clearInterval(stackInterval);
-            }, 2000);
+            stackInterval = setInterval(runStep, 1500);
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(stackInterval));
     }
@@ -536,31 +654,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── TABLAS HASH ───────────────────────────────────────────────────────
     const hashContainer = document.getElementById('hashTableAnimation');
     if (hashContainer) {
-        const width = 800, height = 400;
+        const width = 800, height = 440;
         const svg = d3.select(hashContainer).append('svg').attr('width', width).attr('height', height);
         let hashTable = new Array(10).fill(null);
 
         const hashFn = key => key.charCodeAt(0) % 10;
 
-        const drawHashTable = () => {
-            svg.selectAll('*').remove();
+        // ── Etiqueta de explicación ───────────────────────────────────────
+        const hashExplanation = svg.append('text')
+            .attr('x', width / 2).attr('y', height - 10)
+            .attr('text-anchor', 'middle').attr('fill', '#0d6efd')
+            .attr('font-size', '14px').attr('font-weight', 'bold')
+            .text('');
+
+        // ── Dibujar todas las celdas de la tabla ──────────────────────────
+        const cellW = 220, cellH = 30, tableX = 30;
+        const drawHashTable = (highlightIdx = -1) => {
+            svg.selectAll('.hash-cell').remove();
             hashTable.forEach((value, idx) => {
-                svg.append('rect').attr('x', 50).attr('y', idx * 35 + 10)
-                    .attr('width', 200).attr('height', 30)
-                    .attr('fill', '#f0f0f0').attr('stroke', '#000');
-                svg.append('text').attr('x', 60).attr('y', idx * 35 + 30)
-                    .text(`Índice ${idx}: ${value || ''}`).attr('font-size', '14px');
+                const y = idx * (cellH + 4) + 10;
+                svg.append('rect').attr('class', 'hash-cell')
+                    .attr('x', tableX).attr('y', y)
+                    .attr('width', cellW).attr('height', cellH)
+                    .attr('fill', idx === highlightIdx ? '#ffc107' : '#f0f0f0')
+                    .attr('stroke', idx === highlightIdx ? '#e67e00' : '#000')
+                    .attr('stroke-width', idx === highlightIdx ? 2 : 1);
+                svg.append('text').attr('class', 'hash-cell')
+                    .attr('x', tableX + 8).attr('y', y + cellH / 2 + 5)
+                    .text(`[${idx}]: ${value || '—'}`).attr('font-size', '13px');
             });
         };
 
-        const insert = (key, value) => {
-            hashTable[hashFn(key)] = value;
-            drawHashTable();
+        const insertAnimated = async (key, value, delay) => {
+            const idx = hashFn(key);
+            const asciiVal = key.charCodeAt(0);
+            hashExplanation.text(`Insertando "${key}": hash("${key}") = ${asciiVal} % 10 = ${idx}`);
+            drawHashTable(idx);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            hashTable[idx] = value;
+            drawHashTable(idx);
+            await new Promise(resolve => setTimeout(resolve, delay / 2));
+            drawHashTable(-1);
         };
 
-        modal.addEventListener('shown.bs.modal', () => {
+        modal.addEventListener('shown.bs.modal', async () => {
             hashTable = new Array(10).fill(null);
-            insert('A', 'Valor A'); insert('B', 'Valor B'); insert('C', 'Valor C');
+            drawHashTable();
+            hashExplanation.text('Tabla hash vacía — 10 cubetas inicializadas a null');
+            await new Promise(r => setTimeout(r, 1500));
+            await insertAnimated('A', 'Valor A', 1800);
+            await insertAnimated('B', 'Valor B', 1800);
+            await insertAnimated('C', 'Valor C', 1800);
+            hashExplanation.text('Inserción completada. Cada clave se mapea a un índice único.');
         });
     }
 

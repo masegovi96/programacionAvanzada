@@ -39,10 +39,35 @@
         </section>
 
         <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Operación</th>
+                        <th>Complejidad de Tiempo</th>
+                        <th>Complejidad de Espacio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>insertAtBeginning()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>insertAtEnd()</td><td>O(n)</td><td>O(1)</td></tr>
+                    <tr><td>insertAt(pos)</td><td>O(n)</td><td>O(1)</td></tr>
+                    <tr><td>deleteAt(pos)</td><td>O(n)</td><td>O(1)</td></tr>
+                    <tr><td>search(valor)</td><td>O(n)</td><td>O(1)</td></tr>
+                    <tr><td>traverse()</td><td>O(n)</td><td>O(1)</td></tr>
+                    <tr><td>Espacio total</td><td>—</td><td>O(n)</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="mb-4">
             <h2>Implementaciones Comunes</h2>
             <ul>
-                <li>Implementaciones de otras estructuras</li>
-                <li>Recolección de basura (Garbage Collection)</li>
+                <li>Base para implementar otras estructuras (pilas, colas, deques)</li>
+                <li>Recoleción de basura (<em>Garbage Collection</em>) en lenguajes administrados</li>
+                <li>Historial de navegación y listas de reproducción de música</li>
+                <li>Sistemas de archivos con asignación de bloques no contiguos</li>
+                <li>Representación de polinomios y listas dispersas (<em>sparse lists</em>)</li>
             </ul>
         </section>
 
