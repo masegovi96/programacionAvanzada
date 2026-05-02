@@ -1,0 +1,152 @@
+.todo-app {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(13,110,253,0.10);
+    padding: 2rem;
+}
+
+.todo-input-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.todo-input-row input {
+    flex: 1;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+    padding: 0.55rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    font-family: 'Rubik', sans-serif;
+}
+
+.todo-input-row input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+}
+
+.todo-input-row button {
+    border-radius: 8px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+}
+
+.todo-counter {
+    font-size: 0.92rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+.filter-btns {
+    display: flex;
+    gap: 0.4rem;
+    margin: 1rem 0;
+}
+
+.filter-btns button {
+    flex: 1;
+    border-radius: 8px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    border: 2px solid #dee2e6;
+    background: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.filter-btns button:hover {
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.filter-btns button.active-filter {
+    background: linear-gradient(120deg, #0d6efd, #6610f2);
+    border-color: transparent;
+    color: #fff;
+    font-weight: 700;
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#todo-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s;
+}
+
+#todo-list li:hover {
+    background: #e9ecef;
+}
+
+#todo-list li input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0d6efd;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 1rem;
+    word-break: break-word;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#todo-list li.completed .todo-text {
+    text-decoration: line-through;
+    color: #adb5bd;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+
+.btn-delete:hover {
+    background: #dc3545;
+    color: #fff;
+}
+
+.todo-empty {
+    text-align: center;
+    color: #adb5bd;
+    font-size: 0.95rem;
+    padding: 1.5rem 0;
+}
+
+.badge-resuelta {
+    display: inline-block;
+    background: linear-gradient(120deg, #0d6efd, #6610f2);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.25em 0.7em;
+    border-radius: 50px;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    letter-spacing: 0.04em;
+}
+

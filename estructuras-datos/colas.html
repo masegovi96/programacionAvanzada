@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<base href="/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explicación, ejemplos y animación interactiva de colas.">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/jpeg" href="media/jigsaw.jpg">
+<title>Colas | Programación Avanzada</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Colas</h1>
+
+        <section class="mb-4">
+            <h2>¿Qué son las colas?</h2>
+            <p>Las colas son estructuras de datos lineales que siguen el
+                principio FIFO (First In, First Out), donde el primer
+                elemento en entrar es el primero en salir.</p>
+        </section>
+        
+        <section class="mb-4">
+            <h2>Operaciones Básicas</h2>
+            <ul>
+                <li>enqueue(elemento) &#8594;  agregar al final</li>
+                <li>dequeue() &#8594;  quitar del frente</li>
+                <li>front() &#8594;  consultar el primero sin quitarlo</li>
+                <li>isEmpty() &#8594;  verificar si la cola está vacía</li>
+                <li>size() &#8594;  obtener el tamaño de la cola</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Operación</th>
+                        <th>Complejidad de Tiempo</th>
+                        <th>Complejidad de Espacio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>enqueue()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>dequeue()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>front()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>isEmpty()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>size()</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>Espacio total</td><td>—</td><td>O(n)</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="mb-4">
+            <h2>Implementaciones Comunes</h2>
+            <ul>
+                <li>Planificadores de tareas (sistemas operativos)</li>
+                <li>Simulación de colas en la vida real (bancos, supermercados)</li>
+                <li>Cola de impresión de documentos</li>
+                <li>Manejo de peticiones en servidores web</li>
+                <li>Algoritmo BFS en grafos y árboles</li>
+            </ul>
+        </section>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#animationModal">Ver animación</button>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#phpExampleModal">Ejemplo en PHP</button>
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#javascriptExampleModal">Ejemplo en
+                JavaScript</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal"
+                data-bs-target="#pythonExampleModal">Ejemplo en
+                Python</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="animationModal" tabindex="-1"
+        aria-labelledby="animationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="animationModalLabel">Animación: Cómo funcionan
+                        las colas</h5>
+                    <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <canvas id="queueAnimation" width="600" height="200"
+                        style="border: 1px solid #ccc;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="phpExampleModal" tabindex="-1" aria-labelledby="phpExampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phpExampleModalLabel">Ejemplo en PHP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-php">
+// Crear una cola usando un arreglo (FIFO: primero en entrar, primero en salir)
+$cola = [];
+array_push($cola, "A");   // Cola: [A]
+array_push($cola, "B");   // Cola: [A, B]
+array_push($cola, "C");   // Cola: [A, B, C]
+
+// Consultar el primero sin sacarlo (front)
+$primero = $cola[0];      // "A"
+echo "Primero: $primero\n"; // Imprime: Primero: A
+
+// Verificar si la cola está vacía
+if (!empty($cola)) {
+    echo "La cola no está vacía\n";
+}
+
+// Sacar el primer elemento (dequeue)
+$elemento = array_shift($cola); // Cola: [B, C]
+echo "Sacado: $elemento\n";    // Imprime: Sacado: A
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="javascriptExampleModal" tabindex="-1" aria-labelledby="javascriptExampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="javascriptExampleModalLabel">Ejemplo en JavaScript</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-javascript">
+// Crear una cola usando un arreglo (FIFO: primero en entrar, primero en salir)
+const cola = [];
+cola.push("A");  // Cola: ["A"]
+cola.push("B");  // Cola: ["A", "B"]
+cola.push("C");  // Cola: ["A", "B", "C"]
+
+// Consultar el primero sin sacarlo (front)
+const primero = cola[0];           // "A"
+console.log("Primero:", primero);  // Imprime: Primero: A
+
+// Verificar si la cola está vacía
+if (cola.length > 0) {
+    console.log("La cola no está vacía");
+}
+
+// Sacar el primer elemento (dequeue)
+const elemento = cola.shift();    // Cola: ["B", "C"]
+console.log("Sacado:", elemento); // Imprime: Sacado: A
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pythonExampleModal" tabindex="-1" aria-labelledby="pythonExampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pythonExampleModalLabel">Ejemplo en Python</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-python">
+# deque (double-ended queue) es más eficiente que una lista para colas
+from collections import deque
+
+cola = deque()
+cola.append("A")  # Cola: deque(["A"])
+cola.append("B")  # Cola: deque(["A", "B"])
+cola.append("C")  # Cola: deque(["A", "B", "C"])
+
+# Consultar el primero sin sacarlo (front)
+primero = cola[0]           # "A"
+print("Primero:", primero)  # Imprime: Primero: A
+
+# Verificar si la cola está vacía
+if cola:
+    print("La cola no está vacía")
+
+# Sacar el primer elemento (dequeue) - O(1) con deque
+elemento = cola.popleft()         # Cola: deque(["B", "C"])
+print("Sacado:", elemento)        # Imprime: Sacado: A
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-container"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/data-structure-animations.js"></script>
+</body>
+</html>

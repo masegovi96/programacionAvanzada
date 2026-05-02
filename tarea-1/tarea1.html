@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tarea 1: Caso real — estructuras de datos y algoritmos de ordenamiento.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tarea1.css">
+    <link rel="icon" type="image/jpeg" href="media/jigsaw.jpg">
+    <title>Tarea 1 | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-2">Tarea 1: Caso Real</h1>
+        
+        
+        <section class="mb-4">
+            <h2>¿En qué consiste la tarea?</h2>
+            <p>
+                Se te asigna un <strong>problema del mundo real</strong>. Tu trabajo es analizarlo,
+                decidir qué <em>estructura de datos</em> y qué <em>algoritmo de ordenamiento</em>
+                se adaptan mejor, implementarlo (o describirlo en pseudocódigo detallado)
+                y <strong>justificar tus decisiones con argumentos técnicos</strong>.
+            </p>
+            <p>
+                El enunciado de cada caso describe el sistema y las operaciones que debe soportar,
+                pero <strong>no te dice qué estructura usar ni qué algoritmo aplicar</strong>.
+                Eso es exactamente lo que tú debes determinar, argumentar y defender.
+            </p>
+            <div class="alert alert-warning mb-0" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <strong>Ojo:</strong> no basta con que tu solución «funcione». Debes demostrar que
+                entiendes <em>por qué</em> esa estructura y ese algoritmo son los más adecuados
+                para el contexto del problema. Una elección correcta sin justificación vale poco;
+                una elección cuestionable bien argumentada vale mucho más.
+            </div>
+        </section>
+
+        
+        <section class="mb-4">
+            <h2>¿Por dónde empezar?</h2>
+            <p>Antes de escribir una sola línea de código, responde estas preguntas sobre tu caso:</p>
+            <ol class="mt-2">
+                <li class="mb-2">
+                    <strong>¿Qué datos se almacenan?</strong>
+                    Identifica las entidades (productos, usuarios, procesos…) y sus atributos.
+                </li>
+                <li class="mb-2">
+                    <strong>¿Qué operaciones deben ser rápidas?</strong>
+                    Búsqueda, inserción, eliminación, recorrido… ¿cuál es la más crítica?
+                </li>
+                <li class="mb-2">
+                    <strong>¿Con qué frecuencia cambia el conjunto de datos?</strong>
+                    ¿Se inserta y elimina constantemente, o el conjunto es relativamente estático?
+                </li>
+                <li class="mb-2">
+                    <strong>¿Importa el orden?</strong>
+                    ¿Los datos deben mantenerse ordenados en todo momento, o solo se ordenan bajo demanda?
+                </li>
+                <li class="mb-2">
+                    <strong>¿Hay restricciones de acceso?</strong>
+                    ¿Se necesita acceso aleatorio por índice, o el recorrido siempre es secuencial?
+                </li>
+            </ol>
+            <p>Con esas respuestas, podrás elegir y justificar tu estructura y tu algoritmo con solidez.</p>
+        </section>
+
+        
+        <section class="mb-4">
+            <h2>Entregables</h2>
+            <p class="text-muted">Son <strong>5 entregables obligatorios</strong>. La ausencia de cualquiera de ellos reduce la calificación.</p>
+            <div class="d-flex flex-column gap-3 mt-3">
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">1</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Diseño de la solución</strong></div>
+                        <div class="pregunta-sub">
+                            <p class="mb-2">Documento que describa tu solución antes de implementarla. Debe incluir:</p>
+                            <ul class="mb-2">
+                                <li>El problema <strong>en tus propias palabras</strong>: qué sistema es, qué datos maneja, quiénes lo usan y en qué contexto.</li>
+                                <li>La <strong>estructura de datos elegida</strong> y el <strong>algoritmo de ordenamiento elegido</strong>, nombrados explícitamente.</li>
+                                <li>Un <strong>diagrama o esquema</strong> que muestre cómo la estructura organiza los datos del problema. Puede ser dibujado a mano y fotografiado, o digital.</li>
+                            </ul>
+                            <p class="mb-0"><small class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>No se acepta copiar el enunciado del caso sin reescribirlo ni interpretarlo.</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">2</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Justificación técnica</strong></div>
+                        <div class="pregunta-sub">
+                            <p class="mb-2">Argumenta <em>por qué</em> tomaste esas decisiones de diseño. Debe responder:</p>
+                            <ul class="mb-2">
+                                <li>¿Por qué esa estructura? Apóyate en la complejidad <em>Big O</em> de las operaciones clave (inserción, búsqueda, eliminación, recorrido).</li>
+                                <li>¿Qué <strong>al menos una estructura alternativa</strong> consideraste y por qué la descartaste?</li>
+                                <li>¿Por qué ese algoritmo de ordenamiento? Indica su complejidad en mejor caso, caso promedio y peor caso.</li>
+                                <li>¿Qué <strong>al menos un algoritmo alternativo</strong> evaluaste y por qué no lo elegiste?</li>
+                            </ul>
+                            <p class="mb-0"><small class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>No se acepta «elegí X porque es más rápido» sin respaldo en notación Big O.</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">3</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Implementación</strong></div>
+                        <div class="pregunta-sub">
+                            <p class="mb-2">
+                                Código funcional <strong>o</strong> pseudocódigo detallado de las operaciones principales.
+                                Puede estar en cualquier lenguaje (JavaScript, Python, Java, C++, etc.).
+                            </p>
+                            <ul class="mb-2">
+                                <li>Debe cubrir <strong>todas las operaciones</strong> listadas en tu caso asignado.</li>
+                                <li>El código debe ser <strong>tuyo y original</strong>: nombres descriptivos, comentarios breves que expliquen la lógica no obvia.</li>
+                                <li>Si optas por pseudocódigo, debe ser lo suficientemente detallado como para traducirse a código real sin ambigüedad.</li>
+                                <li>Sube el archivo de código a tu repositorio de GitHub (no dentro del PDF).</li>
+                            </ul>
+                            <p class="mb-0"><small class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>No se acepta código copiado sin comprensión, ni pseudocódigo vago del tipo «ordenar la lista» sin detallar cómo.</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">4</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>PDF de análisis y conclusiones</strong> <span class="fw-normal text-muted">(máx. 2 páginas)</span></div>
+                        <div class="pregunta-sub">
+                            <p class="mb-2">Documento PDF que responda de forma concisa y fundamentada:</p>
+                            <ul class="mb-2">
+                                <li>¿Por qué tu estructura y tu algoritmo son los más adecuados para este problema? (sustentado en Big O)</li>
+                                <li>¿Qué alternativas descartaste y por qué?</li>
+                                <li>¿Cómo escalaría tu solución si el volumen de datos crece 10× o 100×? ¿Seguirías usando la misma estructura?</li>
+                                <li><strong>Mínimo 3 fuentes confiables</strong> correctamente citadas: libros de texto, documentación oficial, artículos académicos. Wikipedia no cuenta como fuente primaria.</li>
+                            </ul>
+                            <p class="mb-0"><small class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>No se aceptan más de 2 páginas ni fuentes sin formato de citación (autor, título, año).</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta-card">
+                    <div class="pregunta-num">5</div>
+                    <div>
+                        <div class="pregunta-texto"><strong>Video explicativo</strong> <span class="fw-normal text-muted">(3–5 min)</span></div>
+                        <div class="pregunta-sub">
+                            <p class="mb-2">Graba un video donde <strong>tú mismo expliques</strong> tu solución. Estructura sugerida:</p>
+                            <ul class="mb-2">
+                                <li><strong>~30 s</strong> — Presenta el problema: ¿qué sistema es?, ¿qué datos maneja?</li>
+                                <li><strong>~1.5 min</strong> — Explica tus decisiones: ¿qué estructura y algoritmo elegiste y por qué?</li>
+                                <li><strong>~1.5 min</strong> — Muestra el código o pseudocódigo; recorre las operaciones principales.</li>
+                                <li><strong>~30 s</strong> — Cierra con tu conclusión: ¿en qué escenario real usarías esta solución?</li>
+                            </ul>
+                            <p class="mb-1">Sube el video a YouTube (privado o no listado) o Google Drive y coloca el enlace en un archivo <code>README.md</code> en la raíz de tu repositorio.</p>
+                            <p class="mb-0"><small class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>No se aceptan videos de más de 5 minutos ni videos sin explicación verbal propia.</small></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+        <section class="mb-4">
+            <h2>Tu caso asignado</h2>
+            <p>
+                Haz clic en el número que te corresponda para ver el enunciado completo.
+                Haz clic de nuevo en el mismo número, o en la <strong>×</strong> de la tarjeta, para cerrarla.
+            </p>
+
+            <div class="case-btn-grid" id="caseBtnGrid">
+                
+            </div>
+
+            <div id="caseDisplay" class="case-display mt-3">
+                
+            </div>
+
+            <div class="alert alert-info mt-3" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                Si tienes dudas sobre qué número te corresponde, consulta directamente con el docente.
+            </div>
+        </section>
+
+        
+        <section class="mb-4">
+            <h2>Criterios de evaluación</h2>
+            <table class="table table-bordered table-striped mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Aspectos a observar</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Diseño y justificación</strong></td>
+                        <td>El problema está descrito con sus propias palabras. La estructura y el algoritmo están nombrados y son coherentes con el caso. La justificación usa Big O y descarta alternativas con argumentos técnicos sólidos.</td>
+                        <td>30 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Implementación</strong></td>
+                        <td>El código o pseudocódigo es original, legible, cubre todas las operaciones del caso y tiene comentarios descriptivos.</td>
+                        <td>30 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PDF de análisis</strong></td>
+                        <td>Responde todas las preguntas del análisis, relaciona la solución con la complejidad teórica, evalúa la escalabilidad y cita al menos 3 fuentes correctamente.</td>
+                        <td>30 %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Video</strong></td>
+                        <td>El estudiante explica con claridad el problema, sus decisiones de diseño y el código en 3–5 minutos con voz propia.</td>
+                        <td>10 %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        
+        <section class="mb-4">
+            <h2>Entrega</h2>
+            <ul>
+                <li>Sube todo a tu repositorio de GitHub del curso, dentro de una carpeta llamada exactamente <code>Tarea 1</code>.</li>
+                <li>El repositorio debe contener: el código fuente (o pseudocódigo), el PDF de análisis y un <code>README.md</code> con el enlace al video.</li>
+                <li>Realiza un <em>commit</em> con el mensaje: <code>feat: tarea 1 caso real</code>.</li>
+                <li>Entrega el enlace a tu repositorio a través de Classroom antes de que concluya la fecha límite.</li>
+            </ul>
+            <div class="alert alert-warning mt-3" role="alert">
+                <strong>Importante:</strong> Se revisarán los <em>logs</em> de Git para validar la hora de entrega.
+                Asegúrate de hacer el <em>push</em> antes de que venza el plazo.
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/tarea1.js"></script>
+</body>
+
+</html>
+
