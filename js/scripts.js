@@ -1,8 +1,8 @@
-﻿/**
- * scripts.js
- * Lógica compartida: sidebar, navbar, footer, accesibilidad y sorteo de equipos.
- * Se carga en todas las páginas del proyecto.
- */
+﻿// Lógica compartida: sidebar, navbar, footer, dark mode y animaciones
+
+// Velocidad de animación — valor guardado en localStorage para mantenerla entre páginas
+window.animSpeed    = parseFloat(localStorage.getItem('animSpeed') || '1.75');
+window.getAnimDelay = ms => Math.round(ms / window.animSpeed);
 
 // Función global para alternar submenús del sidebar
 function toggleMenu(menuId) {
@@ -21,6 +21,11 @@ function toggleMenu(menuId) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Aplicar tema guardado antes de renderizar para evitar parpadeo
+    document.documentElement.setAttribute(
+        'data-theme', localStorage.getItem('theme') || 'light'
+    );
+
     // Cargar navbar
     const navbarContainer = document.getElementById('navbar-container');
     if (navbarContainer) {
@@ -33,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentPath = window.location.pathname;
                 navbarContainer.querySelectorAll('.nav-link').forEach(link => {
                     const href = link.getAttribute('href');
-                    if (href && (currentPath.endsWith(href) || (currentPath === '/' && href === '/index.html'))) {
+                    if (href && (currentPath === href || (currentPath === '/' && href === '/index.html'))) {
                         link.setAttribute('aria-current', 'page');
                         link.classList.add('active');
                         const parentSubmenu = link.closest('.submenu');
@@ -78,6 +83,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (openBtn)  openBtn.addEventListener('click',  openMobile);
                 if (overlay)  overlay.addEventListener('click',  closeMobile);
+
+                // Botón de modo oscuro en el sidebar
+                const sidebarHeader = document.querySelector('.sidebar-header');
+                if (sidebarHeader) {
+                    const darkBtn = document.createElement('button');
+                    darkBtn.className = 'sidebar-toggle-btn';
+                    darkBtn.id = 'dark-mode-toggle';
+                    darkBtn.title = 'Alternar modo oscuro';
+                    darkBtn.setAttribute('aria-label', 'Alternar modo oscuro');
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    darkBtn.innerHTML = isDark
+                        ? '<i class="fa-solid fa-sun"></i>'
+                        : '<i class="fa-solid fa-moon"></i>';
+                    darkBtn.addEventListener('click', () => {
+                        const cur  = document.documentElement.getAttribute('data-theme');
+                        const next = cur === 'dark' ? 'light' : 'dark';
+                        document.documentElement.setAttribute('data-theme', next);
+                        localStorage.setItem('theme', next);
+                        darkBtn.innerHTML = next === 'dark'
+                            ? '<i class="fa-solid fa-sun"></i>'
+                            : '<i class="fa-solid fa-moon"></i>';
+                    });
+                    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+                    sidebarHeader.insertBefore(darkBtn, sidebarToggleBtn);
+                }
             })
             .catch(err => console.error('Error al cargar el navbar:', err));
     }
@@ -122,6 +152,48 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sorteoBtn) {
         sorteoBtn.addEventListener('click', realizarSorteo);
     }
+
+    // Slider de velocidad + contador de pasos para modales de animación
+    document.addEventListener('show.bs.modal', e => {
+        const ANIM_IDS = ['animationModal', 'shellSortModal', 'radixSortModal'];
+        if (!ANIM_IDS.includes(e.target.id)) return;
+
+        // Slider de velocidad (se inyecta una sola vez)
+        const header = e.target.querySelector('.modal-header');
+        if (header && !header.querySelector('.anim-speed-ctrl')) {
+            const speed = window.animSpeed;
+            const ctrl  = document.createElement('div');
+            ctrl.className = 'anim-speed-ctrl d-flex align-items-center gap-2 ms-auto';
+            ctrl.innerHTML = `
+                <label for="animSpeedSlider" class="text-muted small mb-0 text-nowrap">
+                    <i class="fa-solid fa-gauge-simple-high"></i>&nbsp;Velocidad:
+                </label>
+                <input type="range" class="form-range" id="animSpeedSlider"
+                       min="0.5" max="3.5" step="0.25" value="${speed}"
+                       style="width:90px">
+                <span id="animSpeedLabel" class="text-muted small text-nowrap">${speed}&times;</span>`;
+            header.appendChild(ctrl);
+            ctrl.querySelector('#animSpeedSlider').addEventListener('input', ev => {
+                window.animSpeed    = parseFloat(ev.target.value);
+                window.getAnimDelay = ms => Math.round(ms / window.animSpeed);
+                localStorage.setItem('animSpeed', window.animSpeed);
+                ctrl.querySelector('#animSpeedLabel').textContent = `${window.animSpeed}×`;
+            });
+        }
+
+        // Badge de paso (se crea una vez, se reinicia en cada apertura)
+        const body = e.target.querySelector('.modal-body');
+        if (body) {
+            let badge = body.querySelector('.anim-step-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'anim-step-badge';
+                body.appendChild(badge);
+            }
+            badge.textContent  = 'Paso 0';
+            badge.dataset.step = '0';
+        }
+    });
 
     initScrollReveal();
 });

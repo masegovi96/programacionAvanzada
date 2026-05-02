@@ -294,7 +294,7 @@ function showCase(c, btn) {
                 <strong>Pregunta central:</strong> ${c.challenge}
             </div>
 
-            <div class="case-section-label mt-3">M�nimo esperado en tu implementaci�n</div>
+            <div class="case-section-label mt-3">Mínimo esperado en tu implementación</div>
             <p class="mb-0">${c.deliverable}</p>
         </div>
     `;

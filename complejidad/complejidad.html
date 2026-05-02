@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -58,17 +58,13 @@
 
     <div class="container mt-5 pb-5">
 
-        <!-- ══════════════════════════════════════════════════════════
-             HERO
-        ═══════════════════════════════════════════════════════════ -->
+        
         <div class="text-center mb-5">
             <h1 class="mb-2">Notación Big O</h1>
             <p class="lead text-muted">¿Cómo medimos qué tan rápido (o lento) crece un algoritmo?</p>
         </div>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 1 — ¿QUÉ ES LA COMPLEJIDAD?
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>¿Qué es la complejidad de un algoritmo?</h2>
             <p>
@@ -103,9 +99,7 @@
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 2 — ANALOGÍA DEL DÍA A DÍA
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>Una analogía: buscar un nombre en una lista</h2>
             <p>
@@ -152,14 +146,12 @@
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 3 — LAS NOTACIONES EXPLICADAS
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>Las notaciones y su significado</h2>
             <p class="text-muted">Para cada notación verás: qué significa, un ejemplo de código y cómo crece con distintos valores de <strong>n</strong>.</p>
 
-            <!-- O(1) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card o1">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -176,7 +168,7 @@ pila.push(x);</code></pre>
                 </div>
             </div>
 
-            <!-- O(log n) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card logn">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -199,7 +191,7 @@ int busquedaBinaria(int[] arr, int objetivo) {
                 </div>
             </div>
 
-            <!-- O(n) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card lin">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -220,7 +212,7 @@ Nodo* buscar(Nodo* cabeza, int valor) {
                 </div>
             </div>
 
-            <!-- O(n log n) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card nlogn">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -241,7 +233,7 @@ void mergeSort(int[] arr, int izq, int der) {
                 </div>
             </div>
 
-            <!-- O(n²) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card quad">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -263,7 +255,7 @@ for (int i = 0; i < n; i++) {           // ciclo externo: n veces
                 </div>
             </div>
 
-            <!-- O(n+k) / O(nk) -->
+            
             <div class="card mb-3 border-0 shadow-sm notation-card spec">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-2">
@@ -298,9 +290,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 4 — TABLA DE CRECIMIENTO
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>¿Cuánto crecen? — Tabla comparativa</h2>
             <p>La siguiente tabla muestra el número aproximado de operaciones para distintos valores de <strong>n</strong>. Observa cómo O(n²) se dispara con n grandes.</p>
@@ -352,9 +342,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 5 — GRÁFICA DE CRECIMIENTO
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>Gráfica de crecimiento</h2>
             <p class="text-muted">Observa cómo cada función crece para valores de n del 1 al 20. O(n²) se dispara rápidamente comparado con las demás.</p>
@@ -368,9 +356,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 6 — COMPARATIVA ALGORITMOS DE ORDENAMIENTO
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>Comparativa: Algoritmos de Ordenamiento</h2>
             <div class="table-responsive">
@@ -466,9 +452,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </div>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 7 — COMPARATIVA ESTRUCTURAS DE DATOS
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>Comparativa: Estructuras de Datos</h2>
             <div class="table-responsive">
@@ -550,9 +534,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </p>
         </section>
 
-        <!-- ══════════════════════════════════════════════════════════
-             SECCIÓN 8 — CONSEJOS PRÁCTICOS
-        ═══════════════════════════════════════════════════════════ -->
+        
         <section class="mb-5">
             <h2>¿Qué tomar en cuenta al elegir un algoritmo?</h2>
             <div class="row g-3">
@@ -583,7 +565,7 @@ for (int exp = 1; max/exp > 0; exp *= 10)
             </div>
         </section>
 
-    </div><!-- /container -->
+    </div>
 
     <div id="footer-container"></div>
 

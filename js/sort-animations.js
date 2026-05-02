@@ -1,9 +1,6 @@
-/**
- * sort-animations.js
- * Animaciones D3 para los algoritmos de ordenamiento.
- * Se carga únicamente en las páginas de metodos-ordenamiento/.
- */
-
+// Animaciones D3 para los algoritmos de ordenamiento (metodos-ordenamiento/)
+const _tc = (light, dark) => document.documentElement.getAttribute('data-theme') === 'dark' ? dark : light;
+let _animGen = 0;
 document.addEventListener('DOMContentLoaded', () => {
 
     // ── Bubble, Insertion, Selection, Merge, Quick, Heap, Counting ──
@@ -22,11 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             for (const { id, fn } of targets) {
                 if (document.getElementById(id)) {
+                    _animGen++;
                     d3.select(`#${id}`).selectAll('*').remove();
                     fn();
                     break;
                 }
             }
+        });
+        // Cancelar animaciones al cerrar: incrementar _animGen e interrumpir transiciones D3
+        animationModal.addEventListener('hide.bs.modal', () => {
+            _animGen++;
+            d3.select(animationModal).selectAll('*').interrupt();
         });
     }
 
@@ -34,8 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const shellSortModal = document.getElementById('shellSortModal');
     if (shellSortModal) {
         shellSortModal.addEventListener('shown.bs.modal', () => {
+            _animGen++;
             d3.select('#shellSortAnimation').selectAll('*').remove();
             animateShellSort();
+        });
+        shellSortModal.addEventListener('hide.bs.modal', () => {
+            _animGen++;
+            d3.select('#shellSortAnimation').selectAll('*').interrupt();
         });
     }
 
@@ -43,8 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const radixSortModal = document.getElementById('radixSortModal');
     if (radixSortModal) {
         radixSortModal.addEventListener('shown.bs.modal', () => {
+            _animGen++;
             d3.select('#radixSortAnimation').selectAll('*').remove();
             animateRadixSort();
+        });
+        radixSortModal.addEventListener('hide.bs.modal', () => {
+            _animGen++;
+            d3.select('#radixSortAnimation').selectAll('*').interrupt();
         });
     }
 });
@@ -82,6 +95,7 @@ function animateBubbleSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', height + 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Bubble Sort...');
 
     let i = 0, j = 0;
@@ -144,6 +158,7 @@ function animateInsertionSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', height + 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Insertion Sort...');
 
     let i = 1;
@@ -211,6 +226,7 @@ function animateSelectionSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', height + 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Selection Sort...');
 
     let i = 0;
@@ -277,14 +293,15 @@ function animateMergeSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', height + 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Merge Sort...');
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(1000)
+        bars.data(arr).transition().duration(window.getAnimDelay(1000))
             .attr('x', (d, idx) => idx * barWidth)
             .attr('y', d => height - d * 4)
             .attr('height', d => d * 4);
-        labels.data(arr).transition().duration(1000)
+        labels.data(arr).transition().duration(window.getAnimDelay(1000))
             .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
             .attr('y', d => height - d * 4 - 10)
             .text(d => d);
@@ -350,14 +367,15 @@ function animateQuickSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Quick Sort...');
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(1500)
+        bars.data(arr).transition().duration(window.getAnimDelay(1500))
             .attr('x', (d, idx) => idx * barWidth)
             .attr('y', d => height - d * 4)
             .attr('height', d => d * 4);
-        labels.data(arr).transition().duration(1500)
+        labels.data(arr).transition().duration(window.getAnimDelay(1500))
             .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
             .attr('y', d => height - d * 4 - 10)
             .text(d => d);
@@ -410,16 +428,17 @@ function animateQuickSort() {
 // ─────────────────────────────────────────────
 function animateHeapSort() {
     const data = [64, 34, 25, 12, 22, 11, 90];
-    const modal = document.getElementById('animationModal');
-    const width = modal.clientWidth - 150;
-    const height = modal.clientHeight - 100;
+    const width  = 800;
+    const height = 500;
 
-    const svg = d3.select('#heapSortAnimation')
+    // svgRoot = el elemento <svg>; svg = el <g> interno desplazado 50px hacia abajo para el árbol
+    const svgRoot = d3.select('#heapSortAnimation')
         .append('svg')
-        .attr('width', width).attr('height', height)
+        .attr('width', '100%')
         .attr('viewBox', `0 0 ${width} ${height}`)
-        .attr('preserveAspectRatio', 'xMidYMid meet')
-        .append('g').attr('transform', 'translate(0, 50)');
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const svg = svgRoot.append('g').attr('transform', 'translate(0, 50)');
 
     function buildBinaryTree(arr) {
         const nodes = arr.map(value => ({ value }));
@@ -430,7 +449,7 @@ function animateHeapSort() {
         return nodes[0];
     }
 
-    const treeLayout = d3.tree().size([width - 500, height - 250]);
+    const treeLayout = d3.tree().size([700, 340]);
     const root = d3.hierarchy(buildBinaryTree(data), d => [d.left, d.right].filter(n => n));
     treeLayout(root);
 
@@ -450,28 +469,31 @@ function animateHeapSort() {
         .attr('text-anchor', 'middle').attr('alignment-baseline', 'middle')
         .attr('font-size', '12px');
 
-    const explanation = svg.append('text')
-        .attr('x', width / 2).attr('y', height - 20)
+    // La explicación se agrega al SVG raíz (no al <g>) para que no quede fuera del viewBox
+    const explanation = svgRoot.append('text')
+        .attr('x', width / 2).attr('y', height - 15)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '14px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Heap Sort...');
 
     function updateTree(arr) {
         const newRoot = d3.hierarchy(buildBinaryTree(arr), d => [d.left, d.right].filter(n => n));
         treeLayout(newRoot);
-        links.data(newRoot.links()).transition().duration(1500)
+        links.data(newRoot.links()).transition().duration(window.getAnimDelay(1500))
             .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
             .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-        nodes.data(newRoot.descendants()).transition().duration(1500)
+        nodes.data(newRoot.descendants()).transition().duration(window.getAnimDelay(1500))
             .attr('transform', d => `translate(${d.x}, ${d.y})`)
             .select('text').text(d => d.data.value);
     }
 
     function highlightNode(index, color) {
-        nodes.select('circle').attr('fill', (d, i) => i === index ? color : '#fff');
+        // style() (inline) wins over CSS property so dark-mode default fill doesn't mask highlights
+        nodes.select('circle').style('fill', (d, i) => i === index ? color : null);
     }
 
     function highlightAllNodes(color) {
-        nodes.select('circle').attr('fill', color);
+        nodes.select('circle').style('fill', color);
     }
 
     async function heapify(arr, n, i) {
@@ -545,6 +567,7 @@ function animateCountingSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', 22)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '15px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Counting Sort...');
 
     // ── Título y zona del arreglo de conteo ────────────────────────────
@@ -561,6 +584,9 @@ function animateCountingSort() {
         .attr('y', mainHeight + 30)
         .attr('width', cw - 3).attr('height', 34)
         .attr('fill', '#e9ecef').attr('stroke', '#999');
+
+    // apply theme colors on creation
+    countCells.style('fill', _tc('#e9ecef', '#2d333b')).style('stroke', _tc('#999', '#768390'));
 
     svg.selectAll('text.count-idx')
         .data(d3.range(maxVal + 1)).enter().append('text').attr('class', 'count-idx')
@@ -579,17 +605,18 @@ function animateCountingSort() {
     const countArr = new Array(maxVal + 1).fill(0);
 
     const refreshCountDisplay = (highlightIdx = -1) => {
-        countCells.attr('fill', (d, i) => i === highlightIdx ? '#ffc107' : '#e9ecef')
-                  .attr('stroke', (d, i) => i === highlightIdx ? '#e67e00' : '#999');
+        countCells
+            .style('fill',   (d, i) => i === highlightIdx ? '#ffc107' : _tc('#e9ecef', '#2d333b'))
+            .style('stroke', (d, i) => i === highlightIdx ? '#e67e00' : _tc('#999', '#768390'));
         countLabels.text((d, i) => countArr[i]);
     };
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(800)
+        bars.data(arr).transition().duration(window.getAnimDelay(800))
             .attr('x', (d, idx) => idx * barWidth)
             .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50))
             .attr('height', d => (d / maxHeight) * (mainHeight - 50));
-        barLabels.data(arr).transition().duration(800)
+        barLabels.data(arr).transition().duration(window.getAnimDelay(800))
             .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
             .attr('y', d => mainHeight - (d / maxHeight) * (mainHeight - 50) - 5)
             .text(d => d);
@@ -667,14 +694,15 @@ function animateRadixSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', 30)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Radix Sort...');
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(1000)
+        bars.data(arr).transition().duration(window.getAnimDelay(1000))
             .attr('x', (d, idx) => idx * barWidth)
             .attr('y', d => height - (d / maxHeight) * (height - 50))
             .attr('height', d => (d / maxHeight) * (height - 50));
-        labels.data(arr).transition().duration(1000)
+        labels.data(arr).transition().duration(window.getAnimDelay(1000))
             .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
             .attr('y', d => height - (d / maxHeight) * (height - 50) - 10)
             .text(d => d);
@@ -750,14 +778,15 @@ function animateShellSort() {
     const explanation = svg.append('text')
         .attr('x', width / 2).attr('y', height + 50)
         .attr('text-anchor', 'middle').attr('fill', 'black').attr('font-size', '16px')
+        .attr('class', 'anim-explanation')
         .text('Iniciando Shell Sort...');
 
     function refreshBars(arr) {
-        bars.data(arr).transition().duration(1500)
+        bars.data(arr).transition().duration(window.getAnimDelay(1500))
             .attr('x', (d, i) => i * (barWidth + barSpacing))
             .attr('y', d => height - (d / maxHeight) * height * scaleFactor)
             .attr('height', d => (d / maxHeight) * height * scaleFactor);
-        labels.data(arr).transition().duration(1500)
+        labels.data(arr).transition().duration(window.getAnimDelay(1500))
             .attr('x', (d, i) => i * (barWidth + barSpacing) + barWidth / 2)
             .attr('y', d => height - (d / maxHeight) * height * scaleFactor - 5)
             .text(d => d);
@@ -765,8 +794,8 @@ function animateShellSort() {
 
     function highlightShellBar(index, color) {
         bars.filter((d, idx) => idx === index)
-            .transition().duration(1500).attr('fill', color)
-            .transition().duration(1500).attr('fill', 'steelblue');
+            .transition().duration(window.getAnimDelay(1500)).attr('fill', color)
+            .transition().duration(window.getAnimDelay(1500)).attr('fill', 'steelblue');
     }
 
     async function shellSort(arr) {
@@ -799,17 +828,25 @@ function animateShellSort() {
 
 // ─────────────────────────────────────────────
 //  Utilidad compartida
-// ─────────────────────────────────────────────
 function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    const gen = _animGen;
+    const badge = document.querySelector('.anim-step-badge');
+    if (badge) {
+        const cur = parseInt(badge.dataset.step || '0');
+        badge.dataset.step = cur + 1;
+        badge.textContent  = `Paso ${cur + 1}`;
+    }
+    return new Promise(resolve =>
+        setTimeout(resolve, gen === _animGen ? Math.round(ms / (window.animSpeed || 1.75)) : 0)
+    );
 }
 
 function updateBars(bars, labels, data, barWidth, height) {
-    bars.data(data).transition().duration(1500)
+    bars.data(data).transition().duration(window.getAnimDelay(1500))
         .attr('x', (d, idx) => idx * barWidth)
         .attr('y', d => height - d * 4)
         .attr('height', d => d * 4);
-    labels.data(data).transition().duration(1500)
+    labels.data(data).transition().duration(window.getAnimDelay(1500))
         .attr('x', (d, idx) => idx * barWidth + barWidth / 2 - 10)
         .attr('y', d => height - d * 4 - 10)
         .text(d => d);

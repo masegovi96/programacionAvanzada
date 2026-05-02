@@ -1,9 +1,5 @@
-/**
- * data-structure-animations.js
- * Animaciones (Canvas y D3) para las páginas de estructuras de datos.
- * Se carga únicamente en las páginas de estructuras-datos/ y Recursividad/.
- */
-
+// Animaciones (Canvas y D3) para estructuras de datos y recursividad
+const tc = (light, dark) => document.documentElement.getAttribute('data-theme') === 'dark' ? dark : light;
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('animationModal');
     if (!modal) return;
@@ -18,30 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const drawMatrix = () => {
             ctx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
             ctx.font = '16px Arial';
+            const offsetX = Math.floor((matrixCanvas.width - cols * cellSize) / 2);
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
-                    const x = j * cellSize, y = i * cellSize + 30;
+                    const x = offsetX + j * cellSize, y = i * cellSize + 10;
                     if (i === currentRow && j === currentCol) {
                         ctx.fillStyle = '#f0ad4e';
                         ctx.fillRect(x, y, cellSize, cellSize);
                     } else {
-                        ctx.fillStyle = '#fff';
+                        ctx.fillStyle = tc('#fff', '#2d333b');
                         ctx.fillRect(x, y, cellSize, cellSize);
                     }
-                    ctx.strokeStyle = '#000';
+                    ctx.strokeStyle = tc('#000', '#768390');
                     ctx.strokeRect(x, y, cellSize, cellSize);
-                    ctx.fillStyle = '#000';
-                    ctx.fillText(`[${i},${j}]`, x + 10, y + 20);
+                    ctx.fillStyle = tc('#000', '#cdd9e5');
+                    ctx.fillText(`[${i},${j}]`, x + 10, y + 22);
                 }
             }
-            // Etiqueta de acción actual
-            ctx.clearRect(0, 0, matrixCanvas.width, 28);
-            ctx.font = '14px Arial'; ctx.fillStyle = '#0d6efd'; ctx.textAlign = 'left';
+            // Etiqueta explicativa debajo de la matriz
+            ctx.font = '15px Arial'; ctx.textAlign = 'center';
             if (currentRow < rows) {
-                ctx.fillText(`Accediendo a matriz[${currentRow}][${currentCol}] — Recorrido por filas (row-major)`, 5, 18);
+                ctx.fillStyle = '#0d6efd';
+                ctx.fillText(
+                    `Accediendo a matriz[${currentRow}][${currentCol}] — Recorrido por filas (row-major)`,
+                    matrixCanvas.width / 2, rows * cellSize + 32
+                );
             } else {
                 ctx.fillStyle = '#198754';
-                ctx.fillText('Recorrido completo de la matriz 3×3 — O(n·m)', 5, 18);
+                ctx.fillText('Recorrido completo de la matriz 3×3 — O(n·m)', matrixCanvas.width / 2, rows * cellSize + 32);
             }
             ctx.textAlign = 'left';
         };
@@ -50,12 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
             drawMatrix();
             currentCol++;
             if (currentCol >= cols) { currentCol = 0; currentRow++; }
-            if (currentRow >= rows) clearInterval(animationInterval);
+            if (currentRow >= rows) {
+                clearInterval(animationInterval);
+                drawMatrix(); // mostrar estado "completado"
+            }
         };
 
         modal.addEventListener('shown.bs.modal', () => {
             currentRow = 0; currentCol = 0;
-            animationInterval = setInterval(animateMatrix, 600);
+            animationInterval = setInterval(animateMatrix, window.getAnimDelay(600));
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(animationInterval));
     }
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             queue.forEach((el, idx) => {
                 const x = startX + idx * (cellWidth + 10);
-                ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                ctx.strokeStyle = tc('#000', '#768390'); ctx.fillStyle = tc('#000', '#cdd9e5');
                 ctx.strokeRect(x, startY, cellWidth, cellHeight);
                 ctx.fillText(el, x + cellWidth / 2, startY + cellHeight / 2);
             });
@@ -125,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     queue.forEach((el, idx) => {
                         const x = startX + idx * (cellWidth + 10);
                         const y = idx === 0 ? startY - offset : startY;
-                        ctx.strokeStyle = idx === 0 ? '#dc3545' : '#000';
-                        ctx.fillStyle = idx === 0 ? '#dc3545' : '#000';
+                        ctx.strokeStyle = idx === 0 ? '#dc3545' : tc('#000', '#768390');
+                        ctx.fillStyle = idx === 0 ? '#dc3545' : tc('#000', '#cdd9e5');
                         ctx.strokeRect(x, y, cellWidth, cellHeight);
                         ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
                     });
@@ -142,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                         queue.forEach((el, idx) => {
                             const x = startX + idx * (cellWidth + 10) - shiftOffset;
-                            ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                            ctx.strokeStyle = tc('#000', '#768390'); ctx.fillStyle = tc('#000', '#cdd9e5');
                             ctx.strokeRect(x, startY, cellWidth, cellHeight);
                             ctx.fillText(el, x + cellWidth / 2, startY + cellHeight / 2);
                         });
@@ -176,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('shown.bs.modal', () => {
             queue = []; isAnimating = false; queuePhase = 'enqueue'; queueEnqueueIndex = 0;
             drawQueue();
-            queueInterval = setInterval(runQueueStep, 1500);
+            queueInterval = setInterval(runQueueStep, window.getAnimDelay(1500));
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(queueInterval));
     }
@@ -201,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             stack.forEach((el, idx) => {
                 const x = startX, y = startY - idx * (cellHeight + 10);
-                ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                ctx.strokeStyle = tc('#000', '#768390'); ctx.fillStyle = tc('#000', '#cdd9e5');
                 ctx.strokeRect(x, y, cellWidth, cellHeight);
                 ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
             });
@@ -240,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.font = '20px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                     stack.forEach((el, idx) => {
                         const x = startX, y = startY - idx * (cellHeight + 10);
-                        ctx.strokeStyle = '#000'; ctx.fillStyle = '#000';
+                        ctx.strokeStyle = tc('#000', '#768390'); ctx.fillStyle = tc('#000', '#cdd9e5');
                         ctx.strokeRect(x, y, cellWidth, cellHeight);
                         ctx.fillText(el, x + cellWidth / 2, y + cellHeight / 2);
                     });
@@ -276,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('shown.bs.modal', () => {
             stack = []; isAnimating = false; phase = 'push'; pushIndex = 0;
             drawStack();
-            stackInterval = setInterval(runStep, 1500);
+            stackInterval = setInterval(runStep, window.getAnimDelay(1500));
         });
         modal.addEventListener('hidden.bs.modal', () => clearInterval(stackInterval));
     }
@@ -302,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const headLen = 10, angle = Math.atan2(y2 - y1, x2 - x1);
             const cx = x1 + (x2 - x1) * progress, cy = y1 + (y2 - y1) * progress;
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(cx, cy);
-            ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.strokeStyle = tc('#000', '#768390'); ctx.lineWidth = 2; ctx.stroke();
             if (progress === 1) {
                 ctx.beginPath(); ctx.moveTo(x2, y2);
                 ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
@@ -332,11 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     animationStep = 0;
                     currentNodeIndex++;
-                    traversalTimer = setTimeout(animateTraversal, 500);
+                    traversalTimer = setTimeout(animateTraversal, window.getAnimDelay(500));
                 }
             } else {
                 currentNodeIndex = 0;
-                traversalTimer = setTimeout(animateTraversal, 1000);
+                traversalTimer = setTimeout(animateTraversal, window.getAnimDelay(1000));
             }
         };
 
@@ -357,9 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const drawNode = (x, y, value, highlight = false) => {
             ctx.beginPath(); ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
-            ctx.fillStyle = highlight ? '#ffcc00' : '#fff'; ctx.fill();
-            ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
-            ctx.fillStyle = '#000'; ctx.font = '16px Arial';
+            ctx.fillStyle = highlight ? '#ffcc00' : tc('#fff', '#2d333b'); ctx.fill();
+            ctx.strokeStyle = tc('#000', '#768390'); ctx.lineWidth = 2; ctx.stroke();
+            ctx.fillStyle = tc('#000', '#cdd9e5'); ctx.font = '16px Arial';
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText(value, x, y);
         };
@@ -367,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const drawArrow = (x1, y1, x2, y2, highlight = false) => {
             const headLen = 10, angle = Math.atan2(y2 - y1, x2 - x1);
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-            ctx.strokeStyle = highlight ? '#ff0000' : '#000'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.strokeStyle = highlight ? '#ff0000' : tc('#000', '#768390'); ctx.lineWidth = 2; ctx.stroke();
             ctx.beginPath(); ctx.moveTo(x2, y2);
             ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
             ctx.moveTo(x2, y2);
@@ -398,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentNodeIndex >= nodes.length || currentNodeIndex < 0) {
                 direction *= -1; currentNodeIndex += direction;
             }
-            doublyTimer = setTimeout(animateTraversal, 1000);
+            doublyTimer = setTimeout(animateTraversal, window.getAnimDelay(1000));
         };
 
         modal.addEventListener('shown.bs.modal', () => {
@@ -440,9 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .attr('alignment-baseline', 'middle').attr('font-size', '16px');
 
         const animateTraversal = () => {
-            nodeGroup.select('circle').attr('fill', (d, i) => i === currentNodeIndex ? '#ffcc00' : '#fff');
+            nodeGroup.select('circle').style('fill', (d, i) => i === currentNodeIndex ? '#ffcc00' : null);
             currentNodeIndex = (currentNodeIndex + 1) % nodeLabels.length;
-            circularTimer = setTimeout(animateTraversal, 1000);
+            circularTimer = setTimeout(animateTraversal, window.getAnimDelay(1000));
         };
 
         modal.addEventListener('shown.bs.modal', () => { currentNodeIndex = 0; animateTraversal(); });
@@ -466,7 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Etiqueta del recorrido actual (se muestra arriba del árbol)
         const treeLabel = svgRoot.append('text')
             .attr('x', width / 2).attr('y', 30)
-            .attr('text-anchor', 'middle').attr('font-size', '20px').attr('font-weight', 'bold');
+            .attr('text-anchor', 'middle').attr('font-size', '20px').attr('font-weight', 'bold')
+            .attr('class', 'anim-explanation');
 
         const svg = svgRoot.append('g').attr('transform', 'translate(50, 70)');
 
@@ -518,18 +522,18 @@ document.addEventListener('DOMContentLoaded', () => {
             fn(root, n => order.push(n));
 
             // Actualizar etiqueta y restablecer colores
-            treeLabel.text(label).attr('fill', color);
-            treeNodes.select('circle').attr('fill', '#fff');
+            treeLabel.text(label).style('fill', color);
+            treeNodes.select('circle').style('fill', null);
 
             let index = 0;
             const step = () => {
                 if (index < order.length) {
-                    treeNodes.select('circle').attr('fill', d => d === order[index] ? color : '#fff');
+                    treeNodes.select('circle').style('fill', d => d === order[index] ? color : null);
                     index++;
-                    treeAnimationTimer = setTimeout(step, 900);
+                    treeAnimationTimer = setTimeout(step, window.getAnimDelay(900));
                 } else {
                     // Pausa antes del siguiente recorrido
-                    treeAnimationTimer = setTimeout(() => runTreeTraversal((idx + 1) % treeTraversals.length), 1800);
+                    treeAnimationTimer = setTimeout(() => runTreeTraversal((idx + 1) % treeTraversals.length), window.getAnimDelay(1800));
                 }
             };
             step();
@@ -555,7 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Etiqueta del recorrido actual
         const graphLabel = svg.append('text')
             .attr('x', width / 2).attr('y', 28)
-            .attr('text-anchor', 'middle').attr('font-size', '18px').attr('font-weight', 'bold');
+            .attr('text-anchor', 'middle').attr('font-size', '18px').attr('font-weight', 'bold')
+            .attr('class', 'anim-explanation');
 
         const simulation = d3.forceSimulation(graphNodes)
             .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(100))
@@ -571,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
                 .on('end',   (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-        node.append('circle').attr('r', 20).attr('fill', '#ffcc00').attr('stroke', '#000').attr('stroke-width', 2);
+        node.append('circle').attr('r', 20).style('fill', '#ffcc00').attr('stroke', '#000').attr('stroke-width', 2);
         node.append('text').text(d => d.id).attr('text-anchor', 'middle')
             .attr('alignment-baseline', 'middle').attr('font-size', '12px');
 
@@ -627,18 +632,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const { label, fn, color } = graphTraversals[idx];
             const order = fn('A');
 
-            graphLabel.text(label).attr('fill', color);
-            node.select('circle').attr('fill', '#ffcc00');
+            graphLabel.text(label).style('fill', color);
+            node.select('circle').style('fill', '#ffcc00');
 
             let index = 0;
             const step = () => {
                 if (index < order.length) {
-                    node.select('circle').attr('fill', d => d.id === order[index] ? color : '#ffcc00');
+                    node.select('circle').style('fill', d => d.id === order[index] ? color : '#ffcc00');
                     index++;
-                    graphAnimationTimer = setTimeout(step, 900);
+                    graphAnimationTimer = setTimeout(step, window.getAnimDelay(900));
                 } else {
                     // Pausa y luego muestra el siguiente recorrido
-                    graphAnimationTimer = setTimeout(() => runGraphTraversal((idx + 1) % graphTraversals.length), 1800);
+                    graphAnimationTimer = setTimeout(() => runGraphTraversal((idx + 1) % graphTraversals.length), window.getAnimDelay(1800));
                 }
             };
             step();
@@ -646,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal.addEventListener('shown.bs.modal', () => {
             simulation.alpha(1).restart();
-            graphAnimationTimer = setTimeout(() => runGraphTraversal(0), 2000);
+            graphAnimationTimer = setTimeout(() => runGraphTraversal(0), window.getAnimDelay(2000));
         });
         modal.addEventListener('hidden.bs.modal', () => clearTimeout(graphAnimationTimer));
     }
@@ -665,6 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .attr('x', width / 2).attr('y', height - 10)
             .attr('text-anchor', 'middle').attr('fill', '#0d6efd')
             .attr('font-size', '14px').attr('font-weight', 'bold')
+            .attr('class', 'anim-explanation')
             .text('');
 
         // ── Dibujar todas las celdas de la tabla ──────────────────────────
@@ -676,8 +682,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 svg.append('rect').attr('class', 'hash-cell')
                     .attr('x', tableX).attr('y', y)
                     .attr('width', cellW).attr('height', cellH)
-                    .attr('fill', idx === highlightIdx ? '#ffc107' : '#f0f0f0')
-                    .attr('stroke', idx === highlightIdx ? '#e67e00' : '#000')
+                    .style('fill', idx === highlightIdx ? '#ffc107' : tc('#f0f0f0', '#2d333b'))
+                    .style('stroke', idx === highlightIdx ? '#e67e00' : tc('#000', '#768390'))
                     .attr('stroke-width', idx === highlightIdx ? 2 : 1);
                 svg.append('text').attr('class', 'hash-cell')
                     .attr('x', tableX + 8).attr('y', y + cellH / 2 + 5)
@@ -697,14 +703,20 @@ document.addEventListener('DOMContentLoaded', () => {
             drawHashTable(-1);
         };
 
+        let hashRunId = 0;
         modal.addEventListener('shown.bs.modal', async () => {
+            const runId = ++hashRunId;
             hashTable = new Array(10).fill(null);
             drawHashTable();
             hashExplanation.text('Tabla hash vacía — 10 cubetas inicializadas a null');
-            await new Promise(r => setTimeout(r, 1500));
-            await insertAnimated('A', 'Valor A', 1800);
-            await insertAnimated('B', 'Valor B', 1800);
-            await insertAnimated('C', 'Valor C', 1800);
+            await new Promise(r => setTimeout(r, window.getAnimDelay(1500)));
+            if (hashRunId !== runId) return;
+            await insertAnimated('A', 'Valor A', window.getAnimDelay(1800));
+            if (hashRunId !== runId) return;
+            await insertAnimated('B', 'Valor B', window.getAnimDelay(1800));
+            if (hashRunId !== runId) return;
+            await insertAnimated('C', 'Valor C', window.getAnimDelay(1800));
+            if (hashRunId !== runId) return;
             hashExplanation.text('Inserción completada. Cada clave se mapea a un índice único.');
         });
     }
@@ -718,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const boxWidth = 200;
             const boxHeight = 50;
             const verticalSpacing = 80;
-            const animationDuration = 1000;
+            const animationDuration = window.getAnimDelay(1000);
             const initialX = (svgWidth - boxWidth) / 2;
 
             d3.select('#recursionAnimation').html('');
@@ -754,8 +766,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .attr('x', initialX + boxWidth / 2).attr('y', -boxHeight / 2)
                     .attr('text-anchor', 'middle').attr('fill', 'white')
                     .attr('font-size', '16px').text(step.call);
-                box.transition().delay(index * animationDuration).duration(500).attr('y', y);
-                label.transition().delay(index * animationDuration).duration(500).attr('y', y + boxHeight / 2);
+                box.transition().delay(index * animationDuration).duration(window.getAnimDelay(400)).attr('y', y);
+                label.transition().delay(index * animationDuration).duration(window.getAnimDelay(400)).attr('y', y + boxHeight / 2);
             });
 
             calls.slice().reverse().forEach((step, i) => {
@@ -766,14 +778,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     .attr('x', initialX + boxWidth / 2).attr('y', y + boxHeight / 2)
                     .attr('text-anchor', 'middle').attr('fill', '#198754')
                     .attr('font-size', '16px').attr('opacity', 0).text(step.returnText);
-                returnText.transition().delay(delayBase).duration(500).attr('opacity', 1);
+                returnText.transition().delay(delayBase).duration(window.getAnimDelay(400)).attr('opacity', 1);
                 stackGroup.selectAll('rect').filter((d, j) => j === index)
-                    .transition().delay(delayBase + 500).duration(500).attr('y', svgHeight + boxHeight);
+                    .transition().delay(delayBase + window.getAnimDelay(400)).duration(window.getAnimDelay(400)).attr('y', svgHeight + boxHeight);
                 stackGroup.selectAll('text').filter((d, j) => j === index)
-                    .transition().delay(delayBase + 500).duration(500).attr('y', svgHeight + boxHeight);
+                    .transition().delay(delayBase + window.getAnimDelay(400)).duration(window.getAnimDelay(400)).attr('y', svgHeight + boxHeight);
             });
         };
 
         modal.addEventListener('shown.bs.modal', drawRecursiveAnimation);
+        modal.addEventListener('hidden.bs.modal', () => d3.select('#recursionAnimation').selectAll('*').interrupt().remove());
     }
 });
