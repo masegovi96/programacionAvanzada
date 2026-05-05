@@ -1,200 +1,252 @@
-<div id="sidebar-overlay" class="sidebar-overlay"></div>
+﻿<button class="menu-toggle" id="menu-toggle" aria-label="Abrir o cerrar menú lateral">
+    <i class="fa-solid fa-bars"></i>
+</button>
 
-<div class="sidebar" id="sidebar">
-    
+<aside class="sidebar" id="sidebar">
+
     <div class="sidebar-header">
-        <span class="sidebar-brand">Menú</span>
-        <button id="sidebar-toggle-btn" class="sidebar-toggle-btn"
-                aria-label="Alternar menú" title="Alternar menú">
-            <i class="fa-solid fa-bars"></i>
+        <div class="sidebar-brand">
+            <h2>Programación<br>Avanzada</h2>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav">
+        <ul>
+
+            <li class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="nav-label">Inicio</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/sobre-mi/sobre-mi.html" class="nav-link">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-label">Información sobre mí</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/hablame-de-ti/hablame-de-ti.html" class="nav-link">
+                    <i class="fa-solid fa-comments"></i>
+                    <span class="nav-label">Conociéndote</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/reglas-clase/reglas.html" class="nav-link">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span class="nav-label">Reglas de la clase</span>
+                </a>
+            </li>
+
+            <li class="nav-item accordion-item">
+                <button class="nav-link accordion-toggle" onclick="toggleMenu('proyectos')" aria-expanded="false" aria-controls="proyectos">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span class="nav-label">Proyectos Finales</span>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <ul id="proyectos" class="submenu">
+                    <li class="nav-item">
+                        <a href="/Proyectos/generales.html" class="nav-link">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span class="nav-label">Especificaciones generales</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Proyectos/proyecto1.html" class="nav-link">
+                            <i class="fa-solid fa-file-code"></i>
+                            <span class="nav-label">Proyecto 1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Proyectos/proyecto2.html" class="nav-link">
+                            <i class="fa-solid fa-file-code"></i>
+                            <span class="nav-label">Proyecto 2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Proyectos/proyecto3.html" class="nav-link">
+                            <i class="fa-solid fa-file-code"></i>
+                            <span class="nav-label">Proyecto 3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Proyectos/proyecto4.html" class="nav-link">
+                            <i class="fa-solid fa-file-code"></i>
+                            <span class="nav-label">Proyecto 4</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="/actividad-diagnostico/diagnostico_2026.html" class="nav-link">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                    <span class="nav-label">Actividad de diagnóstico</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/complejidad/complejidad.html" class="nav-link">
+                    <i class="fa-solid fa-infinity"></i>
+                    <span class="nav-label">Notación Big O</span>
+                </a>
+            </li>
+
+            <li class="nav-item accordion-item">
+                <button class="nav-link accordion-toggle" onclick="toggleMenu('estructuras')" aria-expanded="false" aria-controls="estructuras">
+                    <i class="fa-solid fa-database"></i>
+                    <span class="nav-label">Estructuras de Datos</span>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <ul id="estructuras" class="submenu">
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/matrices.html" class="nav-link">
+                            <i class="fa-solid fa-table-cells"></i>
+                            <span class="nav-label">Matrices (Arreglos)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/pilas.html" class="nav-link">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span class="nav-label">Pilas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/colas.html" class="nav-link">
+                            <i class="fa-solid fa-list"></i>
+                            <span class="nav-label">Colas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/listas-enlazadas.html" class="nav-link">
+                            <i class="fa-solid fa-link"></i>
+                            <span class="nav-label">Listas enlazadas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/listas-doblemente-enlazadas.html" class="nav-link">
+                            <i class="fa-solid fa-right-left"></i>
+                            <span class="nav-label">Listas doblemente enlazadas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/listas-circulares.html" class="nav-link">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <span class="nav-label">Listas circulares</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/arboles.html" class="nav-link">
+                            <i class="fa-solid fa-sitemap"></i>
+                            <span class="nav-label">Árboles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/grafos.html" class="nav-link">
+                            <i class="fa-solid fa-diagram-project"></i>
+                            <span class="nav-label">Grafos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/estructuras-datos/tablas-hash.html" class="nav-link">
+                            <i class="fa-solid fa-hashtag"></i>
+                            <span class="nav-label">Tablas Hash</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item accordion-item">
+                <button class="nav-link accordion-toggle" onclick="toggleMenu('ordenamiento')" aria-expanded="false" aria-controls="ordenamiento">
+                    <i class="fa-solid fa-sort"></i>
+                    <span class="nav-label">Métodos de ordenamiento</span>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <ul id="ordenamiento" class="submenu">
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/bubble-sort.html" class="nav-link">
+                            <i class="fa-solid fa-water"></i>
+                            <span class="nav-label">Bubble Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/selection-sort.html" class="nav-link">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                            <span class="nav-label">Selection Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/insertion-sort.html" class="nav-link">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span class="nav-label">Insertion Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/merge-sort.html" class="nav-link">
+                            <i class="fa-solid fa-code-merge"></i>
+                            <span class="nav-label">Merge Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/quick-sort.html" class="nav-link">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span class="nav-label">Quick Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/heap-sort.html" class="nav-link">
+                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                            <span class="nav-label">Heap Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/counting-sort.html" class="nav-link">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span class="nav-label">Counting Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/radix-sort.html" class="nav-link">
+                            <i class="fa-solid fa-terminal"></i>
+                            <span class="nav-label">Radix Sort</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/metodos-ordenamiento/shell-sort.html" class="nav-link">
+                            <i class="fa-solid fa-align-justify"></i>
+                            <span class="nav-label">Shell Sort</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="/tarea-1/tarea1.html" class="nav-link">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span class="nav-label">Tarea 1</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/Recursividad/recursividad.html" class="nav-link">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span class="nav-label">Recursividad</span>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Cambiar tema">
+            <i class="fa-solid fa-sun" id="theme-icon"></i>
+            <span class="nav-label" id="theme-label">Modo claro</span>
         </button>
     </div>
 
-    <nav class="nav flex-column" aria-label="Menú principal">
-
-        <a href="/index.html" class="nav-link sidebar-item" data-label="Inicio">
-            <i class="fa-solid fa-house sidebar-icon"></i>
-            <span class="sidebar-label">Inicio</span>
-        </a>
-
-        <a href="/sobre-mi/sobre-mi.html" class="nav-link sidebar-item" data-label="Sobre mí">
-            <i class="fa-solid fa-user sidebar-icon"></i>
-            <span class="sidebar-label">Información sobre mí</span>
-        </a>
-
-        <a href="/hablame-de-ti/hablame-de-ti.html" class="nav-link sidebar-item" data-label="Conociéndote">
-            <i class="fa-solid fa-comments sidebar-icon"></i>
-            <span class="sidebar-label">Conociéndote</span>
-        </a>
-
-        <a href="/reglas-clase/reglas.html" class="nav-link sidebar-item" data-label="Reglas de la clase">
-            <i class="fa-solid fa-scale-balanced sidebar-icon"></i>
-            <span class="sidebar-label">Reglas de la clase</span>
-        </a>
-
-        <button class="nav-link sidebar-item toggle-btn"
-                onclick="toggleMenu('proyectos')"
-                aria-expanded="false" aria-controls="proyectos"
-                data-label="Proyectos Finales">
-            <i class="fa-solid fa-folder-open sidebar-icon"></i>
-            <span class="sidebar-label">Proyectos Finales</span>
-            <i class="fa-solid fa-chevron-down sidebar-chevron"></i>
-        </button>
-        <div id="proyectos" class="submenu">
-            <a href="/Proyectos/generales.html" class="nav-link sidebar-item sidebar-sub" data-label="Especificaciones">
-                <i class="fa-solid fa-file-lines sidebar-icon"></i>
-                <span class="sidebar-label">Especificaciones generales</span>
-            </a>
-            <a href="/Proyectos/proyecto1.html" class="nav-link sidebar-item sidebar-sub" data-label="Proyecto 1">
-                <i class="fa-solid fa-file-code sidebar-icon"></i>
-                <span class="sidebar-label">Proyecto 1</span>
-            </a>
-            <a href="/Proyectos/proyecto2.html" class="nav-link sidebar-item sidebar-sub" data-label="Proyecto 2">
-                <i class="fa-solid fa-file-code sidebar-icon"></i>
-                <span class="sidebar-label">Proyecto 2</span>
-            </a>
-            <a href="/Proyectos/proyecto3.html" class="nav-link sidebar-item sidebar-sub" data-label="Proyecto 3">
-                <i class="fa-solid fa-file-code sidebar-icon"></i>
-                <span class="sidebar-label">Proyecto 3</span>
-            </a>
-            <a href="/Proyectos/proyecto4.html" class="nav-link sidebar-item sidebar-sub" data-label="Proyecto 4">
-                <i class="fa-solid fa-file-code sidebar-icon"></i>
-                <span class="sidebar-label">Proyecto 4</span>
-            </a>
-        </div>
-
-        <button class="nav-link sidebar-item toggle-btn"
-                onclick="toggleMenu('diagnostico')"
-                aria-expanded="false" aria-controls="diagnostico"
-                data-label="Diagnóstico">
-            <i class="fa-solid fa-clipboard-question sidebar-icon"></i>
-            <span class="sidebar-label">Actividad de diagnóstico</span>
-            <i class="fa-solid fa-chevron-down sidebar-chevron"></i>
-        </button>
-        <div id="diagnostico" class="submenu">
-            <a href="/actividad-diagnostico/diagnostico_2026.html" class="nav-link sidebar-item sidebar-sub" data-label="Instrucciones">
-                <i class="fa-solid fa-file-lines sidebar-icon"></i>
-                <span class="sidebar-label">Instrucciones</span>
-            </a>
-            <a href="/actividad-diagnostico/diagnostico_2026_resuelta.html" class="nav-link sidebar-item sidebar-sub" data-label="Resuelta">
-                <i class="fa-solid fa-circle-check sidebar-icon"></i>
-                <span class="sidebar-label">Versión resuelta</span>
-            </a>
-        </div>
-
-        <a href="/complejidad/complejidad.html" class="nav-link sidebar-item" data-label="Big O">
-            <i class="fa-solid fa-infinity sidebar-icon"></i>
-            <span class="sidebar-label">Notación Big O</span>
-        </a>
-
-        <button class="nav-link sidebar-item toggle-btn"
-                onclick="toggleMenu('estructuras')"
-                aria-expanded="false" aria-controls="estructuras"
-                data-label="Estructuras de Datos">
-            <i class="fa-solid fa-database sidebar-icon"></i>
-            <span class="sidebar-label">Estructuras de Datos</span>
-            <i class="fa-solid fa-chevron-down sidebar-chevron"></i>
-        </button>
-        <div id="estructuras" class="submenu">
-            <a href="/estructuras-datos/matrices.html" class="nav-link sidebar-item sidebar-sub" data-label="Matrices">
-                <i class="fa-solid fa-table-cells sidebar-icon"></i>
-                <span class="sidebar-label">Matrices (Arreglos)</span>
-            </a>
-            <a href="/estructuras-datos/pilas.html" class="nav-link sidebar-item sidebar-sub" data-label="Pilas">
-                <i class="fa-solid fa-layer-group sidebar-icon"></i>
-                <span class="sidebar-label">Pilas</span>
-            </a>
-            <a href="/estructuras-datos/colas.html" class="nav-link sidebar-item sidebar-sub" data-label="Colas">
-                <i class="fa-solid fa-list sidebar-icon"></i>
-                <span class="sidebar-label">Colas</span>
-            </a>
-            <a href="/estructuras-datos/listas-enlazadas.html" class="nav-link sidebar-item sidebar-sub" data-label="Listas enlazadas">
-                <i class="fa-solid fa-link sidebar-icon"></i>
-                <span class="sidebar-label">Listas enlazadas</span>
-            </a>
-            <a href="/estructuras-datos/listas-doblemente-enlazadas.html" class="nav-link sidebar-item sidebar-sub" data-label="L. Doble">
-                <i class="fa-solid fa-right-left sidebar-icon"></i>
-                <span class="sidebar-label">Listas doblemente enlazadas</span>
-            </a>
-            <a href="/estructuras-datos/listas-circulares.html" class="nav-link sidebar-item sidebar-sub" data-label="L. Circulares">
-                <i class="fa-solid fa-circle-nodes sidebar-icon"></i>
-                <span class="sidebar-label">Listas circulares</span>
-            </a>
-            <a href="/estructuras-datos/arboles.html" class="nav-link sidebar-item sidebar-sub" data-label="Árboles">
-                <i class="fa-solid fa-sitemap sidebar-icon"></i>
-                <span class="sidebar-label">Árboles</span>
-            </a>
-            <a href="/estructuras-datos/grafos.html" class="nav-link sidebar-item sidebar-sub" data-label="Grafos">
-                <i class="fa-solid fa-diagram-project sidebar-icon"></i>
-                <span class="sidebar-label">Grafos</span>
-            </a>
-            <a href="/estructuras-datos/tablas-hash.html" class="nav-link sidebar-item sidebar-sub" data-label="Tablas Hash">
-                <i class="fa-solid fa-hashtag sidebar-icon"></i>
-                <span class="sidebar-label">Tablas Hash</span>
-            </a>
-        </div>
-
-        <button class="nav-link sidebar-item toggle-btn"
-                onclick="toggleMenu('ordenamiento')"
-                aria-expanded="false" aria-controls="ordenamiento"
-                data-label="Ordenamiento">
-            <i class="fa-solid fa-sort sidebar-icon"></i>
-            <span class="sidebar-label">Métodos de ordenamiento</span>
-            <i class="fa-solid fa-chevron-down sidebar-chevron"></i>
-        </button>
-        <div id="ordenamiento" class="submenu">
-            <a href="/metodos-ordenamiento/bubble-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Bubble Sort">
-                <i class="fa-solid fa-water sidebar-icon"></i>
-                <span class="sidebar-label">Bubble Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/selection-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Selection Sort">
-                <i class="fa-solid fa-hand-pointer sidebar-icon"></i>
-                <span class="sidebar-label">Selection Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/insertion-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Insertion Sort">
-                <i class="fa-solid fa-right-to-bracket sidebar-icon"></i>
-                <span class="sidebar-label">Insertion Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/merge-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Merge Sort">
-                <i class="fa-solid fa-code-merge sidebar-icon"></i>
-                <span class="sidebar-label">Merge Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/quick-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Quick Sort">
-                <i class="fa-solid fa-bolt sidebar-icon"></i>
-                <span class="sidebar-label">Quick Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/heap-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Heap Sort">
-                <i class="fa-solid fa-arrow-up-wide-short sidebar-icon"></i>
-                <span class="sidebar-label">Heap Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/counting-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Counting Sort">
-                <i class="fa-solid fa-calculator sidebar-icon"></i>
-                <span class="sidebar-label">Counting Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/radix-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Radix Sort">
-                <i class="fa-solid fa-terminal sidebar-icon"></i>
-                <span class="sidebar-label">Radix Sort</span>
-            </a>
-            <a href="/metodos-ordenamiento/shell-sort.html" class="nav-link sidebar-item sidebar-sub" data-label="Shell Sort">
-                <i class="fa-solid fa-align-justify sidebar-icon"></i>
-                <span class="sidebar-label">Shell Sort</span>
-            </a>
-        </div>
-
-        <a href="/tarea-1/tarea1.html" class="nav-link sidebar-item" data-label="Tarea 1">
-            <i class="fa-solid fa-book-open sidebar-icon"></i>
-            <span class="sidebar-label">Tarea 1</span>
-        </a>
-
-        <a href="/Recursividad/recursividad.html" class="nav-link sidebar-item" data-label="Recursividad">
-            <i class="fa-solid fa-arrows-rotate sidebar-icon"></i>
-            <span class="sidebar-label">Recursividad</span>
-        </a>
-
-    </nav>
-</div>
-
-<button id="sidebar-open-btn" class="sidebar-open-btn"
-        aria-label="Abrir menú" title="Abrir menú">
-    <i class="fa-solid fa-bars"></i>
-</button>
+</aside>
