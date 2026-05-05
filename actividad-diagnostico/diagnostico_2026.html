@@ -120,16 +120,6 @@
         <section class="mb-5">
             <h2>Estructura de la base de datos</h2>
             <p>Se propone la siguiente tabla MySQL para persistir las tareas:</p>
-            <pre class="bg-light p-3 rounded"><code>CREATE DATABASE IF NOT EXISTS todo_app;
-USE todo_app;
-
-CREATE TABLE tareas (
-    id          INT          NOT NULL AUTO_INCREMENT,
-    descripcion VARCHAR(255) NOT NULL,
-    completada  TINYINT(1)   NOT NULL DEFAULT 0,
-    creada_en   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);</code></pre>
             <div class="table-responsive mt-3">
                 <table class="table table-bordered align-middle text-center">
                     <thead class="table-dark">
@@ -142,7 +132,7 @@ CREATE TABLE tareas (
                     <tbody>
                         <tr>
                             <td><code>id</code></td>
-                            <td><code>INT AUTO_INCREMENT</code></td>
+                            <td><code>INT AUTO_INCREMENT, PK</code></td>
                             <td class="text-start">Identificador único de cada tarea.</td>
                         </tr>
                         <tr>
