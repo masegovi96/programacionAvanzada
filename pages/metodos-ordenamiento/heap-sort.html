@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Heap Sort | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Heap Sort</h1>
+
+        <section class="mb-4">
+            <h2>¿Qué es el Heap Sort?</h2>
+            <p>Heap Sort (Ordenamiento por montículos) es un algoritmo de ordenamiento basado en un árbol binario
+                llamado heap. Utiliza la propiedad del heap para construir un árbol donde el nodo raíz es el mayor
+                (max-heap) o el menor (min-heap), y luego intercambia la raíz con el último elemento, reduciendo el
+                tamaño del heap y repitiendo el proceso.</p>
+        </section>
+
+        <section class="mb-4">
+            <h2>¿Cómo funciona Heap Sort?</h2>
+            <ol>
+                <li>Construir un max-heap a partir del arreglo.</li>
+                <li>Intercambiar el elemento raíz (el mayor) con el último elemento del heap.</li>
+                <li>Reducir el tamaño del heap y aplicar heapify para restaurar la propiedad del heap.</li>
+                <li>Repetir hasta que el heap tenga un solo elemento.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Pasos del Algoritmo (Detallado)</h2>
+            <ol>
+                <li>Construir un max-heap desde el arreglo.</li>
+                <li>Intercambiar el primer elemento (máximo) con el último elemento del arreglo.</li>
+                <li>Reducir el tamaño del heap y aplicar heapify al subárbol afectado.</li>
+                <li>Repetir hasta que el arreglo esté completamente ordenado.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Caso</th>
+                        <th>Comparaciones</th>
+                        <th>Complejidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Peor caso</strong></td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mejor caso</strong></td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Promedio</strong></td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li><strong>Espacio adicional:</strong> O(1) (ordenamiento in-place).</li>
+                <li><strong>Estable:</strong> No (puede cambiar el orden relativo de elementos iguales).</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Ventajas</h2>
+            <ul>
+                <li>Muy eficiente para listas grandes.</li>
+                <li>No requiere memoria adicional significativa.</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Desventajas</h2>
+            <ul>
+                <li>No es estable.</li>
+                <li>Más lento que Quick Sort en la práctica para la mayoría de los casos.</li>
+            </ul>
+        </section>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animationModal">Ver
+                animación</button>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#phpExampleModal">Ejemplo en
+                PHP</button>
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#javascriptExampleModal">Ejemplo en
+                JavaScript</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#pythonExampleModal">Ejemplo en
+                Python</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="animationModal" tabindex="-1" aria-labelledby="animationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="animationModalLabel">Animación: Cómo funciona el Heap Sort</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="heapSortAnimation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="phpExampleModal" tabindex="-1" aria-labelledby="phpExampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phpExampleModalLabel">Ejemplo en PHP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-php">
+function heapify(&$arr, $n, $i) {
+    $largest = $i;
+    $left = 2 * $i + 1;
+    $right = 2 * $i + 2;
+
+    if ($left < $n && $arr[$left] > $arr[$largest]) {
+        $largest = $left;
+    }
+
+    if ($right < $n && $arr[$right] > $arr[$largest]) {
+        $largest = $right;
+    }
+
+    if ($largest != $i) {
+        $temp = $arr[$i];
+        $arr[$i] = $arr[$largest];
+        $arr[$largest] = $temp;
+
+        heapify($arr, $n, $largest);
+    }
+}
+
+function heapSort(&$arr) {
+    $n = count($arr);
+
+    for ($i = floor($n / 2) - 1; $i >= 0; $i--) {
+        heapify($arr, $n, $i);
+    }
+
+    for ($i = $n - 1; $i > 0; $i--) {
+        $temp = $arr[0];
+        $arr[0] = $arr[$i];
+        $arr[$i] = $temp;
+
+        heapify($arr, $i, 0);
+    }
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="javascriptExampleModal" tabindex="-1" aria-labelledby="javascriptExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="javascriptExampleModalLabel">Ejemplo en JavaScript</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-javascript">
+function heapify(arr, n, i) {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+    }
+
+    if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+    }
+
+    if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapify(arr, n, largest);
+    }
+}
+
+function heapSort(arr) {
+    const n = arr.length;
+
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        heapify(arr, n, i);
+    }
+
+    for (let i = n - 1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        heapify(arr, i, 0);
+    }
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pythonExampleModal" tabindex="-1" aria-labelledby="pythonExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pythonExampleModalLabel">Ejemplo en Python</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-python">
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/sort-animations.js"></script>
+</body>
+
+</html>

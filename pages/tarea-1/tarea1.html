@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Tarea 1 | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-2">Tarea 1: Caso Real</h1>
+
+        <section class="mb-4">
+            <h2>¿En qué consiste?</h2>
+            <p>
+                Se te asigna un <strong>caso del mundo real</strong>. Debes analizar el problema,
+                elegir la <em>estructura de datos</em> y el <em>algoritmo de ordenamiento</em> más adecuados,
+                y <strong>explicar y justificar tus decisiones</strong> en un video.
+            </p>
+            <p>
+                El caso describe el sistema y las operaciones que debe soportar,
+                pero <strong>no te dice qué usar</strong>. Eso lo decides tú, y debes poder defenderlo.
+            </p>
+        </section>
+
+        <section class="mb-4">
+            <h2>Tu caso asignado</h2>
+            <p>Haz clic en tu número para ver el enunciado. Haz clic de nuevo o en la <strong>×</strong> para cerrarlo.</p>
+
+            <div class="case-btn-grid" id="caseBtnGrid"></div>
+            <div id="caseDisplay" class="case-display mt-3"></div>
+
+            <div class="alert alert-info mt-3" role="alert">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                Si tienes dudas sobre qué número te corresponde, consulta con el docente.
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2>Entregable</h2>
+            <div class="pregunta-card">
+                <div class="pregunta-num"><i class="fa-solid fa-video"></i></div>
+                <div>
+                    <div class="pregunta-texto"><strong>Video explicativo</strong> <span class="fw-normal text-muted">(3–5 min)</span></div>
+                    <div class="pregunta-sub">
+                        <p class="mb-2">Graba un video donde <strong>tú mismo expliques</strong> tu caso y tus decisiones de diseño.</p>
+                        <p class="mb-0">Sube el video a YouTube (privado o no listado) o Google Drive, y coloca el enlace en un <code>README.md</code> dentro de una carpeta llamada <code>Tarea 1</code> en tu repositorio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2>Entrega</h2>
+            <ul>
+                <li>Carpeta <code>Tarea 1</code> en tu repositorio de GitHub del curso.</li>
+                <li>Archivo <code>README.md</code> con el enlace al video.</li>
+                <li>Commit con el mensaje: <code>feat: tarea 1 caso real</code>.</li>
+                <li>Entrega el enlace del repositorio en Classroom antes de la fecha límite.</li>
+            </ul>
+            <div class="alert alert-warning mt-3" role="alert">
+                <strong>Importante:</strong> Se revisarán los <em>logs</em> de Git para validar la hora de entrega.
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
+
+</html>
+

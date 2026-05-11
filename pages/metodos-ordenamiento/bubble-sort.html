@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Bubble Sort | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Bubble Sort</h1>
+
+        <section class="mb-4">
+            <h2>¿Qué es el Bubble Sort?</h2>
+            <p>Bubble Sort (Ordenamiento de burbuja) es un algoritmo de ordenamiento simple pero ineficiente para listas
+                grandes. Funciona al recorrer repetidamente la lista, comparando elementos adyacentes e
+                intercambiándolos si están en el orden incorrecto. Al final de cada iteración, el elemento más grande
+                "burbujea" hacia el final de la lista.</p>
+        </section>
+
+        <section class="mb-4">
+            <h2>¿Cómo funciona Bubble Sort?</h2>
+            <ol>
+                <li>Se recorren los elementos del arreglo de izquierda a derecha.</li>
+                <li>Si el elemento actual es mayor que el siguiente, se intercambian.</li>
+                <li>Este proceso se repite hasta que no se requieran más intercambios, lo que significa que el arreglo
+                    está ordenado.</li>
+                <li>Con cada pasada, el número de elementos a comparar se reduce porque los más grandes ya están
+                    colocados al final.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Pasos del Algoritmo (Detallado)</h2>
+            <ol>
+                <li>Repetir (n - 1) veces:</li>
+                <ul>
+                    <li>Desde el inicio hasta el último elemento no ordenado:</li>
+                    <ul>
+                        <li>Comparar el elemento actual con el siguiente.</li>
+                        <li>Si están en el orden incorrecto, intercambiarlos.</li>
+                    </ul>
+                </ul>
+                <li>Si no hubo intercambios en una pasada, el arreglo está ordenado.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Caso</th>
+                        <th>Comparaciones e intercambios</th>
+                        <th>Complejidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Peor caso</strong></td>
+                        <td>Lista invertida</td>
+                        <td>O(n²)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mejor caso</strong></td>
+                        <td>Lista ya ordenada</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Promedio</strong></td>
+                        <td>Lista aleatoria</td>
+                        <td>O(n²)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li><strong>Espacio adicional:</strong> O(1) (ordenamiento in-place)</li>
+                <li><strong>Estable:</strong> Sí (no cambia el orden relativo de elementos iguales)</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Ventajas</h2>
+            <ul>
+                <li>Fácil de implementar.</li>
+                <li>Intuitivo y útil para fines educativos.</li>
+                <li>No requiere memoria adicional.</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Desventajas</h2>
+            <ul>
+                <li>Muy ineficiente en listas grandes.</li>
+                <li>Existen algoritmos mucho más rápidos como Merge Sort, Quick Sort o Heap Sort.</li>
+            </ul>
+        </section>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animationModal">Ver
+                animación</button>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#phpExampleModal">Ejemplo en
+                PHP</button>
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#javascriptExampleModal">Ejemplo en
+                JavaScript</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#pythonExampleModal">Ejemplo en
+                Python</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="animationModal" tabindex="-1" aria-labelledby="animationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="animationModalLabel">Animación: Cómo funciona el Bubble Sort</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="bubbleSortAnimation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="phpExampleModal" tabindex="-1" aria-labelledby="phpExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phpExampleModalLabel">Ejemplo en PHP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-php">
+function bubbleSort($arr) {
+    $n = count($arr);
+    for ($i = 0; $i < $n - 1; $i++) {
+        for ($j = 0; $j < $n - $i - 1; $j++) {
+            if ($arr[$j] > $arr[$j + 1]) {
+                $temp = $arr[$j];
+                $arr[$j] = $arr[$j + 1];
+                $arr[$j + 1] = $temp;
+            }
+        }
+    }
+    return $arr;
+}
+                        </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="javascriptExampleModal" tabindex="-1" aria-labelledby="javascriptExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="javascriptExampleModalLabel">Ejemplo en
+                        JavaScript</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-javascript">
+function bubbleSort(arr) {
+    let n = arr.length;
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            }
+        }
+    }
+    return arr;
+}
+                        </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pythonExampleModal" tabindex="-1" aria-labelledby="pythonExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pythonExampleModalLabel">Ejemplo en Python</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-python">
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+                        </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/sort-animations.js"></script>
+</body>
+
+</html>

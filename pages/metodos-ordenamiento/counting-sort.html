@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Counting Sort | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Counting Sort</h1>
+
+        <section class="mb-4">
+            <h2>¿Qué es el Counting Sort?</h2>
+            <p>Counting Sort (Ordenamiento por conteo) es un algoritmo de ordenamiento no comparativo que funciona
+                contando la frecuencia de cada elemento en un rango específico y luego utilizando esa información para
+                construir el arreglo ordenado. Es eficiente para datos con un rango limitado de valores.</p>
+        </section>
+
+        <section class="mb-4">
+            <h2>¿Cómo funciona Counting Sort?</h2>
+            <ol>
+                <li>Determinar el rango de los valores en el arreglo.</li>
+                <li>Construir un arreglo de conteo para almacenar la frecuencia de cada valor.</li>
+                <li>Modificar el arreglo de conteo para que cada posición contenga la suma acumulativa de las
+                    frecuencias.</li>
+                <li>Construir el arreglo ordenado utilizando el arreglo de conteo.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Pasos del Algoritmo (Detallado)</h2>
+            <ol>
+                <li>Encontrar el valor máximo en el arreglo.</li>
+                <li>Inicializar un arreglo de conteo con ceros.</li>
+                <li>Contar la frecuencia de cada elemento en el arreglo.</li>
+                <li>Calcular la suma acumulativa en el arreglo de conteo.</li>
+                <li>Construir el arreglo ordenado utilizando el arreglo de conteo.</li>
+            </ol>
+        </section>
+
+        <section class="mb-4">
+            <h2>Complejidad</h2>
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Caso</th>
+                        <th>Complejidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Peor caso</strong></td>
+                        <td>O(n + k)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mejor caso</strong></td>
+                        <td>O(n + k)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Promedio</strong></td>
+                        <td>O(n + k)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>donde <strong>n</strong> es el número de elementos en el arreglo y <strong>k</strong> es el rango de los
+                valores.</p>
+        </section>
+
+        <section class="mb-4">
+            <h2>Ventajas</h2>
+            <ul>
+                <li>Muy eficiente para datos con un rango limitado de valores.</li>
+                <li>No realiza comparaciones entre elementos.</li>
+                <li>Es estable si se implementa correctamente.</li>
+            </ul>
+        </section>
+
+        <section class="mb-4">
+            <h2>Desventajas</h2>
+            <ul>
+                <li>No es adecuado para datos con un rango muy amplio.</li>
+                <li>Requiere memoria adicional para el arreglo de conteo.</li>
+                <li>No es un algoritmo in-place.</li>
+            </ul>
+        </section>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animationModal">Ver
+                animación</button>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#phpExampleModal">Ejemplo en
+                PHP</button>
+            <button class="btn btn-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#javascriptExampleModal">Ejemplo en
+                JavaScript</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#pythonExampleModal">Ejemplo en
+                Python</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="animationModal" tabindex="-1" aria-labelledby="animationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="animationModalLabel">Animación: Cómo funciona el Counting Sort</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="countingSortAnimation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="phpExampleModal" tabindex="-1" aria-labelledby="phpExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phpExampleModalLabel">Ejemplo en PHP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-php">
+function countingSort($arr) {
+    $max = max($arr);
+    $count = array_fill(0, $max + 1, 0);
+
+    foreach ($arr as $num) {
+        $count[$num]++;
+    }
+
+    $sorted = [];
+    for ($i = 0; $i <= $max; $i++) {
+        while ($count[$i] > 0) {
+            $sorted[] = $i;
+            $count[$i]--;
+        }
+    }
+
+    return $sorted;
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="javascriptExampleModal" tabindex="-1" aria-labelledby="javascriptExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="javascriptExampleModalLabel">Ejemplo en JavaScript</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-javascript">
+function countingSort(arr) {
+    const max = Math.max(...arr);
+    const count = new Array(max + 1).fill(0);
+
+    for (const num of arr) {
+        count[num]++;
+    }
+
+    const sorted = [];
+    for (let i = 0; i <= max; i++) {
+        while (count[i] > 0) {
+            sorted.push(i);
+            count[i]--;
+        }
+    }
+
+    return sorted;
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pythonExampleModal" tabindex="-1" aria-labelledby="pythonExampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pythonExampleModalLabel">Ejemplo en Python</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <pre class="d-inline-block text-start"><code class="language-python">
+def counting_sort(arr):
+    max_val = max(arr)
+    count = [0] * (max_val + 1)
+
+    for num in arr:
+        count[num] += 1
+
+    sorted_arr = []
+    for i, freq in enumerate(count):
+        sorted_arr.extend([i] * freq)
+
+    return sorted_arr
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/sort-animations.js"></script>
+</body>
+
+</html>
