@@ -12,35 +12,30 @@
 
     <nav class="sidebar-nav" id="sidebar-nav">
         <ul>
-
             <li class="nav-item">
                 <a href="/index.html" class="nav-link">
                     <i class="fa-solid fa-house"></i>
                     <span class="nav-label">Inicio</span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="/pages/sobre-mi/sobre-mi.html" class="nav-link">
                     <i class="fa-solid fa-user"></i>
                     <span class="nav-label">Información sobre mí</span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="/pages/hablame-de-ti/hablame-de-ti.html" class="nav-link">
                     <i class="fa-solid fa-comments"></i>
                     <span class="nav-label">Conociéndote</span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="/pages/reglas-clase/reglas.html" class="nav-link">
                     <i class="fa-solid fa-scale-balanced"></i>
                     <span class="nav-label">Reglas de la clase</span>
                 </a>
             </li>
-
             <li class="nav-item accordion-item">
                 <button class="nav-link accordion-toggle" onclick="toggleMenu('proyectos')" aria-expanded="false"
                     aria-controls="proyectos">
@@ -81,195 +76,220 @@
                     </li>
                 </ul>
             </li>
-
             <li class="nav-item">
                 <a href="/pages/actividad-diagnostico/diagnostico_2026.html" class="nav-link">
                     <i class="fa-solid fa-clipboard-question"></i>
                     <span class="nav-label">Actividad de diagnóstico</span>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a href="/pages/complejidad/complejidad.html" class="nav-link">
-                    <i class="fa-solid fa-infinity"></i>
-                    <span class="nav-label">Notación Big O</span>
-                </a>
-            </li>
-
             <li class="nav-item accordion-item">
-                <button class="nav-link accordion-toggle" onclick="toggleMenu('estructuras')" aria-expanded="false"
-                    aria-controls="estructuras">
-                    <i class="fa-solid fa-database"></i>
-                    <span class="nav-label">Estructuras de Datos</span>
+                <button class="nav-link accordion-toggle" onclick="toggleMenu('introduccion')" aria-expanded="false"
+                    aria-controls="introduccion">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <span class="nav-label">Introducción</span>
                     <i class="fa-solid fa-chevron-down accordion-icon"></i>
                 </button>
-                <ul id="estructuras" class="submenu">
+                <ul id="introduccion" class="submenu">
                     <li class="nav-item">
-                        <a href="/pages/estructuras-datos/matrices.html" class="nav-link">
-                            <i class="fa-solid fa-table-cells"></i>
-                            <span class="nav-label">Matrices (Arreglos)</span>
+                        <a href="/pages/complejidad/complejidad.html" class="nav-link">
+                            <i class="fa-solid fa-infinity"></i>
+                            <span class="nav-label">Notación Big O</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/pilas.html" class="nav-link">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span class="nav-label">Pilas</span>
-                        </a>
+                    <li class="nav-item accordion-item">
+                        <button class="nav-link accordion-toggle" onclick="toggleMenu('estructuras')"
+                            aria-expanded="false" aria-controls="estructuras">
+                            <i class="fa-solid fa-database"></i>
+                            <span class="nav-label">Estructuras de Datos</span>
+                            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <ul id="estructuras" class="submenu">
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/matrices.html" class="nav-link">
+                                    <i class="fa-solid fa-table-cells"></i>
+                                    <span class="nav-label">Matrices (Arreglos)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/pilas.html" class="nav-link">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                    <span class="nav-label">Pilas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/colas.html" class="nav-link">
+                                    <i class="fa-solid fa-list"></i>
+                                    <span class="nav-label">Colas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/listas-enlazadas.html" class="nav-link">
+                                    <i class="fa-solid fa-link"></i>
+                                    <span class="nav-label">Listas enlazadas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/listas-doblemente-enlazadas.html" class="nav-link">
+                                    <i class="fa-solid fa-right-left"></i>
+                                    <span class="nav-label">Listas doblemente enlazadas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/listas-circulares.html" class="nav-link">
+                                    <i class="fa-solid fa-circle-nodes"></i>
+                                    <span class="nav-label">Listas circulares</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/arboles.html" class="nav-link">
+                                    <i class="fa-solid fa-sitemap"></i>
+                                    <span class="nav-label">Árboles</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/grafos.html" class="nav-link">
+                                    <i class="fa-solid fa-diagram-project"></i>
+                                    <span class="nav-label">Grafos</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/estructuras-datos/tablas-hash.html" class="nav-link">
+                                    <i class="fa-solid fa-hashtag"></i>
+                                    <span class="nav-label">Tablas Hash</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item accordion-item">
+                        <button class="nav-link accordion-toggle" onclick="toggleMenu('ordenamiento')"
+                            aria-expanded="false" aria-controls="ordenamiento">
+                            <i class="fa-solid fa-sort"></i>
+                            <span class="nav-label">Métodos de ordenamiento</span>
+                            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <ul id="ordenamiento" class="submenu">
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/bubble-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-water"></i>
+                                    <span class="nav-label">Bubble Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/selection-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-hand-pointer"></i>
+                                    <span class="nav-label">Selection Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/insertion-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                    <span class="nav-label">Insertion Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/merge-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-code-merge"></i>
+                                    <span class="nav-label">Merge Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/quick-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    <span class="nav-label">Quick Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/heap-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-arrow-up-wide-short"></i>
+                                    <span class="nav-label">Heap Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/counting-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-calculator"></i>
+                                    <span class="nav-label">Counting Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/radix-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-terminal"></i>
+                                    <span class="nav-label">Radix Sort</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/metodos-ordenamiento/shell-sort.html" class="nav-link">
+                                    <i class="fa-solid fa-align-justify"></i>
+                                    <span class="nav-label">Shell Sort</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="/pages/estructuras-datos/colas.html" class="nav-link">
-                            <i class="fa-solid fa-list"></i>
-                            <span class="nav-label">Colas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/listas-enlazadas.html" class="nav-link">
-                            <i class="fa-solid fa-link"></i>
-                            <span class="nav-label">Listas enlazadas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/listas-doblemente-enlazadas.html" class="nav-link">
-                            <i class="fa-solid fa-right-left"></i>
-                            <span class="nav-label">Listas doblemente enlazadas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/listas-circulares.html" class="nav-link">
-                            <i class="fa-solid fa-circle-nodes"></i>
-                            <span class="nav-label">Listas circulares</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/arboles.html" class="nav-link">
-                            <i class="fa-solid fa-sitemap"></i>
-                            <span class="nav-label">Árboles</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/grafos.html" class="nav-link">
-                            <i class="fa-solid fa-diagram-project"></i>
-                            <span class="nav-label">Grafos</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/estructuras-datos/tablas-hash.html" class="nav-link">
-                            <i class="fa-solid fa-hashtag"></i>
-                            <span class="nav-label">Tablas Hash</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="nav-item accordion-item">
-                <button class="nav-link accordion-toggle" onclick="toggleMenu('ordenamiento')" aria-expanded="false"
-                    aria-controls="ordenamiento">
-                    <i class="fa-solid fa-sort"></i>
-                    <span class="nav-label">Métodos de ordenamiento</span>
-                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
-                </button>
-                <ul id="ordenamiento" class="submenu">
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/bubble-sort.html" class="nav-link">
-                            <i class="fa-solid fa-water"></i>
-                            <span class="nav-label">Bubble Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/selection-sort.html" class="nav-link">
-                            <i class="fa-solid fa-hand-pointer"></i>
-                            <span class="nav-label">Selection Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/insertion-sort.html" class="nav-link">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            <span class="nav-label">Insertion Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/merge-sort.html" class="nav-link">
-                            <i class="fa-solid fa-code-merge"></i>
-                            <span class="nav-label">Merge Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/quick-sort.html" class="nav-link">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span class="nav-label">Quick Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/heap-sort.html" class="nav-link">
-                            <i class="fa-solid fa-arrow-up-wide-short"></i>
-                            <span class="nav-label">Heap Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/counting-sort.html" class="nav-link">
-                            <i class="fa-solid fa-calculator"></i>
-                            <span class="nav-label">Counting Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/radix-sort.html" class="nav-link">
-                            <i class="fa-solid fa-terminal"></i>
-                            <span class="nav-label">Radix Sort</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/metodos-ordenamiento/shell-sort.html" class="nav-link">
-                            <i class="fa-solid fa-align-justify"></i>
-                            <span class="nav-label">Shell Sort</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="nav-item">
-                <a href="/pages/tarea-1/tarea1.html" class="nav-link">
-                    <i class="fa-solid fa-book-open"></i>
-                    <span class="nav-label">Tarea 1</span>
-                </a>
-            </li>
-
-            <li class="nav-item accordion-item">
-                <button class="nav-link accordion-toggle" onclick="toggleMenu('recursividad')" aria-expanded="false"
-                    aria-controls="recursividad">
-                    <i class="fa-solid fa-arrows-rotate"></i>
-                    <span class="nav-label">Recursividad</span>
-                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
-                </button>
-                <ul id="recursividad" class="submenu">
-                    <li class="nav-item">
-                        <a href="/pages/recursividad/recursividad.html" class="nav-link">
-                            <i class="fa-solid fa-book"></i>
-                            <span class="nav-label">Definición</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/recursividad/ejemplo.html" class="nav-link">
-                            <i class="fa-solid fa-file-code"></i>
-                            <span class="nav-label">Ejemplo</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pages/recursividad/tarea-2/tarea2.html" class="nav-link">
+                        <a href="/pages/tarea-1/tarea1.html" class="nav-link">
                             <i class="fa-solid fa-book-open"></i>
-                            <span class="nav-label">Tarea 2</span>
+                            <span class="nav-label">Tarea 1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item accordion-item">
+                        <button class="nav-link accordion-toggle" onclick="toggleMenu('recursividad')"
+                            aria-expanded="false" aria-controls="recursividad">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <span class="nav-label">Recursividad</span>
+                            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                        </button>
+                        <ul id="recursividad" class="submenu">
+                            <li class="nav-item">
+                                <a href="/pages/recursividad/recursividad.html" class="nav-link">
+                                    <i class="fa-solid fa-book"></i>
+                                    <span class="nav-label">Definición</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/recursividad/ejemplo.html" class="nav-link">
+                                    <i class="fa-solid fa-file-code"></i>
+                                    <span class="nav-label">Ejemplo</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/recursividad/tarea-2/tarea2.html" class="nav-link">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    <span class="nav-label">Tarea 2</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pages/recursividad/participacion-2/participacion2.html" class="nav-link">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    <span class="nav-label">Actividad por participación 2</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item accordion-item">
+                <button class="nav-link accordion-toggle" onclick="toggleMenu('unidad1')" aria-expanded="false"
+                    aria-controls="unidad1">
+                    <i class="fa-solid fa-globe"></i>
+                    <span class="nav-label">Unidad 1. JS asíncrono y HTTP</span>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <ul id="unidad1" class="submenu">
+                    <li class="nav-item">
+                        <a href="/pages/unidad1-js-asincrono/gestor-bibliotecario/gestor-bibliotecario.html"
+                            class="nav-link">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            <span class="nav-label">Proyecto Gestor Bibliotecario</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/pages/recursividad/participacion-2/participacion2.html" class="nav-link">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span class="nav-label">Actividad por participación 2</span>
+                        <a href="/pages/unidad1-js-asincrono/tarea-3/tarea3.html"
+                            class="nav-link">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            <span class="nav-label">Tarea 3: Módulo CRUD de Autores</span>
                         </a>
                     </li>
                 </ul>
             </li>
-
-
-
         </ul>
     </nav>
 
