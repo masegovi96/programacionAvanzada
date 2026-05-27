@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <script>(()=>{const base=document.querySelector('base');const isGitHubPages=window.location.hostname.endsWith('github.io');const repoName='programacionAvanzada';if(base)base.setAttribute('href',isGitHubPages?('/'+repoName+'/'):'/');document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');})();</script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
-    <title>Proyecto Gestor Bibliotecario | Programación Avanzada</title>
+    <title>Proyecto Gestor Bibliotecario | ProgramaciÃ³n Avanzada</title>
 </head>
 
 <body>
@@ -21,27 +21,27 @@
         <h1 class="text-center mb-2">Proyecto Gestor Bibliotecario</h1>
 
         <section class="mb-4">
-            <h2>Descripción del Proyecto</h2>
+            <h2>DescripciÃ³n del Proyecto</h2>
             <p>
                 El <strong>Gestor Bibliotecario</strong> es un sistema web desarrollado en PHP que permite administrar
-                el catálogo de una biblioteca. Incluye funcionalidades para registrar libros, gestionar préstamos y
-                devoluciones, así como consultar la disponibilidad del acervo desde una interfaz web. Se conecta a una
-                base de datos MySQL para persistir toda la información.
+                el catÃ¡logo de una biblioteca. Incluye funcionalidades para registrar libros, gestionar prÃ©stamos y
+                devoluciones, asÃ­ como consultar la disponibilidad del acervo desde una interfaz web. Se conecta a una
+                base de datos MySQL para persistir toda la informaciÃ³n.
             </p>
         </section>
 
         <section class="mb-4">
-            <h2>Tecnologías utilizadas</h2>
+            <h2>TecnologÃ­as utilizadas</h2>
             <ul>
-                <li><strong>PHP</strong> &mdash; Lógica del servidor y procesamiento de consultas preparadas. (Más adelante se actualizará para trabajar con peticiones HTTP asíncronas)</li>
+                <li><strong>PHP</strong> &mdash; LÃ³gica del servidor y procesamiento de consultas preparadas. (MÃ¡s adelante se actualizarÃ¡ para trabajar con peticiones HTTP asÃ­ncronas)</li>
                 <li><strong>MySQL</strong> &mdash; Base de datos relacional</li>
-                <li><strong>Javascript (Fetch API / async)</strong> &mdash; Comunicación asíncrona con el servidor. (Más adelante se actualizará para incluir esta tecnología, al día de hoy no se usa en el proyecto).</li>
+                <li><strong>Javascript (Fetch API / async)</strong> &mdash; ComunicaciÃ³n asÃ­ncrona con el servidor. (MÃ¡s adelante se actualizarÃ¡ para incluir esta tecnologÃ­a, al dÃ­a de hoy no se usa en el proyecto).</li>
                 <li><strong>HTML &amp; CSS</strong> &mdash; Interfaz de usuario</li>
             </ul>
         </section>
 
         <section class="mb-5">
-            <h2>Instrucciones de instalación y ejecución</h2>
+            <h2>Instrucciones de instalaciÃ³n y ejecuciÃ³n</h2>
             <p>Para ejecutar el proyecto necesitas un servidor local que soporte PHP y MySQL, como <strong>XAMPP</strong>.</p>
 
             <ol class="list-group list-group-numbered mb-4">
@@ -53,7 +53,7 @@
                             <a href="https://www.apachefriends.org/es/index.html" target="_blank" rel="noopener noreferrer">
                                 apachefriends.org
                             </a>
-                            e instálalo en tu equipo. Asegúrate de incluir los módulos <em>Apache</em> y <em>MySQL</em>.
+                            e instÃ¡lalo en tu equipo. AsegÃºrate de incluir los mÃ³dulos <em>Apache</em> y <em>MySQL</em>.
                         </p>
                     </div>
                 </li>
@@ -61,7 +61,7 @@
                     <div>
                         <strong>Descarga el proyecto</strong>
                         <p class="mb-0 text-muted">
-                            Descarga el archivo <code>.zip</code> del proyecto desde la tarjeta de abajo y descomprímelo.
+                            Descarga el archivo <code>.zip</code> del proyecto desde la tarjeta de abajo y descomprÃ­melo.
                         </p>
                     </div>
                 </li>
@@ -89,11 +89,11 @@
                 </li>
                 <li class="list-group-item d-flex gap-3 align-items-start">
                     <div>
-                        <strong>Configura la conexión a la base de datos</strong>
+                        <strong>Configura la conexiÃ³n a la base de datos</strong>
                         <p class="mb-0 text-muted">
-                            Abre el archivo de configuración (normalmente <code>config.php</code> o <code>conexion.php</code>)
-                            y verifica que los datos de conexión coincidan con tu entorno local
-                            (<code>host</code>, <code>usuario</code>, <code>contraseña</code> y <code>nombre de la BD</code>).
+                            Abre el archivo de configuraciÃ³n (normalmente <code>config.php</code> o <code>conexion.php</code>)
+                            y verifica que los datos de conexiÃ³n coincidan con tu entorno local
+                            (<code>host</code>, <code>usuario</code>, <code>contraseÃ±a</code> y <code>nombre de la BD</code>).
                         </p>
                     </div>
                 </li>
@@ -101,7 +101,7 @@
                     <div>
                         <strong>Inicia los servicios de XAMPP</strong>
                         <p class="mb-0 text-muted">
-                            Abre el <strong>Panel de Control de XAMPP</strong> y arranca los módulos
+                            Abre el <strong>Panel de Control de XAMPP</strong> y arranca los mÃ³dulos
                             <em>Apache</em> y <em>MySQL</em>.
                         </p>
                     </div>
@@ -130,7 +130,7 @@
                         </div>
                         <h5 class="card-title fw-semibold mb-1">gestor_bibliotecario.zip</h5>
                         <p class="card-text text-muted mb-3 small">
-                            Incluye el código fuente completo del sistema (PHP, SQL y recursos estáticos).
+                            Incluye el cÃ³digo fuente completo del sistema (PHP, SQL y recursos estÃ¡ticos).
                         </p>
                         <a href="assets/media/gestor_bibliotecario.zip" download class="btn btn-primary rounded-pill px-4">
                             <i class="fa-solid fa-download me-2"></i>Descargar proyecto
@@ -144,8 +144,8 @@
         <section class="mb-4">
             <h2>Notas importantes</h2>
             <ul>
-                <li>El proyecto fue desarrollado para ejecutarse en un entorno <strong>local con XAMPP</strong>; no está configurado para producción.</li>
-                <li>Asegúrate de que el puerto <strong>80</strong> (Apache) y el puerto <strong>3306</strong> (MySQL) estén disponibles en tu máquina.</li>
+                <li>El proyecto fue desarrollado para ejecutarse en un entorno <strong>local con XAMPP</strong>; no estÃ¡ configurado para producciÃ³n.</li>
+                <li>AsegÃºrate de que el puerto <strong>80</strong> (Apache) y el puerto <strong>3306</strong> (MySQL) estÃ©n disponibles en tu mÃ¡quina.</li>
                 <li>Si usas un sistema operativo distinto a Windows, la ruta de <code>htdocs</code> puede variar:
                     <ul>
                         <li><strong>macOS (XAMPP):</strong> <code>/Applications/XAMPP/htdocs/</code></li>
@@ -163,3 +163,5 @@
 </body>
 
 </html>
+
+

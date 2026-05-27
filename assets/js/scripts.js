@@ -20,15 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const navbarContainer = document.getElementById('navbar-container');
     if (navbarContainer) {
-        fetch('/components/navbar.html')
+        fetch('components/navbar.html')
             .then(res => res.text())
             .then(html => {
                 navbarContainer.innerHTML = html;
 
-                const currentPath = window.location.pathname;
+                const normalizePath = (path) => {
+                    if (!path) return '/';
+                    return path
+                        .replace(/\/+$/, '')
+                        .replace(/\/index\.html$/, '') || '/';
+                };
+
+                const currentPath = normalizePath(window.location.pathname);
                 navbarContainer.querySelectorAll('a.nav-link').forEach(link => {
                     const href = link.getAttribute('href');
-                    if (href && (currentPath === href || (currentPath === '/' && href === '/index.html'))) {
+                    if (!href) return;
+
+                    const targetPath = normalizePath(new URL(href, window.location.href).pathname);
+                    if (currentPath === targetPath) {
                         link.classList.add('active');
                         const parentSubmenu = link.closest('.submenu');
                         if (parentSubmenu) {
@@ -109,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const footerContainer = document.getElementById('footer-container');
     if (footerContainer) {
-        fetch('/components/footer.html')
+        fetch('components/footer.html')
             .then(res => res.text())
             .then(html => { footerContainer.innerHTML = html; })
             .catch(err => console.error('Error al cargar el footer:', err));
