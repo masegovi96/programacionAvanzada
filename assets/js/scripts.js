@@ -32,24 +32,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         .replace(/\/index\.html$/, '') || '/';
                 };
 
+                const setAccordionState = (submenu, isOpen) => {
+                    if (!submenu || !submenu.id) return;
+
+                    submenu.classList.toggle('active', isOpen);
+
+                    const btn = navbarContainer.querySelector(`[aria-controls="${submenu.id}"]`);
+                    if (!btn) return;
+
+                    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    btn.classList.toggle('active', isOpen);
+
+                    const chevron = btn.querySelector('.accordion-icon');
+                    if (chevron) chevron.style.transform = isOpen ? 'rotate(-180deg)' : '';
+                };
+
                 const currentPath = normalizePath(window.location.pathname);
                 navbarContainer.querySelectorAll('a.nav-link').forEach(link => {
                     const href = link.getAttribute('href');
                     if (!href) return;
 
-                    const targetPath = normalizePath(new URL(href, window.location.href).pathname);
+                    const targetPath = normalizePath(new URL(href, document.baseURI).pathname);
                     if (currentPath === targetPath) {
                         link.classList.add('active');
-                        const parentSubmenu = link.closest('.submenu');
-                        if (parentSubmenu) {
-                            parentSubmenu.classList.add('active');
-                            const btn = document.querySelector(`[aria-controls="${parentSubmenu.id}"]`);
-                            if (btn) {
-                                btn.setAttribute('aria-expanded', 'true');
-                                btn.classList.add('active');
-                                const chevron = btn.querySelector('.accordion-icon');
-                                if (chevron) chevron.style.transform = 'rotate(-180deg)';
-                            }
+                        let parentSubmenu = link.closest('.submenu');
+                        while (parentSubmenu) {
+                            setAccordionState(parentSubmenu, true);
+                            parentSubmenu = parentSubmenu.parentElement.closest('.submenu');
                         }
                     }
                 });
