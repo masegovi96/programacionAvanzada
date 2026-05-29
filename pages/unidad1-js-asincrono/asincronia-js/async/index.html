@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(()=>{const base=document.querySelector('base');const isGitHubPages=window.location.hostname.endsWith('github.io');const repoName='programacionAvanzada';if(base)base.setAttribute('href',isGitHubPages?('/'+repoName+'/'):'/');document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');})();</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>async / await | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5 pb-5">
+
+        <h1 class="text-center mb-2">async / await</h1>
+
+        <section class="mb-5">
+            <h2>¿Qué es async / await?</h2>
+            <p>
+                <code>async</code> y <code>await</code> son dos palabras clave introducidas en
+                ES2017 que permiten trabajar con <strong>Promises de forma más legible</strong>.
+                No reemplazan a las Promises; son una capa encima de ellas que evita el
+                encadenamiento de <code>.then()</code> y produce código que se lee de manera
+                secuencial, igual que si fuera síncrono.
+            </p>
+            <p>
+                Usando <code>fetch()</code> con <code>.then()</code> el código crece hacia la
+                derecha (callbacks anidados). Con <code>async/await</code> el mismo código crece
+                hacia abajo, que es la dirección natural de lectura.
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-lightbulb me-2" style="color:var(--accent-primary)"></i>
+                <strong>Regla de oro:</strong> <code>await</code> solo puede usarse dentro de
+                una función marcada con <code>async</code>. Una función <code>async</code> siempre
+                devuelve una Promise, aunque no haya ningún <code>await</code> dentro.
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>La palabra clave async</h2>
+            <p>
+                Colocar <code>async</code> antes de la declaración de una función la convierte en
+                una <strong>función asíncrona</strong>. Su comportamiento cambia en dos aspectos:
+            </p>
+            <ul>
+                <li>Siempre devuelve una <strong>Promise</strong>, incluso si el valor de retorno es un dato primitivo.</li>
+                <li>Habilita el uso de <code>await</code> dentro de su cuerpo.</li>
+            </ul>
+            <div class="code-block mt-3">
+<pre><span style="color:var(--text-secondary)">// Función normal — devuelve el número 42</span>
+<span class="json-bool">function</span> <span class="json-key">obtenerValor</span>() {
+  <span class="json-bool">return</span> <span class="json-number">42</span>;
+}
+
+<span style="color:var(--text-secondary)">// Función async — devuelve Promise&lt;42&gt;</span>
+<span class="json-bool">async function</span> <span class="json-key">obtenerValor</span>() {
+  <span class="json-bool">return</span> <span class="json-number">42</span>;
+}</pre>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>La palabra clave await</h2>
+            <p>
+                <code>await</code> se coloca delante de una expresión que devuelve una Promise.
+                Le indica a JavaScript que <strong>pause la ejecución de la función asíncrona</strong>
+                en ese punto hasta que la Promise se resuelva, y luego extrae el valor resultante.
+                El resto del programa (fuera de la función) sigue ejecutándose con normalidad.
+            </p>
+            <div class="highlight-box">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                <strong>Importante:</strong> <code>await</code> no bloquea el hilo principal de
+                JavaScript. Solo pausa la función <code>async</code> en la que está; el motor
+                de JavaScript continúa ejecutando cualquier otro código mientras espera la respuesta.
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>async / await vs .then()</h2>
+            <p>
+                Los dos fragmentos de código siguientes hacen exactamente lo mismo: consultan
+                un post de JSONPlaceholder e imprimen su título. La diferencia es solo de
+                legibilidad.
+            </p>
+
+            <h3 class="section-subtitle">Con .then() encadenado</h3>
+            <div class="code-block mb-4">
+<pre>fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts/1'</span>)
+  .then(<span class="json-key">response</span> => {
+    <span class="json-bool">if</span> (!response.ok) <span class="json-bool">throw new</span> Error(response.status);
+    <span class="json-bool">return</span> response.json();
+  })
+  .then(<span class="json-key">data</span> => {
+    console.log(data.title);
+  })
+  .catch(<span class="json-key">error</span> => {
+    console.error(<span class="json-string">'Error:'</span>, error);
+  });</pre>
+            </div>
+
+            <h3 class="section-subtitle">Con async / await</h3>
+            <div class="code-block mb-3">
+<pre><span class="json-bool">async function</span> <span class="json-key">obtenerPost</span>() {
+  <span class="json-bool">try</span> {
+    <span class="json-bool">const</span> response = <span class="json-bool">await</span> fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts/1'</span>);
+
+    <span class="json-bool">if</span> (!response.ok) <span class="json-bool">throw new</span> Error(response.status);
+
+    <span class="json-bool">const</span> data = <span class="json-bool">await</span> response.json();
+    console.log(data.title);
+
+  } <span class="json-bool">catch</span> (<span class="json-key">error</span>) {
+    console.error(<span class="json-string">'Error:'</span>, error);
+  }
+}
+
+obtenerPost();</pre>
+            </div>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                Con <code>async/await</code> el manejo de errores se realiza con el bloque
+                estándar <code>try / catch</code>, igual que en código síncrono, en lugar de
+                encadenar un <code>.catch()</code>.
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Ejemplos de código</h2>
+
+            <h3 class="section-subtitle">GET — Leer un recurso</h3>
+            <div class="code-block mb-4">
+<pre><span class="json-bool">async function</span> <span class="json-key">obtenerUsuario</span>(<span class="json-key">id</span>) {
+  <span class="json-bool">try</span> {
+    <span class="json-bool">const</span> response = <span class="json-bool">await</span> fetch(<span class="json-string">`https://jsonplaceholder.typicode.com/users/${id}`</span>);
+
+    <span class="json-bool">if</span> (!response.ok) <span class="json-bool">throw new</span> Error(<span class="json-string">'Usuario no encontrado'</span>);
+
+    <span class="json-bool">const</span> usuario = <span class="json-bool">await</span> response.json();
+    console.log(<span class="json-string">`Nombre: ${usuario.name} — Email: ${usuario.email}`</span>);
+
+  } <span class="json-bool">catch</span> (<span class="json-key">error</span>) {
+    console.error(error.message);
+  }
+}
+
+obtenerUsuario(<span class="json-number">1</span>);</pre>
+            </div>
+
+            <h3 class="section-subtitle">POST — Crear un recurso</h3>
+            <div class="code-block mb-4">
+<pre><span class="json-bool">async function</span> <span class="json-key">crearPost</span>(<span class="json-key">titulo</span>, <span class="json-key">contenido</span>) {
+  <span class="json-bool">try</span> {
+    <span class="json-bool">const</span> response = <span class="json-bool">await</span> fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts'</span>, {
+      <span class="json-key">method</span>: <span class="json-string">'POST'</span>,
+      <span class="json-key">headers</span>: { <span class="json-string">'Content-Type'</span>: <span class="json-string">'application/json'</span> },
+      <span class="json-key">body</span>: JSON.stringify({ <span class="json-key">title</span>: titulo, <span class="json-key">body</span>: contenido, <span class="json-key">userId</span>: <span class="json-number">1</span> })
+    });
+
+    <span class="json-bool">const</span> nuevoPost = <span class="json-bool">await</span> response.json();
+    console.log(<span class="json-string">'Creado con id:'</span>, nuevoPost.id);
+
+  } <span class="json-bool">catch</span> (<span class="json-key">error</span>) {
+    console.error(<span class="json-string">'Error al crear:'</span>, error);
+  }
+}
+
+crearPost(<span class="json-string">'Mi título'</span>, <span class="json-string">'El contenido del post'</span>);</pre>
+            </div>
+
+            <h3 class="section-subtitle">Múltiples peticiones en paralelo con Promise.all()</h3>
+            <p>
+                Cuando necesitas hacer varias peticiones independientes y esperar a que todas
+                terminen, usar <code>await</code> en secuencia es ineficiente porque espera una
+                por una. <code>Promise.all()</code> las lanza todas a la vez y espera a que
+                todas se resuelvan.
+            </p>
+            <div class="code-block">
+<pre><span class="json-bool">async function</span> <span class="json-key">obtenerDatos</span>() {
+  <span class="json-bool">try</span> {
+    <span style="color:var(--text-secondary)">// Se lanzan las dos peticiones al mismo tiempo</span>
+    <span class="json-bool">const</span> [resUsuarios, resPosts] = <span class="json-bool">await</span> Promise.all([
+      fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/users'</span>),
+      fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts'</span>)
+    ]);
+
+    <span class="json-bool">const</span> usuarios = <span class="json-bool">await</span> resUsuarios.json();
+    <span class="json-bool">const</span> posts    = <span class="json-bool">await</span> resPosts.json();
+
+    console.log(<span class="json-string">`${usuarios.length} usuarios y ${posts.length} posts cargados`</span>);
+
+  } <span class="json-bool">catch</span> (<span class="json-key">error</span>) {
+    console.error(<span class="json-string">'Una petición falló:'</span>, error);
+  }
+}
+
+obtenerDatos();</pre>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Resumen</h2>
+            <div class="table-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>async function</code></td>
+                            <td>Declara una función asíncrona que siempre devuelve una Promise.</td>
+                        </tr>
+                        <tr>
+                            <td><code>await</code></td>
+                            <td>Pausa la función asíncrona hasta que la Promise se resuelva y extrae su valor.</td>
+                        </tr>
+                        <tr>
+                            <td><code>try / catch</code></td>
+                            <td>Reemplaza al <code>.catch()</code>; captura errores de red y errores lanzados manualmente.</td>
+                        </tr>
+                        <tr>
+                            <td><code>response.ok</code></td>
+                            <td>Propiedad booleana que indica si el código de estado está entre 200 y 299.</td>
+                        </tr>
+                        <tr>
+                            <td><code>response.json()</code></td>
+                            <td>Parsea el cuerpo de la respuesta como JSON; también es una Promise, por eso necesita <code>await</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Promise.all()</code></td>
+                            <td>Ejecuta múltiples Promises en paralelo y espera a que todas se resuelvan.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
+
+</html>

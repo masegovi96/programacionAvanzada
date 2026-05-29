@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(()=>{const base=document.querySelector('base');const isGitHubPages=window.location.hostname.endsWith('github.io');const repoName='programacionAvanzada';if(base)base.setAttribute('href',isGitHubPages?('/'+repoName+'/'):'/');document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');})();</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>fetch() | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5 pb-5">
+
+        <h1 class="text-center mb-2">fetch()</h1>
+
+        <section class="mb-5">
+            <h2>¿Qué es fetch()?</h2>
+            <p>
+                <code>fetch()</code> es una función integrada en los navegadores modernos que permite
+                realizar peticiones HTTP de forma <strong>asíncrona</strong>, es decir, sin bloquear
+                la ejecución del resto del programa mientras se espera la respuesta del servidor.
+            </p>
+            <p>
+                Antes de <code>fetch()</code>, la forma estándar de hacer peticiones asíncronas era
+                usando <code>XMLHttpRequest</code> (XHR), una API más compleja y verbosa. <code>fetch()</code>
+                llegó para simplificar ese proceso con una sintaxis más limpia basada en
+                <strong>Promesas</strong> (<em>Promises</em>).
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-lightbulb me-2" style="color:var(--accent-primary)"></i>
+                <strong>Clave:</strong> <code>fetch()</code> devuelve una <strong>Promise</strong>.
+                Eso significa que no devuelve la respuesta de inmediato; en cambio, devuelve un
+                objeto que <em>eventualmente</em> se resolverá con la respuesta del servidor
+                (o se rechazará si hubo un error de red).
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>¿Qué es una Promise?</h2>
+            <p>
+                Una <strong>Promise</strong> (promesa) representa el resultado eventual de una
+                operación asíncrona. Puede estar en uno de tres estados:
+            </p>
+
+            <div class="features-grid mt-4" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <h3>Pending</h3>
+                    <p>La operación aún está en curso. Ni cumplida ni rechazada.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background:rgba(130,255,130,0.1); color:#82ff82;"><i class="fa-solid fa-check"></i></div>
+                    <h3>Fulfilled</h3>
+                    <p>La operación terminó con éxito. El valor prometido está disponible.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background:rgba(255,100,100,0.1); color:#ff6464;"><i class="fa-solid fa-xmark"></i></div>
+                    <h3>Rejected</h3>
+                    <p>La operación falló. Se dispara el manejador de error.</p>
+                </div>
+            </div>
+
+            <p class="mt-3">
+                Para reaccionar a una Promise se encadenan los métodos <code>.then()</code> y
+                <code>.catch()</code>. El primero recibe el valor resuelto; el segundo captura
+                cualquier error.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2>Firma y parámetros de fetch()</h2>
+            <div class="code-block mb-4">
+<pre>fetch(<span class="json-string">url</span>, <span class="json-key">options</span>)</pre>
+            </div>
+
+            <div class="table-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>url</code></td>
+                            <td><code>string</code></td>
+                            <td>La URL del endpoint al que se hace la petición. Obligatorio.</td>
+                        </tr>
+                        <tr>
+                            <td><code>options</code></td>
+                            <td><code>object</code></td>
+                            <td>Objeto de configuración opcional. Permite definir método, cabeceras, cuerpo, etc.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-subtitle mt-4">Opciones más utilizadas</h3>
+            <div class="code-block">
+<pre>{
+  <span class="json-key">method</span>:  <span class="json-string">'GET'</span>,            <span style="color:var(--text-secondary)">// GET | POST | PUT | PATCH | DELETE</span>
+  <span class="json-key">headers</span>: {
+    <span class="json-key">'Content-Type'</span>: <span class="json-string">'application/json'</span>
+  },
+  <span class="json-key">body</span>: JSON.stringify({ <span class="json-key">nombre</span>: <span class="json-string">'valor'</span> })
+  <span style="color:var(--text-secondary)">// body solo se usa con POST, PUT y PATCH</span>
+}</pre>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>¿Cómo funciona el flujo?</h2>
+            <p>
+                Cuando se llama a <code>fetch()</code>, el navegador envía la petición HTTP en
+                segundo plano y devuelve inmediatamente una Promise. El código siguiente al
+                <code>fetch()</code> se ejecuta sin esperar. Cuando el servidor responde, se
+                activa el callback del <code>.then()</code>.
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                <strong>Importante:</strong> <code>fetch()</code> solo rechaza la Promise si hay
+                un <strong>error de red</strong> (sin conexión, DNS no resuelto, etc.). Una
+                respuesta <code>404</code> o <code>500</code> del servidor <em>no</em> lanza un
+                error automáticamente: la Promise se resuelve igual. Por eso hay que revisar
+                la propiedad <code>response.ok</code> manualmente.
+            </div>
+
+            <p class="mt-3">
+                La respuesta que llega en el primer <code>.then()</code> es un objeto
+                <code>Response</code>. Para leer los datos como JSON hay que llamar a
+                <code>response.json()</code>, que también devuelve una Promise, razón por la
+                que se encadena un segundo <code>.then()</code>.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2>Ejemplos de código</h2>
+
+            <h3 class="section-subtitle">GET — Obtener datos</h3>
+            <div class="code-block mb-4">
+<pre><span style="color:var(--text-secondary)">// Petición GET a la API pública JSONPlaceholder</span>
+fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts/1'</span>)
+  .then(<span class="json-key">response</span> => {
+    <span style="color:var(--text-secondary)">// Verificar que la respuesta fue exitosa</span>
+    <span class="json-bool">if</span> (!response.ok) {
+      <span class="json-bool">throw</span> <span class="json-bool">new</span> Error(<span class="json-string">'Error en la petición: '</span> + response.status);
+    }
+    <span style="color:var(--text-secondary)">// Convertir la respuesta a JSON (también es una Promise)</span>
+    <span class="json-bool">return</span> response.json();
+  })
+  .then(<span class="json-key">data</span> => {
+    <span style="color:var(--text-secondary)">// Aquí ya tenemos el objeto JavaScript con los datos</span>
+    console.log(data.title);
+  })
+  .catch(<span class="json-key">error</span> => {
+    <span style="color:var(--text-secondary)">// Solo se activa si hay error de red</span>
+    console.error(<span class="json-string">'Error de red:'</span>, error);
+  });</pre>
+            </div>
+
+            <h3 class="section-subtitle">POST — Enviar datos</h3>
+            <div class="code-block mb-4">
+<pre><span style="color:var(--text-secondary)">// Petición POST: crear un nuevo recurso</span>
+fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts'</span>, {
+  <span class="json-key">method</span>: <span class="json-string">'POST'</span>,
+  <span class="json-key">headers</span>: {
+    <span class="json-string">'Content-Type'</span>: <span class="json-string">'application/json'</span>
+  },
+  <span class="json-key">body</span>: JSON.stringify({
+    <span class="json-key">title</span>:  <span class="json-string">'Mi post'</span>,
+    <span class="json-key">body</span>:   <span class="json-string">'Contenido del post'</span>,
+    <span class="json-key">userId</span>: <span class="json-number">1</span>
+  })
+})
+  .then(<span class="json-key">response</span> => response.json())
+  .then(<span class="json-key">data</span> => {
+    console.log(<span class="json-string">'Recurso creado con id:'</span>, data.id);
+  })
+  .catch(<span class="json-key">error</span> => {
+    console.error(<span class="json-string">'Error:'</span>, error);
+  });</pre>
+            </div>
+
+            <h3 class="section-subtitle">DELETE — Eliminar un recurso</h3>
+            <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Petición DELETE: eliminar el post con id=1</span>
+fetch(<span class="json-string">'https://jsonplaceholder.typicode.com/posts/1'</span>, {
+  <span class="json-key">method</span>: <span class="json-string">'DELETE'</span>
+})
+  .then(<span class="json-key">response</span> => {
+    <span class="json-bool">if</span> (response.ok) {
+      console.log(<span class="json-string">'Recurso eliminado correctamente'</span>);
+    }
+  })
+  .catch(<span class="json-key">error</span> => {
+    console.error(<span class="json-string">'Error:'</span>, error);
+  });</pre>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Resumen del flujo</h2>
+            <div class="table-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Paso</th>
+                            <th>Qué ocurre</th>
+                            <th>Método / Propiedad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Se lanza la petición HTTP</td>
+                            <td><code>fetch(url, options)</code></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Se recibe la respuesta del servidor (metadatos)</td>
+                            <td><code>.then(response => ...)</code></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Se verifica que la respuesta sea exitosa</td>
+                            <td><code>response.ok</code> · <code>response.status</code></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Se parsea el cuerpo como JSON</td>
+                            <td><code>response.json()</code></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Se trabaja con los datos obtenidos</td>
+                            <td><code>.then(data => ...)</code></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Se captura cualquier error de red</td>
+                            <td><code>.catch(error => ...)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
+
+</html>
