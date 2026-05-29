@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(()=>{const base=document.querySelector('base');const isGitHubPages=window.location.hostname.endsWith('github.io');const repoName='programacionAvanzada';if(base)base.setAttribute('href',isGitHubPages?('/'+repoName+'/'):'/');document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');})();</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Peticiones HTTP | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5 pb-5">
+
+        <h1 class="text-center mb-2">Peticiones HTTP</h1>
+
+
+        <section class="mb-5">
+            <h2>¿Qué es una petición HTTP?</h2>
+            <p>
+                <strong>HTTP</strong> (<em>HyperText Transfer Protocol</em>) es el protocolo de
+                comunicación que define cómo los clientes y los servidores intercambian información
+                en la web. Cada vez que tu navegador carga una página, obtiene una imagen o envía
+                un formulario, está enviando una <strong>petición HTTP</strong> al servidor y
+                esperando una <strong>respuesta HTTP</strong>.
+            </p>
+            <p>
+                Una petición HTTP es un mensaje estructurado que el cliente envía al servidor
+                indicando <em>qué recurso</em> necesita y <em>qué quiere hacer</em> con él.
+                El servidor procesa esa petición y devuelve una respuesta con el resultado.
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-lightbulb me-2" style="color:var(--accent-primary)"></i>
+                <strong>Analogía:</strong> Una petición HTTP es como enviar una carta formal.
+                Incluye la dirección del destinatario (URL), el tipo de solicitud (método),
+                información adicional sobre quien pregunta (cabeceras) y, opcionalmente,
+                el contenido del mensaje (cuerpo).
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>¿Cómo funciona?</h2>
+            <p>
+                Toda comunicación HTTP sigue el modelo <strong>petición–respuesta</strong>
+                (<em>request–response</em>). El proceso tiene cuatro pasos principales:
+            </p>
+
+            <div class="features-grid mt-4" style="grid-template-columns: repeat(auto-fit, minmax(210px,1fr));">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-1"></i></div>
+                    <h3>El cliente inicia</h3>
+                    <p>El navegador o la aplicación construye una petición HTTP con método, URL, cabeceras y cuerpo (si aplica).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-2"></i></div>
+                    <h3>Viaja por la red</h3>
+                    <p>La petición viaja a través de internet hasta llegar al servidor indicado en la URL.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-3"></i></div>
+                    <h3>El servidor procesa</h3>
+                    <p>El servidor interpreta el método y la ruta, ejecuta la lógica correspondiente y prepara la respuesta.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-4"></i></div>
+                    <h3>El cliente recibe</h3>
+                    <p>El servidor devuelve una respuesta con un <strong>código de estado</strong> (ej. <code>200 OK</code>) y los datos solicitados.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle mt-4">Anatomía de una petición HTTP</h3>
+            <p>Toda petición está formada por tres partes:</p>
+            <div class="code-block mb-4">
+<pre><span class="json-key">POST</span> <span class="json-string">/api/users</span> HTTP/1.1
+<span style="color:var(--text-secondary)">─────────────────────────── línea de solicitud (método + ruta + versión)</span>
+
+<span class="json-key">Host:</span>         <span class="json-string">api.ejemplo.com</span>
+<span class="json-key">Content-Type:</span> <span class="json-string">application/json</span>
+<span class="json-key">Authorization:</span><span class="json-string">Bearer eyJhbGciOiJIUzI1NiJ9...</span>
+<span style="color:var(--text-secondary)">─────────────────────────── cabeceras (headers)</span>
+
+{
+  <span class="json-key">"name"</span>: <span class="json-string">"Ana López"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"ana@ejemplo.com"</span>
+}
+<span style="color:var(--text-secondary)">─────────────────────────── cuerpo (body) — solo en POST, PUT, PATCH</span></pre>
+            </div>
+
+            <h3 class="section-subtitle">Anatomía de una respuesta HTTP</h3>
+            <div class="code-block mb-3">
+<pre>HTTP/1.1 <span class="json-number">201</span> <span class="json-string">Created</span>
+<span style="color:var(--text-secondary)">─────────── línea de estado (versión + código + descripción)</span>
+
+<span class="json-key">Content-Type:</span> <span class="json-string">application/json</span>
+<span class="json-key">Location:</span>     <span class="json-string">/api/users/42</span>
+<span style="color:var(--text-secondary)">─────────── cabeceras de respuesta</span>
+
+{
+  <span class="json-key">"id"</span>:    <span class="json-number">42</span>,
+  <span class="json-key">"name"</span>:  <span class="json-string">"Ana López"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"ana@ejemplo.com"</span>
+}
+<span style="color:var(--text-secondary)">─────────── cuerpo de la respuesta</span></pre>
+            </div>
+
+            <h3 class="section-subtitle mt-4">Códigos de estado más comunes</h3>
+            <div class="table-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Significado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="badge-method badge-get">200</span></td><td>OK</td><td>La petición fue exitosa y el servidor devuelve los datos.</td></tr>
+                        <tr><td><span class="badge-method badge-post">201</span></td><td>Created</td><td>El recurso fue creado correctamente.</td></tr>
+                        <tr><td><span class="badge-method badge-get">204</span></td><td>No Content</td><td>La petición fue exitosa pero no hay datos que devolver (típico en DELETE).</td></tr>
+                        <tr><td><span class="badge-method badge-put">400</span></td><td>Bad Request</td><td>La petición tiene un error de sintaxis o datos inválidos.</td></tr>
+                        <tr><td><span class="badge-method badge-put">401</span></td><td>Unauthorized</td><td>Se requiere autenticación para acceder al recurso.</td></tr>
+                        <tr><td><span class="badge-method badge-put">403</span></td><td>Forbidden</td><td>El servidor entiende la petición pero no tiene permiso de ejecutarla.</td></tr>
+                        <tr><td><span class="badge-method badge-delete">404</span></td><td>Not Found</td><td>El recurso solicitado no existe en el servidor.</td></tr>
+                        <tr><td><span class="badge-method badge-delete">500</span></td><td>Internal Server Error</td><td>Error genérico del servidor; algo salió mal en el backend.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Tipos de peticiones HTTP</h2>
+            <p>
+                El <strong>método HTTP</strong> (también llamado verbo) indica la intención de la
+                petición: ¿quieres leer datos, crearlos, modificarlos o eliminarlos? Los cinco
+                métodos más utilizados en APIs REST son:
+            </p>
+
+            <div class="highlight-box mb-4">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                Los métodos se clasifican en <strong>seguros</strong> (no modifican el servidor,
+                ej. <code>GET</code>) e <strong>idempotentes</strong> (ejecutarlos varias veces
+                produce el mismo resultado que ejecutarlos una sola vez, ej. <code>PUT</code>,
+                <code>DELETE</code>).
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge-method badge-get" style="font-size:1rem; padding:0.4em 1em;">GET</span>
+                    <h3 class="mb-0" style="color:var(--text-primary); font-size:1.3rem;">Obtener datos</h3>
+                </div>
+                <div class="glass-panel glass-panel--accent">
+                    <p>
+                        <code>GET</code> solicita la <strong>lectura</strong> de un recurso. Es el
+                        método más utilizado: cada vez que escribes una URL en el navegador y presionas
+                        Enter, se envía un <code>GET</code>. <strong>No modifica</strong> nada en el
+                        servidor y no lleva cuerpo (<em>body</em>).
+                    </p>
+                    <ul class="mb-3">
+                        <li>Es <strong>seguro</strong> e <strong>idempotente</strong>.</li>
+                        <li>Los parámetros de filtrado van en la URL como <em>query string</em>: <span class="url-chip">/posts?userId=1</span></li>
+                        <li>Nunca debe usarse para enviar información sensible (los datos quedan en la URL y en los logs del servidor).</li>
+                    </ul>
+                    <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Obtener todos los posts</span>
+<span class="json-key">GET</span> https://jsonplaceholder.typicode.com/posts
+
+<span style="color:var(--text-secondary)">// Obtener el post con id=1</span>
+<span class="json-key">GET</span> https://jsonplaceholder.typicode.com/posts/1
+
+<span style="color:var(--text-secondary)">// Filtrar posts del usuario 2</span>
+<span class="json-key">GET</span> https://jsonplaceholder.typicode.com/posts?userId=2</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge-method badge-post" style="font-size:1rem; padding:0.4em 1em;">POST</span>
+                    <h3 class="mb-0" style="color:var(--text-primary); font-size:1.3rem;">Crear un recurso</h3>
+                </div>
+                <div class="glass-panel glass-panel--accent" style="border-left-color:#82ff82;">
+                    <p>
+                        <code>POST</code> envía datos al servidor para <strong>crear un nuevo recurso</strong>.
+                        Los datos viajan en el <em>body</em> de la petición, generalmente en formato JSON.
+                        Cada llamada puede crear un recurso diferente, por lo que
+                        <strong>no es idempotente</strong>.
+                    </p>
+                    <ul class="mb-3">
+                        <li>Es el método estándar para enviar formularios y subir información.</li>
+                        <li>El servidor generalmente responde con <code>201 Created</code> y devuelve el recurso recién creado.</li>
+                        <li>No es seguro ni idempotente.</li>
+                    </ul>
+                    <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Crear un nuevo post</span>
+<span class="json-key">POST</span> https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+{
+  <span class="json-key">"title"</span>: <span class="json-string">"Mi nuevo post"</span>,
+  <span class="json-key">"body"</span>:  <span class="json-string">"Contenido del post..."</span>,
+  <span class="json-key">"userId"</span>: <span class="json-number">1</span>
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge-method badge-put" style="font-size:1rem; padding:0.4em 1em;">PUT</span>
+                    <h3 class="mb-0" style="color:var(--text-primary); font-size:1.3rem;">Reemplazar un recurso</h3>
+                </div>
+                <div class="glass-panel glass-panel--accent" style="border-left-color:#ffdc64;">
+                    <p>
+                        <code>PUT</code> <strong>reemplaza completamente</strong> un recurso existente
+                        con los datos que envías. Si omites un campo, ese campo se elimina o queda
+                        vacío en el servidor. Se usa cuando tienes la versión completa y actualizada
+                        del recurso.
+                    </p>
+                    <ul class="mb-3">
+                        <li>Es <strong>idempotente</strong>: enviarlo dos veces produce el mismo resultado.</li>
+                        <li>Requiere enviar <strong>todos los campos</strong> del recurso, no solo los que cambiaron.</li>
+                        <li>El servidor generalmente responde con <code>200 OK</code> y el recurso actualizado.</li>
+                    </ul>
+                    <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Reemplazar completamente el post con id=1</span>
+<span class="json-key">PUT</span> https://jsonplaceholder.typicode.com/posts/1
+Content-Type: application/json
+
+{
+  <span class="json-key">"id"</span>:     <span class="json-number">1</span>,
+  <span class="json-key">"title"</span>: <span class="json-string">"Título completamente nuevo"</span>,
+  <span class="json-key">"body"</span>:  <span class="json-string">"Cuerpo nuevo y completo"</span>,
+  <span class="json-key">"userId"</span>:<span class="json-number">1</span>
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge-method badge-put" style="font-size:1rem; padding:0.4em 1em; background:rgba(180,130,255,0.15); color:#c084fc; border-color:rgba(180,130,255,0.35);">PATCH</span>
+                    <h3 class="mb-0" style="color:var(--text-primary); font-size:1.3rem;">Modificar parcialmente un recurso</h3>
+                </div>
+                <div class="glass-panel glass-panel--accent" style="border-left-color:#c084fc;">
+                    <p>
+                        <code>PATCH</code> aplica una <strong>modificación parcial</strong> a un
+                        recurso: solo envías los campos que quieres cambiar, el resto permanece igual.
+                        Es la diferencia clave con <code>PUT</code>.
+                    </p>
+                    <ul class="mb-3">
+                        <li>Ideal para actualizar un campo sin necesidad de conocer todo el recurso.</li>
+                        <li>Es más eficiente en red porque el body es más pequeño.</li>
+                        <li>Generalmente devuelve <code>200 OK</code> con el recurso actualizado.</li>
+                    </ul>
+                    <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Cambiar solo el título del post con id=1</span>
+<span class="json-key">PATCH</span> https://jsonplaceholder.typicode.com/posts/1
+Content-Type: application/json
+
+{
+  <span class="json-key">"title"</span>: <span class="json-string">"Solo cambio el título"</span>
+}
+
+<span style="color:var(--text-secondary)">// El body y el userId del post NO se modifican</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge-method badge-delete" style="font-size:1rem; padding:0.4em 1em;">DELETE</span>
+                    <h3 class="mb-0" style="color:var(--text-primary); font-size:1.3rem;">Eliminar un recurso</h3>
+                </div>
+                <div class="glass-panel glass-panel--accent" style="border-left-color:#ff6464;">
+                    <p>
+                        <code>DELETE</code> le indica al servidor que <strong>elimine</strong> el
+                        recurso identificado por la URL. Generalmente no lleva cuerpo en la petición.
+                    </p>
+                    <ul class="mb-3">
+                        <li>Es <strong>idempotente</strong>: eliminar un recurso que ya no existe devuelve <code>404</code>, pero el estado del servidor es el mismo.</li>
+                        <li>El servidor responde típicamente con <code>204 No Content</code> (sin body) o <code>200 OK</code> con un mensaje de confirmación.</li>
+                    </ul>
+                    <div class="code-block">
+<pre><span style="color:var(--text-secondary)">// Eliminar el post con id=1</span>
+<span class="json-key">DELETE</span> https://jsonplaceholder.typicode.com/posts/1
+
+<span style="color:var(--text-secondary)">// Respuesta del servidor:</span>
+HTTP/1.1 <span class="json-number">200</span> OK
+{}  <span style="color:var(--text-secondary)">← JSONPlaceholder devuelve un objeto vacío al eliminar</span></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Comparativa de métodos</h2>
+            <div class="table-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Método</th>
+                            <th>Operación CRUD</th>
+                            <th>Lleva body</th>
+                            <th>Seguro</th>
+                            <th>Idempotente</th>
+                            <th>Código de éxito típico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td>Read</td>
+                            <td>No</td>
+                            <td><i class="fa-solid fa-check" style="color:#82ff82"></i> Sí</td>
+                            <td><i class="fa-solid fa-check" style="color:#82ff82"></i> Sí</td>
+                            <td><code>200 OK</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-post">POST</span></td>
+                            <td>Create</td>
+                            <td>Sí</td>
+                            <td><i class="fa-solid fa-xmark" style="color:#ff6464"></i> No</td>
+                            <td><i class="fa-solid fa-xmark" style="color:#ff6464"></i> No</td>
+                            <td><code>201 Created</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-put">PUT</span></td>
+                            <td>Update (total)</td>
+                            <td>Sí</td>
+                            <td><i class="fa-solid fa-xmark" style="color:#ff6464"></i> No</td>
+                            <td><i class="fa-solid fa-check" style="color:#82ff82"></i> Sí</td>
+                            <td><code>200 OK</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-put" style="background:rgba(180,130,255,0.15); color:#c084fc; border-color:rgba(180,130,255,0.35);">PATCH</span></td>
+                            <td>Update (parcial)</td>
+                            <td>Sí</td>
+                            <td><i class="fa-solid fa-xmark" style="color:#ff6464"></i> No</td>
+                            <td><i class="fa-solid fa-circle-half-stroke" style="color:#ffdc64"></i> Depende</td>
+                            <td><code>200 OK</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-delete">DELETE</span></td>
+                            <td>Delete</td>
+                            <td>No</td>
+                            <td><i class="fa-solid fa-xmark" style="color:#ff6464"></i> No</td>
+                            <td><i class="fa-solid fa-check" style="color:#82ff82"></i> Sí</td>
+                            <td><code>204 No Content</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
+
+</html>

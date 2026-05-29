@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(()=>{const base=document.querySelector('base');const isGitHubPages=window.location.hostname.endsWith('github.io');const repoName='programacionAvanzada';if(base)base.setAttribute('href',isGitHubPages?('/'+repoName+'/'):'/');document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');})();</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/jpeg" href="assets/media/jigsaw.jpg">
+    <title>Introducción a las APIs | Programación Avanzada</title>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="container mt-5 pb-5">
+
+        <h1 class="text-center mb-2">Introducción a las APIs</h1>
+
+        <section class="mb-5">
+            <h2>¿Qué es una API?</h2>
+            <p>
+                <strong>API</strong> son las siglas de <em>Application Programming Interface</em>
+                (Interfaz de Programación de Aplicaciones). En términos simples, es un
+                <strong>contrato de comunicación</strong> entre dos sistemas de software: define
+                qué operaciones están disponibles, cómo pedirlas y en qué formato se recibirá la
+                respuesta.
+            </p>
+            <p>
+                Piensa en una API como una ventanilla de atención: no necesitas saber cómo funciona
+                el sistema interno; solo necesitas saber qué le puedes pedir y qué te va a devolver.
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-lightbulb me-2" style="color:var(--accent-primary)"></i>
+                <strong>Definición formal:</strong> Una API es un conjunto de reglas y definiciones
+                que permite que una aplicación se comunique con otra, abstrayendo los detalles de
+                implementación y exponiendo únicamente la funcionalidad necesaria.
+            </div>
+
+            <div class="features-grid mt-4" style="grid-template-columns: repeat(auto-fit, minmax(220px,1fr));">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-plug"></i></div>
+                    <h3>Interoperabilidad</h3>
+                    <p>Permite que aplicaciones escritas en diferentes lenguajes y plataformas se comuniquen entre sí.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+                    <h3>Abstracción</h3>
+                    <p>El cliente no necesita conocer los detalles internos del servidor; solo la interfaz pública.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+                    <h3>Reutilización</h3>
+                    <p>Una misma API puede ser consumida por una app web, una app móvil y un servicio de terceros a la vez.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3>Separación de capas</h3>
+                    <p>Desacopla el frontend del backend, permitiendo que cada uno evolucione de forma independiente.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>La analogía del restaurante</h2>
+            <p>
+                Una de las formas más sencillas de entender una API es imaginar un restaurante.
+                Cada parte del proceso tiene su equivalente en el desarrollo web:
+            </p>
+
+            <div class="d-flex flex-wrap align-items-center justify-content-center gap-2 my-4">
+                <div class="analogy-card" style="width:180px;">
+                    <div class="analogy-icon"><i class="fa-solid fa-user"></i></div>
+                    <h4>Cliente</h4>
+                    <p>El <strong>Frontend</strong>: quien hace la solicitud.</p>
+                </div>
+
+                <div class="arrow-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <div class="analogy-card" style="width:180px;">
+                    <div class="analogy-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+                    <h4>Mesero</h4>
+                    <p>La <strong>API</strong>: lleva la orden y regresa la respuesta.</p>
+                </div>
+
+                <div class="arrow-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <div class="analogy-card" style="width:180px;">
+                    <div class="analogy-icon"><i class="fa-solid fa-kitchen-set"></i></div>
+                    <h4>Cocina</h4>
+                    <p>El <strong>Backend</strong>: procesa la solicitud y prepara los datos.</p>
+                </div>
+            </div>
+
+            <table class="table table-bordered mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Restaurante</th>
+                        <th>Equivalente en software</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fa-solid fa-user me-2" style="color:var(--accent-primary)"></i>Cliente</td>
+                        <td><strong>Frontend</strong> (navegador / app)</td>
+                        <td>Quien genera la solicitud: un clic en un botón, cargar una página, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-bell-concierge me-2" style="color:var(--accent-primary)"></i>Mesero</td>
+                        <td><strong>API</strong></td>
+                        <td>Recibe la petición del cliente, la lleva a la cocina y devuelve el resultado. No cocina, solo comunica.</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-kitchen-set me-2" style="color:var(--accent-primary)"></i>Cocina</td>
+                        <td><strong>Backend</strong> (servidor / base de datos)</td>
+                        <td>Procesa la lógica, consulta la base de datos y prepara los datos que serán devueltos.</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-book-open me-2" style="color:var(--accent-primary)"></i>Menú</td>
+                        <td><strong>Documentación de la API</strong></td>
+                        <td>Lista de lo que puedes pedir: rutas disponibles, parámetros aceptados y formato de respuesta.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                El mesero <strong>no necesita saber</strong> cómo se prepara cada platillo, y el cliente
+                <strong>no necesita entrar a la cocina</strong>. Esa separación de responsabilidades es
+                exactamente lo que hace poderosa a una API.
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Una API pública para practicar</h2>
+            <p>
+                Existe una API de acceso libre llamada <strong>JSONPlaceholder</strong> que simula un
+                servidor REST con datos de prueba. Es perfecta para aprender porque no requiere registro,
+                no requiere token de autenticación y responde de inmediato.
+            </p>
+
+            <div class="feature-card mb-4" style="flex-direction:row; gap:1.5rem; align-items:center;">
+                <div class="feature-icon" style="flex-shrink:0;">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <div>
+                    <h3 class="mb-1">JSONPlaceholder</h3>
+                    <p class="mb-2">Fake REST API for testing and prototyping.</p>
+                    <a href="https://jsonplaceholder.typicode.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>
+                        Visitar jsonplaceholder.typicode.com
+                    </a>
+                </div>
+            </div>
+
+            <p>Esta API expone varios recursos de prueba:</p>
+            <ul>
+                <li><span class="url-chip">/posts</span> &mdash; 100 publicaciones de blog</li>
+                <li><span class="url-chip">/comments</span> &mdash; comentarios asociados a publicaciones</li>
+                <li><span class="url-chip">/albums</span> &mdash; álbumes de fotos</li>
+                <li><span class="url-chip">/photos</span> &mdash; 5 000 fotos</li>
+                <li><span class="url-chip">/todos</span> &mdash; tareas pendientes</li>
+                <li><span class="url-chip">/users</span> &mdash; 10 usuarios con perfiles completos</li>
+            </ul>
+        </section>
+
+        <section class="mb-5">
+            <h2>Estructura de una respuesta de API</h2>
+            <p>
+                La mayoría de las APIs modernas devuelven los datos en formato <strong>JSON</strong>
+                (<em>JavaScript Object Notation</em>). JSON es un formato de texto ligero y legible
+                tanto por humanos como por máquinas.
+            </p>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-circle-info me-2" style="color:var(--accent-primary)"></i>
+                Cuando haces una petición a
+                <span class="url-chip">https://jsonplaceholder.typicode.com/posts/1</span>,
+                el servidor responde con un <strong>objeto JSON</strong> que describe una publicación.
+            </div>
+
+            <h3 class="section-subtitle mt-4">Respuesta: un objeto (recurso único)</h3>
+            <p>Al solicitar un recurso específico por su <code>id</code>, la API devuelve un objeto JSON:</p>
+            <div class="code-block mb-4">
+<pre><span style="color:var(--text-secondary)">// GET https://jsonplaceholder.typicode.com/posts/1</span>
+{
+  <span class="json-key">"userId"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"id"</span>:     <span class="json-number">1</span>,
+  <span class="json-key">"title"</span>:  <span class="json-string">"sunt aut facere repellat provident occaecati excepturi optio reprehenderit"</span>,
+  <span class="json-key">"body"</span>:   <span class="json-string">"quia et suscipit\nsuscipit recusandae consequuntur..."</span>
+}</pre>
+            </div>
+
+            <h3 class="section-subtitle">Respuesta: un arreglo (colección de recursos)</h3>
+            <p>Al solicitar una colección sin filtros, la API devuelve un <strong>arreglo</strong> de objetos JSON:</p>
+            <div class="code-block mb-4">
+<pre><span style="color:var(--text-secondary)">// GET https://jsonplaceholder.typicode.com/posts</span>
+[
+  {
+    <span class="json-key">"userId"</span>: <span class="json-number">1</span>,
+    <span class="json-key">"id"</span>:     <span class="json-number">1</span>,
+    <span class="json-key">"title"</span>:  <span class="json-string">"sunt aut facere repellat..."</span>,
+    <span class="json-key">"body"</span>:   <span class="json-string">"quia et suscipit..."</span>
+  },
+  {
+    <span class="json-key">"userId"</span>: <span class="json-number">1</span>,
+    <span class="json-key">"id"</span>:     <span class="json-number">2</span>,
+    <span class="json-key">"title"</span>:  <span class="json-string">"qui est esse"</span>,
+    <span class="json-key">"body"</span>:   <span class="json-string">"est rerum tempore vitae..."</span>
+  },
+  <span style="color:var(--text-secondary)">// ... 98 objetos más</span>
+]</pre>
+            </div>
+
+            <h3 class="section-subtitle">Tipos de datos en JSON</h3>
+            <p>JSON soporta seis tipos de valores. Aquí un ejemplo de un usuario con todos ellos:</p>
+            <div class="code-block mb-4">
+<pre><span style="color:var(--text-secondary)">// GET https://jsonplaceholder.typicode.com/users/1</span>
+{
+  <span class="json-key">"id"</span>:       <span class="json-number">1</span>,                          <span style="color:var(--text-secondary)">// número</span>
+  <span class="json-key">"name"</span>:    <span class="json-string">"Leanne Graham"</span>,           <span style="color:var(--text-secondary)">// cadena de texto</span>
+  <span class="json-key">"active"</span>:  <span class="json-bool">true</span>,                      <span style="color:var(--text-secondary)">// booleano</span>
+  <span class="json-key">"score"</span>:   <span class="json-null">null</span>,                      <span style="color:var(--text-secondary)">// nulo</span>
+  <span class="json-key">"address"</span>: {                       <span style="color:var(--text-secondary)">// objeto anidado</span>
+    <span class="json-key">"street"</span>: <span class="json-string">"Kulas Light"</span>,
+    <span class="json-key">"city"</span>:   <span class="json-string">"Gwenborough"</span>,
+    <span class="json-key">"zipcode"</span>:<span class="json-string">"92998-3874"</span>,
+    <span class="json-key">"geo"</span>: {
+      <span class="json-key">"lat"</span>: <span class="json-string">"-37.3159"</span>,
+      <span class="json-key">"lng"</span>: <span class="json-string">"81.1496"</span>
+    }
+  },
+  <span class="json-key">"tags"</span>: [<span class="json-string">"admin"</span>, <span class="json-string">"user"</span>]           <span style="color:var(--text-secondary)">// arreglo</span>
+}</pre>
+            </div>
+
+            <div class="table-container mb-3">
+                <table class="table table-bordered mb-0 endpoint-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo JSON</th>
+                            <th>Ejemplo</th>
+                            <th>Equivalente en JavaScript</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>String</td>    <td><code class="json-string">"Leanne Graham"</code></td><td><code>String</code></td></tr>
+                        <tr><td>Number</td>    <td><code class="json-number">42</code> &nbsp;/&nbsp; <code class="json-number">3.14</code></td><td><code>Number</code></td></tr>
+                        <tr><td>Boolean</td>   <td><code class="json-bool">true</code> &nbsp;/&nbsp; <code class="json-bool">false</code></td><td><code>Boolean</code></td></tr>
+                        <tr><td>Null</td>      <td><code class="json-null">null</code></td><td><code>null</code></td></tr>
+                        <tr><td>Object</td>    <td><code>{ "city": "Gwenborough" }</code></td><td><code>Object</code></td></tr>
+                        <tr><td>Array</td>     <td><code>["admin", "user"]</code></td><td><code>Array</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>¿Qué es un endpoint?</h2>
+            <p>
+                Un <strong>endpoint</strong> (punto de acceso) es una <strong>URL específica</strong>
+                dentro de una API a la que puedes enviar una petición para realizar una operación concreta.
+                Cada endpoint combina tres elementos:
+            </p>
+
+            <div class="features-grid mt-3" style="grid-template-columns: repeat(auto-fit, minmax(200px,1fr));">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
+                    <h3>URL base</h3>
+                    <p>La dirección raíz del servidor. Ej.: <span class="url-chip">https://jsonplaceholder.typicode.com</span></p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-route"></i></div>
+                    <h3>Ruta (path)</h3>
+                    <p>El recurso específico que se quiere operar. Ej.: <span class="url-chip">/posts</span>, <span class="url-chip">/users/3</span></p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-hand-pointer"></i></div>
+                    <h3>Método HTTP</h3>
+                    <p>La operación a realizar: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box mt-4">
+                <i class="fa-solid fa-lightbulb me-2" style="color:var(--accent-primary)"></i>
+                <strong>Mismo recurso, distintas operaciones.</strong> La ruta
+                <span class="url-chip">/posts/1</span> puede comportarse diferente según el método HTTP
+                que uses: <code>GET</code> obtiene el post, <code>PUT</code> lo reemplaza,
+                <code>DELETE</code> lo elimina.
+            </div>
+
+            <h3 class="section-subtitle mt-4">Métodos HTTP más comunes (CRUD)</h3>
+            <div class="table-container">
+                <table class="table table-bordered mb-0 endpoint-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Operación CRUD</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td>Read (Leer)</td>
+                            <td>Obtiene datos del servidor. No modifica nada.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-post">POST</span></td>
+                            <td>Create (Crear)</td>
+                            <td>Envía datos al servidor para crear un nuevo recurso.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-put">PUT</span></td>
+                            <td>Update (Actualizar)</td>
+                            <td>Reemplaza completamente un recurso existente.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-delete">DELETE</span></td>
+                            <td>Delete (Eliminar)</td>
+                            <td>Elimina un recurso del servidor.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-subtitle mt-4">Endpoints de JSONPlaceholder</h3>
+            <div class="table-container">
+                <table class="table table-bordered mb-0 endpoint-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Endpoint</th>
+                            <th>Descripción</th>
+                            <th>Ejemplo de respuesta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td><span class="url-chip">/posts</span></td>
+                            <td>Obtiene todos los posts</td>
+                            <td>Arreglo de 100 objetos</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td><span class="url-chip">/posts/1</span></td>
+                            <td>Obtiene el post con <code>id=1</code></td>
+                            <td>Un objeto con <code>userId</code>, <code>id</code>, <code>title</code>, <code>body</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td><span class="url-chip">/posts/1/comments</span></td>
+                            <td>Obtiene los comentarios del post 1</td>
+                            <td>Arreglo de objetos comentario</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td><span class="url-chip">/users</span></td>
+                            <td>Obtiene todos los usuarios</td>
+                            <td>Arreglo de 10 objetos usuario</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-post">POST</span></td>
+                            <td><span class="url-chip">/posts</span></td>
+                            <td>Crea un nuevo post (simulado)</td>
+                            <td>El objeto creado con <code>id: 101</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-put">PUT</span></td>
+                            <td><span class="url-chip">/posts/1</span></td>
+                            <td>Reemplaza el post con <code>id=1</code></td>
+                            <td>El objeto actualizado</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-delete">DELETE</span></td>
+                            <td><span class="url-chip">/posts/1</span></td>
+                            <td>Elimina el post con <code>id=1</code></td>
+                            <td>Objeto vacío <code>{}</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-subtitle mt-4">Anatomía de un endpoint</h3>
+            <div class="code-block">
+<pre>  https://jsonplaceholder.typicode.com/posts/1?_limit=5
+  ──────────────────────────────────── ───── ─ ─────────
+           │                            │    │     │
+        URL base                      ruta  id  query string
+                                                (parámetros opcionales)</pre>
+            </div>
+
+            <ul class="mt-3">
+                <li><strong>URL base</strong>: dirección del servidor que ofrece la API.</li>
+                <li><strong>Ruta</strong>: el recurso que se solicita (<code>/posts</code>, <code>/users</code>, etc.).</li>
+                <li><strong>Parámetro de ruta</strong>: identifica un recurso concreto dentro de la colección (el <code>/1</code>).</li>
+                <li><strong>Query string</strong>: parámetros opcionales para filtrar, ordenar o paginar resultados (<code>?_limit=5</code>).</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
+
+</html>
