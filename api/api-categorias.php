@@ -65,9 +65,24 @@ switch ($method) { // Utilizamos la condicional switch-case para evaluar el valo
     case 'POST':
         // Bloque de código con estructura y operaciones para manejar solicitudes POST
         // Operación para crear un nuevo registro en la tabla "categorías"
+        // Endpoint para crear una nueva categoría - http://localhost/gestor_bibliotecario/api/api-categorias.php
         $data = json_decode(file_get_contents("php://input"), true); // Aquí lo que estoy haciendo es crear una variable llamada $data, y esta variable contiene la decodificación de los datos JSON, que se realiza mediante el método json_decode(). ¿A qué se refiere o para qué me sirve la decodificación? Recuerda que el cliente envía los datos en formato JSON, entonces para poder trabajarlos en nuestro código PHP necesitamos convertirlos de formato JSON a un formato que PHP pueda entender, en este caso usaremos un arreglo asociativo. El método json_decode() hace tal cual eso, convierte una cadena JSON en una estructura de datos de PHP. El parámetro file_get_contents("php://input") se utiliza para leer el cuerpo de la solicitud HTTP, y el parámetro true, indica que el resultado debe ser un arreglo asociativo.
-        $data['nombre'] = trim($data['nombre'] ?? "");
-        $data['descripcion'] = trim($data['descripcion'] ?? "");
+        $nombre = trim($data['nombre'] ?? "");
+        $descripcion = trim($data['descripcion'] ?? "");
+        if(!empty($nombre) && !empty($descripcion)){
+            $stmt = $conn->prepare("INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)");
+            $stmt->bind_param("ss", $nombre, $descripcion);
+            if($stmt->execute()){
+                http_response_code(201); // Código HTTP indicando que el recurso fue creado exitosamente. Recuerda que el código 201 es un código de estado HTTP que indica que la solicitud se ha completado con éxito y que se ha creado un nuevo recurso como resultado de la solicitud. En este caso, estamos indicando que la categoría fue creada exitosamente.
+                echo json_encode(array("mensaje" => "Categoría creada exitosamente")); // Con json_encode(), hacemos lo contrario que con json_decode(), es decir, convertimos un arreglo asociativo de PHP a una cadena en formato JSON. Posteriormente enviamos la respuesta al cliente con echo.
+            }else{
+                http_response_code(500); // Código HTTP indicando que ocurrió un error interno en el servidor.
+                echo json_encode(array("mensaje" => "Error al crear la categoría " . $stmt->error)); // En caso de que ocurra un error al ejecutar la consulta, enviamos un mensaje de error al cliente con el detalle del error.
+            }
+        }else{
+            http_response_code(400); // Código HTTP indicando que la solicitud es inválida.
+            echo json_encode(array("mensaje" => "El nombre y la descripción son obligatorios"));
+        }
         break;
     case 'PUT':
         // Bloque de código con estructura y operaciones para manejar solicitudes PUT
